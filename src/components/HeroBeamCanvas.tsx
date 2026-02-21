@@ -157,6 +157,7 @@ export default function HeroBeamCanvas({ theme }: { theme: Theme }) {
     const gridColor = theme === "light" ? "0,0,0" : "255,255,255";
 
     function drawGrid() {
+      if (!ctx) return;
       ctx.strokeStyle = `rgba(${gridColor},${gridAlpha})`;
       ctx.lineWidth = 1;
       for (let x = 0; x <= W; x += CELL) {
@@ -183,6 +184,7 @@ export default function HeroBeamCanvas({ theme }: { theme: Theme }) {
 
     let last = performance.now() / 1000;
     function tick(now: number) {
+      if (!ctx) return;
       const t = now / 1000;
       const dt = t - last;
       last = t;
