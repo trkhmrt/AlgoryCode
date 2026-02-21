@@ -137,7 +137,7 @@ export default function SikcaSorulanSorular() {
               burada. İster onboarding, entegrasyon ister destek olsun, size
               yardımcı olmaya hazırız.
             </p>
-            <Link href="#iletisim" className="faq-contact-btn">
+            <Link href="/iletisim" className="faq-contact-btn">
               Bize Ulaşın
               <svg
                 width="16"

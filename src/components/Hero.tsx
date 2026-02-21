@@ -40,7 +40,7 @@ export default function Hero() {
               Hemen Başla →
             </Link>
             <Link
-              href="#iletisim"
+              href="/iletisim"
               className="faq-contact-btn faq-contact-btn-pill hero-beam-btn-mobile-sm touch-manipulation"
             >
               Bize Ulaşın

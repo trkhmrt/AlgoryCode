@@ -2,7 +2,7 @@
 
 /* AlgroyCode marka renkleri: mor, pembe, turkuaz – göz yormayan tonlar */
 :root {
-  --background: #fafafa;
+  --background: #ffffff;
   --foreground: #1a1a1a;
   --brand-violet: #8b7fc7;
   --brand-violet-soft: #a89dd4;
@@ -32,6 +32,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+html {
+  overflow-x: clip;
+  overflow-y: auto;
+}
+body {
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 /* Hero konsept 1: hareketli gradient mesh – blur'lu blob'lar, yumuşak salınım */
@@ -120,9 +129,43 @@
   }
 }
 
-/* Hizmetler alanı – grid salaş: açık zemin, bol beyaz alan */
+/* Hizmetler / Ürünler alanı – grid: 1. satır 2 kart, 2. satır 3 kart */
 .services-section-salas {
   background-color: #ffffff;
+}
+.services-products-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.services-products-row {
+  display: grid;
+  gap: 20px;
+}
+.services-products-row-first {
+  grid-template-columns: 1fr 1fr;
+}
+.services-products-row-second {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+/* Üstte iki kart uzun, altta üç kart kısa */
+.circuit-card-tall {
+  min-height: 300px;
+}
+.circuit-card-short {
+  min-height: 200px;
+}
+@media (max-width: 767px) {
+  .services-products-row-first,
+  .services-products-row-second {
+    grid-template-columns: 1fr;
+  }
+  .circuit-card-tall {
+    min-height: 240px;
+  }
+  .circuit-card-short {
+    min-height: 180px;
+  }
 }
 
 /* Circuit Lines tarzı kart – hover'da mor / teal / pembe / turuncu glow */
@@ -135,6 +178,7 @@
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 .circuit-card::before {
   content: "";
@@ -157,12 +201,20 @@
 .circuit-card:nth-child(4)::before {
   background: radial-gradient(ellipse at 50% 0%, rgba(249, 115, 22, 0.08), transparent 70%);
 }
+.circuit-card:nth-child(5)::before {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+}
 .circuit-card:hover {
   border-color: #d0d0d8;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
 }
 .circuit-card:hover::before {
   opacity: 1;
+}
+.circuit-card-icon.circuit-card-icon-red-blue {
+  background: linear-gradient(135deg, #ef4444 0%, #3b82f6 100%);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fff;
 }
 .circuit-card-icon {
   width: 48px;
@@ -175,6 +227,503 @@
   margin-bottom: 24px;
   border: 1px solid #ebebef;
   background: #f5f5f8;
+}
+
+/* Hizmet detay sayfası */
+.service-detail-card {
+  position: relative;
+  overflow: hidden;
+}
+.service-detail-red-blue::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, rgba(59, 130, 246, 0.06) 100%);
+  pointer-events: none;
+}
+.service-detail-icon-red-blue {
+  background: linear-gradient(135deg, #ef4444 0%, #3b82f6 100%) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #fff;
+}
+
+/* ═══ ServicesList – sol liste + sağ detay paneli (mor/pembe arındırılmış) ═══ */
+.services-list-section {
+  background: #fff;
+  position: relative;
+}
+.services-list-blob {
+  position: absolute;
+  top: -200px;
+  left: -200px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(
+    circle,
+    rgba(244, 114, 182, 0.12) 0%,
+    rgba(244, 114, 182, 0.04) 50%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  animation: services-list-blob-float 10s ease-in-out infinite;
+}
+@keyframes services-list-blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 30px) scale(1.05); }
+}
+.services-list-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #52525b;
+  letter-spacing: 0.5px;
+}
+.services-list-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  background: #a1a1aa;
+  border-radius: 50%;
+  display: inline-block;
+}
+.services-list-title-accent {
+  color: #27272a;
+  font-weight: 700;
+}
+.services-list-layout {
+  align-items: start;
+}
+@media (max-width: 1023px) {
+  .services-list-layout {
+    grid-template-columns: 1fr;
+  }
+}
+.services-list-item {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1.5px solid transparent;
+  transition: all 0.25s ease;
+  background: transparent;
+  text-align: left;
+}
+.services-list-item:hover {
+  background: #fafafa;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.services-list-item.active {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+.services-list-item.active .services-list-chevron {
+  background: #27272a;
+  color: #fff;
+}
+.services-list-chevron {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f4f4f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s;
+  color: #a1a1aa;
+}
+.services-list-badge {
+  background: #f4f4f5;
+  color: #52525b;
+}
+.services-list-feature-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #27272a;
+}
+
+/* ═══ Scrollable section – sol metin kayar, sağ sticky kutu ═══ */
+.scroll-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  gap: 50px;
+}
+.text-content {
+  flex: 1;
+}
+.text-block {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.visual-content {
+  flex: 1;
+  position: relative;
+}
+.sticky-box {
+  position: sticky;
+  top: 20vh;
+  height: 60vh;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+@media (max-width: 768px) {
+  .scroll-container {
+    flex-direction: column;
+    padding: 60px 16px;
+    gap: 40px;
+  }
+  .sticky-box {
+    position: relative;
+    top: 0;
+    height: 50vh;
+    min-height: 280px;
+  }
+}
+
+/* ═══ Marquee – kayan kartlar, alttan ışık ═══ */
+.marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #0d1117;
+  padding: 50px 0;
+}
+.marquee-bottom-light {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 60px;
+  background: radial-gradient(
+    ellipse,
+    rgba(0, 215, 175, 0.4) 0%,
+    transparent 70%
+  );
+  filter: blur(20px);
+  z-index: 1;
+}
+.marquee-track {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+  animation: marquee-scroll 15s linear infinite;
+  z-index: 2;
+  position: relative;
+}
+.marquee-card {
+  width: 150px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-weight: bold;
+  flex-shrink: 0;
+  backdrop-filter: blur(5px);
+}
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 15px));
+  }
+}
+
+/* ═══ Müşteri Yorumları Marquee – iki satır zıt yön, site renklerine uyumlu ═══ */
+.reviews-marquee-section {
+  position: relative;
+  padding: 80px 24px;
+  overflow-x: clip;
+  overflow-y: visible;
+  background: transparent;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  isolation: isolate;
+  contain: layout style;
+}
+@media (min-width: 768px) {
+  .reviews-marquee-section {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .reviews-marquee-section {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+.reviews-marquee-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.reviews-marquee-blob-1 {
+  top: -200px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(244, 114, 182, 0.08) 0%,
+    rgba(0, 0, 0, 0.02) 50%,
+    transparent 70%
+  );
+  animation: reviews-blob-1 12s ease-in-out infinite;
+}
+.reviews-marquee-blob-2 {
+  bottom: -150px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(6, 182, 212, 0.06) 0%,
+    transparent 70%
+  );
+  animation: reviews-blob-2 15s ease-in-out infinite;
+}
+@keyframes reviews-blob-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 30px) scale(1.05); }
+}
+@keyframes reviews-blob-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30px, -40px) scale(1.08); }
+}
+
+.reviews-header {
+  text-align: center;
+  padding: 0 24px 60px;
+  position: relative;
+  z-index: 1;
+}
+.reviews-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #52525b;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+.reviews-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  background: #a1a1aa;
+  border-radius: 50%;
+}
+.reviews-title {
+  font-family: var(--font-syne), var(--font-outfit), system-ui, sans-serif;
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 700;
+  color: #27272a;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+.reviews-title-accent {
+  color: #27272a;
+  font-weight: 700;
+}
+.reviews-sub {
+  font-size: 16px;
+  color: #a1a1aa;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.reviews-stars-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 10px 20px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 100px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+.reviews-stars-row { display: flex; gap: 3px; }
+.reviews-star { color: #f59e0b; font-size: 14px; }
+.reviews-stars-text { font-size: 13px; font-weight: 600; color: #27272a; }
+.reviews-stars-sub { font-size: 12px; color: #a1a1aa; }
+
+.reviews-marquee-wrapper {
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+  padding: 12px 0;
+  contain: layout paint;
+}
+.reviews-marquee-wrapper::before,
+.reviews-marquee-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  z-index: 2;
+  pointer-events: none;
+}
+.reviews-marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--background) 0%, transparent 100%);
+}
+.reviews-marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--background) 0%, transparent 100%);
+}
+
+.reviews-marquee-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  width: max-content;
+}
+.reviews-marquee-row-1 {
+  animation: reviews-scroll-left 40s linear infinite;
+}
+.reviews-marquee-row-2 {
+  animation: reviews-scroll-right 35s linear infinite;
+}
+@keyframes reviews-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes reviews-scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.reviews-card {
+  width: 320px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 18px;
+  padding: 24px 26px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.reviews-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  border-color: #d4d4d4;
+}
+.reviews-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 18px 18px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.reviews-card:hover::before {
+  opacity: 1;
+}
+.reviews-card-v1::before { background: #27272a; }
+.reviews-card-v2::before { background: #52525b; }
+.reviews-card-v3::before { background: #737373; }
+
+.reviews-quote-icon {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 12px;
+  color: #a1a1aa;
+  font-family: Georgia, serif;
+}
+.reviews-card-stars { display: flex; gap: 3px; margin-bottom: 12px; }
+.reviews-card-star { color: #f59e0b; font-size: 13px; }
+.reviews-card-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #52525b;
+  margin-bottom: 20px;
+}
+.reviews-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+.reviews-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -0.5px;
+  background: #27272a;
+}
+.reviews-reviewer-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #27272a;
+  margin-bottom: 2px;
+}
+.reviews-reviewer-role {
+  font-size: 12px;
+  color: #a1a1aa;
+  font-weight: 400;
+}
+.reviews-verified-badge {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #52525b;
+  font-weight: 500;
 }
 
 /* ═══ Hero Beam (gündüz / gece) ═══ */
