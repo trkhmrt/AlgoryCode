@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import type { Theme } from "@/contexts/ThemeContext";
 
-const CELL = 48;
+const CELL = 24;
 const GRID_ALPHA_LIGHT = 0.06;
 const GRID_ALPHA_DARK = 0.06;
 const TAIL = 110;

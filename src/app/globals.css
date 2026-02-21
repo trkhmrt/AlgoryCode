@@ -781,6 +781,18 @@ html[data-theme="dark"] .why-us-answer {
   border-radius: 100px;
 }
 
+/* Hero: Bize Ulaşın butonu mobilde daha küçük */
+.hero-beam-section .hero-beam-btn-mobile-sm {
+  padding: 8px 14px;
+  font-size: 12px;
+}
+@media (min-width: 640px) {
+  .hero-beam-section .hero-beam-btn-mobile-sm {
+    padding: 12px 20px;
+    font-size: 0.9375rem;
+  }
+}
+
 /* Navbar’daki Bize Ulaşın butonu – aynı stil, daha kompakt */
 .faq-contact-btn-nav {
   padding: 8px 16px;
