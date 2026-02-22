@@ -5,17 +5,17 @@ export default function Services() {
   return (
     <section
       id="hizmetler"
-      className="services-section-salas relative py-16 sm:py-20 md:py-24"
+      className="services-section-salas relative pt-16 pb-0 sm:pt-20 sm:pb-0 md:pt-24 md:pb-0"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+      <div className="px-4 sm:px-6 md:px-8">
         <h2 className="mb-3 text-center text-3xl font-bold tracking-tight text-[#0f0f0f] sm:text-4xl">
           Ürünler
         </h2>
         <p className="mx-auto mb-14 max-w-2xl text-center text-neutral-600">
           AI agent ve e-ticaret alanında sunduğumuz çözümler
         </p>
-
-        <div className="services-products-grid">
+      </div>
+      <div className="services-products-grid services-products-grid-full">
           <div className="services-products-row services-products-row-first">
             {services.slice(0, 2).map((item) => (
               <Link
@@ -69,7 +69,6 @@ export default function Services() {
             ))}
           </div>
         </div>
-      </div>
     </section>
   );
 }

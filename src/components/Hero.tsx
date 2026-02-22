@@ -16,13 +16,18 @@ export default function Hero() {
       <div className="absolute inset-0 z-[1]">
         <HeroBeamCanvas theme={theme} />
       </div>
+      {/* Alttan yayılan mavi ışık */}
       <div
-        className="hero-beam-vignette absolute inset-0 z-[2] pointer-events-none"
+        className="hero-beam-glow absolute inset-0 z-[2] pointer-events-none"
+        aria-hidden
+      />
+      <div
+        className="hero-beam-vignette absolute inset-0 z-[3] pointer-events-none"
         aria-hidden
       />
 
-      {/* Ortada sütun: içerik */}
-      <div className="hero-beam-inner relative z-[3] mx-auto flex min-h-full w-full max-w-5xl flex-1 flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:min-h-0 md:flex-initial md:px-8 md:py-20 lg:px-10">
+      {/* Ortada sütun: içerik – page-content zaten max-w-7xl */}
+      <div className="hero-beam-inner relative z-[4] mx-auto flex min-h-full w-full flex-1 flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:min-h-0 md:flex-initial md:px-8 md:py-20">
         {/* İçerik – başlık, açıklama, butonlar */}
         <div className="hero-beam-content relative flex flex-col items-center justify-center text-center min-w-0 w-full">
           <h1 className="hero-beam-title hero-beam-title-colorchange mb-4 w-full min-w-0 break-words text-[2rem] font-extrabold leading-tight tracking-tight sm:mb-5 sm:text-5xl sm:leading-none md:text-6xl lg:text-7xl xl:text-8xl">

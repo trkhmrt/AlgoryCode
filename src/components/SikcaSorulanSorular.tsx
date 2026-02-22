@@ -3,123 +3,83 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const items = [
+const faqs = [
   {
-    question: "AlgroyCode nedir ve kimler için uygundur?",
-    answer:
-      "AlgroyCode, web sitesi, mobil uygulama ve sesli asistan geliştirme hizmetleri sunan bir yazılım ekibidir. Kurumsal firmalar, KOBİ'ler ve girişimciler projelerini hızlı ve ölçeklenebilir şekilde hayata geçirmek için bizi tercih edebilir.",
+    q: "Proje süreci nasıl işliyor?",
+    a: "Keşif görüşmesiyle başlıyoruz. İhtiyaçlarınızı anladıktan sonra yol haritası ve teklifimizi sunuyoruz. Onay sonrası tasarım, geliştirme ve test süreçleri şeffaf biçimde ilerliyor. Teslimata kadar her aşamada sizi bilgilendiriyorum.",
   },
   {
-    question: "Teknik bilgim olmadan AlgroyCode ile çalışabilir miyim?",
-    answer:
-      "Evet. İhtiyaç analizinden teslimata kadar süreçte size rehberlik ediyoruz. Teknik detayları biz yönetiyoruz; siz sadece iş hedeflerinizi ve beklentilerinizi paylaşmanız yeterli.",
+    q: "Bir proje ne kadar sürer?",
+    a: "Proje kapsamına göre değişir. Temel bir kurumsal web sitesi genellikle 2–3 haftada teslim edilirken, e-ticaret veya özel uygulama projeleri 4–8 hafta sürebilir. Görüşmemizde size özel takvim paylaşıyorum.",
   },
   {
-    question: "Slack, Figma gibi araçlarla entegrasyon yapılıyor mu?",
-    answer:
-      "Evet. ChatBot, sesli asistan ve mobil uygulama projelerinde Slack, e-posta, CRM ve tasarım araçlarıyla entegrasyon sunuyoruz. Mevcut iş akışlarınızı bozmadan yeni çözümleri devreye alabilirsiniz.",
+    q: "Lansman sonrası destek veriyor musunuz?",
+    a: "Evet, projenin yayına alınmasıyla iş bitmez. Bakım, güncelleme, hız optimizasyonu ve yeni özellikler için aylık destek paketleri sunuyorum. Acil durumlarda WhatsApp üzerinden hızlıca ulaşabilirsiniz.",
   },
   {
-    question: "AlgroyCode'da görev otomasyonu nasıl çalışır?",
-    answer:
-      "AI destekli asistanlar ve botlar ile tekrarlayan görevleri otomatikleştiriyoruz. Müşteri yanıtları, randevu yönetimi, raporlama ve bildirimler gibi süreçler tanımladığınız kurallara göre çalışır.",
+    q: "Mevcut sitemin tasarımını yenileyebilir misiniz?",
+    a: "Kesinlikle. Mevcut sitenizi analiz edip hem görsel hem teknik açıdan modernize ediyorum. İçeriğinizi ve SEO değerinizi koruyarak çok daha iyi bir deneyim sunmak mümkün.",
   },
   {
-    question: "Güvenlik ve uyumluluk nasıl sağlanıyor?",
-    answer:
-      "Güvenlik önceliğimizdir. AlgroyCode, uçtan uca şifreleme, KVKK uyumu ve düzenli güvenlik denetimleriyle kurumsal düzeyde güvenlik sunar. Verileriniz endüstri standardı güvenlik protokolleriyle korunur.",
+    q: "Fiyatlandırma nasıl yapılıyor?",
+    a: "Her proje kendine özgü olduğu için sabit fiyat listesi yerine kapsama özel teklif hazırlıyorum. Keşif görüşmemizde ihtiyaçlarınızı dinleyip net bir rakam paylaşıyorum. Gizli maliyet yok.",
+  },
+  {
+    q: "Tasarımı beğenmezsem ne olur?",
+    a: "Tasarım sürecinde sizden düzenli geri bildirim alıyorum. İlk taslaktan itibaren revizyon hakkı dahil çalışıyoruz. Sonuçtan memnun olmanız en öncelikli hedefim.",
   },
 ];
 
-function SpeechBubbleIcon() {
-  return (
-    <svg
-      width="40"
-      height="40"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="faq-contact-icon"
-      aria-hidden
-    >
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    </svg>
-  );
-}
-
 export default function SikcaSorulanSorular() {
-  const [openIndex, setOpenIndex] = useState<number | null>(4);
+  const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
     <section
       id="sikca-sorulan-sorular"
-      className="faq-section relative py-16 sm:py-20 md:py-24"
+      className="sss-section pt-0 pb-16 sm:pb-20 md:pb-24"
     >
-      <div className="faq-inner mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="faq-grid">
-          {/* Sol: Sıkça sorulan sorular */}
-          <div className="faq-left">
-            <h2 className="faq-title mb-8 text-2xl font-bold tracking-tight text-[#0f0f0f] sm:text-3xl">
-              Sıkça sorulan sorular:
-            </h2>
+      <div className="sss-inner w-full">
+        <div className="sss-wrapper">
+          {/* FAQ row: sol başlık, sağ accordion */}
+          <div className="sss-faq-row">
+            <div className="sss-faq-left">
+              <h2 className="sss-faq-title">Sıkça Sorulan Sorular</h2>
+              <p className="sss-faq-sub">
+                Aklınızdaki soruların cevapları burada. Başka bir sorunuz varsa
+                benimle iletişime geçin.
+              </p>
+            </div>
 
-            <div className="faq-list space-y-2">
-              {items.map((item, index) => {
-                const isOpen = openIndex === index;
+            <div className="sss-faq-right">
+              {faqs.map((faq, i) => {
+                const isOpen = openIndex === i;
                 return (
                   <div
-                    key={index}
-                    className={`faq-item overflow-hidden rounded-lg border bg-white transition-shadow ${isOpen ? "faq-item-open" : ""}`}
+                    key={i}
+                    className={`sss-faq-item ${isOpen ? "open" : ""}`}
                   >
                     <button
                       type="button"
-                      onClick={() => setOpenIndex(isOpen ? null : index)}
-                      className="faq-question-btn flex w-full items-center justify-between gap-4 py-4 px-5 text-left sm:px-6"
+                      className="sss-faq-btn"
+                      onClick={() => setOpenIndex(isOpen ? -1 : i)}
                       aria-expanded={isOpen}
                     >
-                      <span className="faq-question text-[15px] font-normal leading-snug text-[#1a1a1a] sm:text-base">
-                        {item.question}
-                      </span>
-                      <span
-                        className={`faq-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#1a1a1a] transition-transform duration-200 ${isOpen ? "faq-icon-open" : ""}`}
-                        aria-hidden
-                      >
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          {isOpen ? (
-                            <path d="M5 12h14" />
-                          ) : (
-                            <>
-                              <path d="M12 5v14" />
-                              <path d="M5 12h14" />
-                            </>
-                          )}
+                      <span>{faq.q}</span>
+                      <span className="sss-chevron" aria-hidden>
+                        <svg viewBox="0 0 14 14" fill="none">
+                          <path
+                            d="M2 5L7 10L12 5"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </span>
                     </button>
-                    <div
-                      className="faq-answer-wrapper grid transition-[grid-template-rows] duration-200 ease-out"
-                      style={{
-                        gridTemplateRows: isOpen ? "1fr" : "0fr",
-                      }}
-                    >
-                      <div className="min-h-0 overflow-hidden">
-                        <div className="faq-answer border-t border-[#e5e5e5] pb-4 pt-0 px-5 sm:pb-5 sm:px-6">
-                          <p className="text-sm leading-relaxed text-[#525252] sm:text-[15px]">
-                            {item.answer}
-                          </p>
-                        </div>
+                    <div className="sss-faq-body">
+                      <div className="sss-faq-body-inner">
+                        <div className="sss-faq-answer">{faq.a}</div>
                       </div>
                     </div>
                   </div>
@@ -128,30 +88,17 @@ export default function SikcaSorulanSorular() {
             </div>
           </div>
 
-          {/* Sağ: Hâlâ sorularınız mı var? */}
-          <div className="faq-contact-card">
-            <SpeechBubbleIcon />
-            <h3 className="faq-contact-title">Hâlâ sorularınız mı var?</h3>
-            <p className="faq-contact-desc">
-              Konuşalım. Ekibimiz AlgroyCode ile en iyi sonucu almanız için
-              burada. İster onboarding, entegrasyon ister destek olsun, size
-              yardımcı olmaya hazırız.
+          {/* CTA row */}
+          <div className="sss-cta-row">
+            <h2 className="sss-cta-title">
+              Projenizi hayata geçirmeye hazır mısınız?
+            </h2>
+            <p className="sss-cta-sub">
+              Fikrinizi dinlemekten mutluluk duyarım. Ücretsiz bir keşif
+              görüşmesi için hemen ulaşın.
             </p>
-            <Link href="/iletisim" className="faq-contact-btn">
-              Bize Ulaşın
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
+            <Link href="/iletisim" className="sss-cta-btn">
+              Ücretsiz Görüşme Ayarla
             </Link>
           </div>
         </div>
