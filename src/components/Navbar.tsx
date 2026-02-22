@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const navLinks = [
   { label: "Hizmetler", href: "#hizmetler" },
   { label: "Hakkımızda", href: "#hakkimizda" },
-  { label: "Eğitim", href: "#egitim" },
+  { label: "Eğitim", href: "/egitim" },
 ];
 
 const SCROLL_THRESHOLD = 40;

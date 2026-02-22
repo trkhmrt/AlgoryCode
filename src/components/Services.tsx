@@ -20,7 +20,7 @@ export default function Services() {
             {services.slice(0, 2).map((item) => (
               <Link
                 key={item.slug}
-                href={`/hizmetler/${item.slug}`}
+                href={`/${item.slug}`}
                 className="circuit-card circuit-card-tall block"
               >
                 <div
@@ -46,7 +46,7 @@ export default function Services() {
             {services.slice(2, 5).map((item) => (
               <Link
                 key={item.slug}
-                href={`/hizmetler/${item.slug}`}
+                href={`/${item.slug}`}
                 className="circuit-card circuit-card-short block"
               >
                 <div

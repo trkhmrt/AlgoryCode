@@ -72,6 +72,354 @@ html[data-theme="dark"] .page-content .content-divider {
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* ═══ Eğitim detay sayfası – aynı çizgi şablonu, eğitim kartları ═══ */
+.egitim-header {
+  background: #fff;
+}
+.egitim-back-link {
+  display: inline-block;
+}
+.egitim-title {
+  color: #0f0f0f;
+}
+.egitim-sub {
+  line-height: 1.6;
+}
+.egitim-cards-section {
+  background: #fff;
+}
+.egitim-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--nav-border);
+}
+@media (min-width: 640px) {
+  .egitim-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .egitim-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.egitim-card {
+  padding: 28px 24px;
+  border-right: 1px solid var(--nav-border);
+  border-bottom: 1px solid var(--nav-border);
+  background: #fff;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.egitim-card:hover {
+  background: #fafafa;
+  box-shadow: inset 0 0 0 1px var(--nav-border);
+}
+@media (min-width: 640px) {
+  .egitim-card:nth-child(2n) {
+    border-right: none;
+  }
+}
+@media (min-width: 1024px) {
+  .egitim-card:nth-child(2n) {
+    border-right: 1px solid var(--nav-border);
+  }
+  .egitim-card:nth-child(3n) {
+    border-right: none;
+  }
+}
+/* Son satırda alt çizgi yok: 1 col son kart, 2 col son 2, 3 col son 3 */
+.egitim-card:last-child {
+  border-bottom: none;
+}
+@media (min-width: 640px) {
+  .egitim-card:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+@media (min-width: 1024px) {
+  .egitim-card:nth-last-child(-n+3) {
+    border-bottom: none;
+  }
+}
+.egitim-card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 24px;
+  margin-bottom: 16px;
+  background: #f5f5f8;
+  border: 1px solid #e8e8ec;
+}
+.egitim-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #71717a;
+  margin-bottom: 10px;
+}
+.egitim-card-sep {
+  color: #a1a1aa;
+}
+.egitim-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f0f0f;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.egitim-card-arrow {
+  font-size: 14px;
+  color: #a1a1aa;
+  transition: color 0.2s;
+}
+.egitim-card:hover .egitim-card-arrow {
+  color: #52525b;
+}
+.egitim-card-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #52525b;
+  margin: 0;
+}
+html[data-theme="dark"] .egitim-cards-grid {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .egitim-card {
+  border-right-color: rgba(255, 255, 255, 0.06);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .egitim-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .egitim-detail-header .egitim-detail-icon-wrap {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+html[data-theme="dark"] .egitim-detail-title {
+  color: #fafafa;
+}
+html[data-theme="dark"] .egitim-detail-desc {
+  color: #a1a1aa;
+}
+html[data-theme="dark"] .egitim-back-link:hover {
+  color: #e4e4e7;
+}
+
+/* ═══ Eğitim detay: sol sidebar (sabit) + sağ içerik (scroll) ═══ */
+.egitim-detail-top {
+  flex-shrink: 0;
+}
+.egitim-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  flex: 1;
+  min-height: 0;
+}
+@media (min-width: 1024px) {
+  .egitim-detail-layout {
+    grid-template-columns: 380px 1fr;
+  }
+}
+.egitim-detail-sidebar {
+  padding: 0 1rem 2rem;
+  background: #fff;
+}
+@media (min-width: 640px) {
+  .egitim-detail-sidebar {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .egitim-detail-sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 0 1.5rem 2rem 2rem;
+    border-right: 1px solid var(--nav-border);
+  }
+}
+.egitim-detail-sidebar-inner {
+  max-width: 360px;
+}
+.egitim-detail-visual {
+  width: 100%;
+  aspect-ratio: 16/10;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f5f5f8;
+  border: 1px solid #e8e8ec;
+  margin-bottom: 1.25rem;
+}
+.egitim-detail-visual-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f5f8 0%, #ebebef 100%);
+}
+.egitim-detail-visual-icon {
+  font-size: 4rem;
+  line-height: 1;
+  opacity: 0.9;
+}
+.egitim-detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.egitim-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #71717a;
+  margin-bottom: 0.75rem;
+}
+.egitim-detail-meta-sep {
+  color: #a1a1aa;
+}
+.egitim-detail-sidebar .egitim-detail-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f0f0f;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+@media (min-width: 1024px) {
+  .egitim-detail-sidebar .egitim-detail-title {
+    font-size: 1.75rem;
+  }
+}
+.egitim-detail-sidebar .egitim-detail-desc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #52525b;
+  margin-bottom: 1.5rem;
+}
+.egitim-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.egitim-detail-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: #0f0f0f;
+  color: #fff;
+  transition: opacity 0.2s;
+}
+.egitim-detail-cta-primary:hover {
+  opacity: 0.9;
+}
+.egitim-detail-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  color: #404040;
+  transition: background 0.2s, color 0.2s;
+}
+.egitim-detail-cta-secondary:hover {
+  background: #fafafa;
+  color: #0f0f0f;
+}
+/* Sağ: scroll yapılabilir içerik */
+.egitim-detail-content {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 1rem 3rem;
+  background: #fff;
+}
+@media (min-width: 640px) {
+  .egitim-detail-content {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .egitim-detail-content {
+    padding: 0 2rem 3rem 2rem;
+  }
+}
+.egitim-detail-content-inner {
+  max-width: 42rem;
+}
+.egitim-detail-section {
+  margin-bottom: 2rem;
+}
+.egitim-detail-section:last-child {
+  margin-bottom: 0;
+}
+.egitim-detail-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f0f0f;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+.egitim-detail-section-body {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #52525b;
+  margin: 0;
+}
+/* Dark: eğitim detay sidebar + content */
+html[data-theme="dark"] .egitim-detail-sidebar {
+  background: var(--background);
+  border-right-color: rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .egitim-detail-visual,
+html[data-theme="dark"] .egitim-detail-visual-placeholder {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+html[data-theme="dark"] .egitim-detail-sidebar .egitim-detail-title {
+  color: #fafafa;
+}
+html[data-theme="dark"] .egitim-detail-sidebar .egitim-detail-desc {
+  color: #a1a1aa;
+}
+html[data-theme="dark"] .egitim-detail-cta-secondary {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: #e4e4e7;
+}
+html[data-theme="dark"] .egitim-detail-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fafafa;
+}
+html[data-theme="dark"] .egitim-detail-content {
+  background: var(--background);
+}
+html[data-theme="dark"] .egitim-detail-section-title {
+  color: #fafafa;
+}
+html[data-theme="dark"] .egitim-detail-section-body {
+  color: #a1a1aa;
+}
+
 /* Hero konsept 1: hareketli gradient mesh – blur'lu blob'lar, yumuşak salınım */
 @keyframes blob-oscillate-1 {
   0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
