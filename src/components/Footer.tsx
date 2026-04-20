@@ -150,19 +150,19 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <div className="footer-legal">
-            <Link href="#gizlilik" className="footer-legal-link">
+            <Link href="/privacy" className="footer-legal-link">
               Gizlilik Politikası
             </Link>
             <span className="footer-legal-sep" aria-hidden>
               ·
             </span>
-            <Link href="#kullanim-kosullari" className="footer-legal-link">
+            <Link href="/terms" className="footer-legal-link">
               Kullanım Koşulları
             </Link>
             <span className="footer-legal-sep" aria-hidden>
               ·
             </span>
-            <Link href="#lisans" className="footer-legal-link">
+            <Link href="/license" className="footer-legal-link">
               Lisans Politikası
             </Link>
           </div>

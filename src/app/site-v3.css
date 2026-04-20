@@ -2430,3 +2430,118 @@ html[data-theme="dark"] body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* ——— Yasal metinler (Gizlilik / Koşullar) ——— */
+.site-legal-page {
+  width: 100%;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 6vw, 4.5rem);
+  background: var(--background);
+}
+
+.site-legal-inner {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.site-legal-prose {
+  color: var(--foreground);
+}
+
+.site-legal-header {
+  margin-bottom: 2.25rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.site-legal-header h1 {
+  margin: 0 0 0.65rem;
+  font-size: clamp(1.65rem, 3vw, 2.125rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+  color: var(--foreground);
+}
+
+.site-legal-meta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--site-text-muted);
+}
+
+.site-legal-prose h2 {
+  margin: 2.35rem 0 0.65rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  scroll-margin-top: calc(var(--nav-scroll-h) + 0.75rem);
+}
+
+.site-legal-prose h2:first-of-type {
+  margin-top: 0;
+}
+
+.site-legal-prose h3 {
+  margin: 1.45rem 0 0.45rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.site-legal-prose p {
+  margin: 0 0 0.95rem;
+  font-size: 0.9375rem;
+  line-height: 1.68;
+  color: var(--site-text-muted);
+}
+
+.site-legal-prose ul,
+.site-legal-prose ol {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+  font-size: 0.9375rem;
+  line-height: 1.68;
+  color: var(--site-text-muted);
+}
+
+.site-legal-prose li {
+  margin-bottom: 0.4rem;
+}
+
+.site-legal-prose li::marker {
+  color: var(--site-text-faint);
+}
+
+.site-legal-prose a {
+  color: var(--site-zemin);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  transition: color 0.2s ease;
+}
+
+.site-legal-prose a:hover {
+  color: var(--accent-hover);
+}
+
+html[data-theme="dark"] .site-legal-prose a:hover {
+  color: #93c5fd;
+}
+
+.site-legal-prose strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.site-legal-prose .site-legal-note {
+  margin: 1.25rem 0;
+  padding: 1rem 1.1rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--site-text-muted);
+  border-left: 3px solid var(--site-zemin);
+  background: color-mix(in srgb, var(--site-zemin) 8%, var(--background));
+}
+
+html[data-theme="dark"] .site-legal-prose .site-legal-note {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--background));
+}
