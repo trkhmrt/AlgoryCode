@@ -32,18 +32,10 @@ const cells = [
 export default function WorkStyle() {
   return (
     <section id="work-style" className="work-style-section relative">
-      <div className="work-style-blob-before" aria-hidden />
-      <div className="work-style-blob-after" aria-hidden />
-
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
         <header className="work-style-header">
-          <div className="work-style-eyebrow">
-            <span className="work-style-eyebrow-dot" />
-            Süreçlerimiz
-          </div>
-          <h2 className="work-style-title">
-            Nasıl <span className="work-style-title-gradient">Çalışıyoruz?</span>
-          </h2>
+          <p className="work-style-kicker">Süreçlerimiz</p>
+          <h2 className="work-style-title">Nasıl çalışıyoruz?</h2>
           <p className="work-style-sub">
             Fikrinizden lansmana kadar şeffaf, hızlı ve sonuç odaklı bir süreç.
           </p>
@@ -52,12 +44,9 @@ export default function WorkStyle() {
         <div className="work-style-bento">
           {/* Cell 1: Keşif & Planlama */}
           <div className="work-style-cell">
-            <div
-              className={`work-style-step-badge work-style-step-1`}
-              aria-hidden
-            >
+            <span className="work-style-step-index" aria-hidden>
               01
-            </div>
+            </span>
             <div className="work-style-mock">
               <div className="work-style-flow">
                 <div className="work-style-flow-step">
@@ -95,12 +84,9 @@ export default function WorkStyle() {
 
           {/* Cell 2: UI/UX Tasarım */}
           <div className="work-style-cell">
-            <div
-              className={`work-style-step-badge work-style-step-2`}
-              aria-hidden
-            >
+            <span className="work-style-step-index" aria-hidden>
               02
-            </div>
+            </span>
             <div className="work-style-mock">
               <div className="work-style-design-preview">
                 <div className="work-style-palette-row">
@@ -190,12 +176,9 @@ export default function WorkStyle() {
 
           {/* Cell 3: Geliştirme */}
           <div className="work-style-cell">
-            <div
-              className={`work-style-step-badge work-style-step-3`}
-              aria-hidden
-            >
+            <span className="work-style-step-index" aria-hidden>
               03
-            </div>
+            </span>
             <div className="work-style-mock work-style-code-editor">
               <div className="work-style-editor-chrome">
                 <span className="work-style-e-dot bg-[#ff5f57]" />
@@ -264,12 +247,9 @@ export default function WorkStyle() {
 
           {/* Cell 4: Lansman & Büyüme */}
           <div className="work-style-cell">
-            <div
-              className={`work-style-step-badge work-style-step-4`}
-              aria-hidden
-            >
+            <span className="work-style-step-index" aria-hidden>
               04
-            </div>
+            </span>
             <div className="work-style-mock">
               <div className="work-style-metrics-grid">
                 <div className="work-style-metric-card">
@@ -347,13 +327,10 @@ export default function WorkStyle() {
           </div>
         </div>
 
-        <p className="mt-12 text-center">
-          <Link
-            href="/iletisim"
-            className="inline-flex items-center gap-2 rounded-full bg-[#0f0f0f] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
-          >
+        <p className="work-style-bottom-wrap">
+          <Link href="/iletisim" className="work-style-bottom-cta">
             Projenizi konuşalım
-            <span className="text-neutral-400">→</span>
+            <span aria-hidden>→</span>
           </Link>
         </p>
       </div>

@@ -16,6 +16,14 @@ export const services = [
     color: "teal",
   },
   {
+    slug: "web-app",
+    title: "Web App",
+    description:
+      "Kurumsal portallar, SaaS ve yüksek trafikli web uygulamaları; modern stack ile performans, güvenlik ve ölçeklenebilir mimari.",
+    icon: "🌐",
+    color: "blue",
+  },
+  {
     slug: "chatbot",
     title: "ChatBot",
     description:

@@ -23,7 +23,7 @@ const socialLinks = [
   { label: "GitHub", href: "https://github.com", icon: "github" },
   { label: "X (Twitter)", href: "https://x.com", icon: "x" },
   { label: "Web", href: "/", icon: "globe" },
-  { label: "E-posta", href: "mailto:info@algroycode.com", icon: "email" },
+  { label: "E-posta", href: "mailto:info@algorycode.com", icon: "email" },
 ];
 
 function ScrollToTopButton() {
@@ -62,15 +62,13 @@ export default function Footer() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <footer className="footer">
+    <footer className="footer site-footer-v3">
       <div className="footer-gradient-edge" aria-hidden />
       <div className="footer-inner">
         <div className="footer-grid">
-          {/* Sol: Marka + açıklama + sosyal */}
           <div className="footer-brand">
             <Link href="/" className="footer-logo">
               <span className="footer-logo-mark" aria-hidden>
-                {/* Bar chart / signal strength: 4 dikey çubuk */}
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
                   <rect x="2" y="16" width="3" height="4" rx="1" />
                   <rect x="7" y="12" width="3" height="8" rx="1" />
@@ -121,42 +119,52 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Orta: Ürün */}
-          <div className="footer-col">
-            <h3 className="footer-col-title">ÜRÜN</h3>
-            <ul className="footer-links">
-              {productLinks.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="footer-link">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <nav className="footer-nav-cols" aria-label="Alt bilgi bağlantıları">
+            <div className="footer-col">
+              <h3 className="footer-col-title">Ürün</h3>
+              <ul className="footer-links">
+                {productLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="footer-link">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Sağ: Kaynaklar */}
-          <div className="footer-col">
-            <h3 className="footer-col-title">KAYNAKLAR</h3>
-            <ul className="footer-links">
-              {resourceLinks.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="footer-link">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div className="footer-col">
+              <h3 className="footer-col-title">Kaynaklar</h3>
+              <ul className="footer-links">
+                {resourceLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="footer-link">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
         </div>
 
         <div className="footer-bottom">
           <div className="footer-legal">
-            <Link href="#gizlilik" className="footer-legal-link">Gizlilik Politikası</Link>
-            <span className="footer-legal-sep" aria-hidden>·</span>
-            <Link href="#kullanim-kosullari" className="footer-legal-link">Kullanım Koşulları</Link>
-            <span className="footer-legal-sep" aria-hidden>·</span>
-            <Link href="#lisans" className="footer-legal-link">Lisans Politikası</Link>
+            <Link href="#gizlilik" className="footer-legal-link">
+              Gizlilik Politikası
+            </Link>
+            <span className="footer-legal-sep" aria-hidden>
+              ·
+            </span>
+            <Link href="#kullanim-kosullari" className="footer-legal-link">
+              Kullanım Koşulları
+            </Link>
+            <span className="footer-legal-sep" aria-hidden>
+              ·
+            </span>
+            <Link href="#lisans" className="footer-legal-link">
+              Lisans Politikası
+            </Link>
           </div>
           <div className="footer-bottom-right">
             <button
@@ -166,11 +174,18 @@ export default function Footer() {
               aria-label={theme === "light" ? "Gece moduna geç" : "Gündüz moduna geç"}
               title={theme === "light" ? "Gece modu" : "Gündüz modu"}
             >
-              {theme === "light" ? "🌙" : "☀️"}
+              {theme === "light" ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+              )}
             </button>
-            <p className="footer-copy">
-              © {new Date().getFullYear()} AlgroyCode. Tüm hakları saklıdır.
-            </p>
+            <p className="footer-copy">© {new Date().getFullYear()} AlgroyCode. Tüm hakları saklıdır.</p>
           </div>
         </div>
       </div>

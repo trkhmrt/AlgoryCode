@@ -23,7 +23,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <main className="flex-1 py-16 sm:py-20 md:py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 md:px-8">
           <Link
-            href="/#hizmetler"
+            href="/#services"
             className="mb-8 inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-800"
           >
             ← Hizmetlere dön
@@ -58,7 +58,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 Bu hizmet için iletişime geçin →
               </Link>
               <Link
-                href="/#hizmetler"
+                href="/#services"
                 className="inline-flex items-center gap-2 rounded-full border border-[#e0e0e0] bg-white px-6 py-3 text-sm font-medium text-[#333] transition hover:bg-[#f8f8f8]"
               >
                 Diğer hizmetler

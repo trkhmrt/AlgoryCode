@@ -1,74 +1,42 @@
 import Link from "next/link";
 import { services } from "@/lib/services";
 
+type ServiceItem = (typeof services)[number];
+
+function ServiceCard({ item }: { item: ServiceItem }) {
+  return (
+    <Link
+      href={`/${item.slug}`}
+      className="site-service-card group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--site-mist)]"
+    >
+      <h3 className="site-service-name">{item.title}</h3>
+      <p className="site-service-desc">{item.description}</p>
+      <span className="site-service-card-circle" aria-hidden>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </span>
+    </Link>
+  );
+}
+
 export default function Services() {
   return (
-    <section
-      id="hizmetler"
-      className="services-section-salas relative pt-16 pb-0 sm:pt-20 sm:pb-0 md:pt-24 md:pb-0"
-    >
-      <div className="px-4 sm:px-6 md:px-8">
-        <h2 className="mb-3 text-center text-3xl font-bold tracking-tight text-[#0f0f0f] sm:text-4xl">
-          Ürünler
+    <section id="services" className="site-services" aria-labelledby="site-services-title">
+      <div className="site-services-head">
+        <h2 id="site-services-title" className="site-services-title">
+          Hizmetlerimiz
         </h2>
-        <p className="mx-auto mb-14 max-w-2xl text-center text-neutral-600">
-          AI agent ve e-ticaret alanında sunduğumuz çözümler
+        <p className="site-services-lead">
+          AI agent, e-ticaret ve özel yazılım ihtiyaçlarınız için uçtan uca ürün geliştirme.
         </p>
       </div>
-      <div className="services-products-grid services-products-grid-full">
-          <div className="services-products-row services-products-row-first">
-            {services.slice(0, 2).map((item) => (
-              <Link
-                key={item.slug}
-                href={`/${item.slug}`}
-                className="circuit-card circuit-card-tall block"
-              >
-                <div
-                  className={`circuit-card-icon ${
-                    item.color === "red-blue" ? "circuit-card-icon-red-blue" : ""
-                  }`}
-                >
-                  {item.icon}
-                </div>
-                <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-[#0f0f0f]">
-                  {item.title}
-                  <span className="text-[13px] text-neutral-400 transition-colors hover:text-neutral-600">
-                    ↗
-                  </span>
-                </h3>
-                <p className="text-[13.5px] leading-relaxed text-[#777]">
-                  {item.description}
-                </p>
-              </Link>
-            ))}
-          </div>
-          <div className="services-products-row services-products-row-second">
-            {services.slice(2, 5).map((item) => (
-              <Link
-                key={item.slug}
-                href={`/${item.slug}`}
-                className="circuit-card circuit-card-short block"
-              >
-                <div
-                  className={`circuit-card-icon ${
-                    item.color === "red-blue" ? "circuit-card-icon-red-blue" : ""
-                  }`}
-                >
-                  {item.icon}
-                </div>
-                <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-[#0f0f0f]">
-                  {item.title}
-                  <span className="text-[13px] text-neutral-400 transition-colors hover:text-neutral-600">
-                    ↗
-                  </span>
-                </h3>
-                <p className="text-[13.5px] leading-relaxed text-[#777]">
-                  {item.description}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
+
+      <div className="site-services-grid">
+        {services.map((item) => (
+          <ServiceCard key={item.slug} item={item} />
+        ))}
+      </div>
     </section>
   );
 }

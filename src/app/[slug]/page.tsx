@@ -4,12 +4,10 @@ import { getServiceBySlug, services } from "@/lib/services";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const PRODUCT_SLUGS = ["commerce", "mobil-app", "chatbot", "voice-assistant", "egitim"] as const;
-
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return PRODUCT_SLUGS.map((slug) => ({ slug }));
+  return services.map((s) => ({ slug: s.slug }));
 }
 
 export default async function UrunPage({ params }: Props) {
@@ -26,7 +24,7 @@ export default async function UrunPage({ params }: Props) {
       <main className="flex-1 py-16 sm:py-20 md:py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 md:px-8">
           <Link
-            href="/#hizmetler"
+            href="/#services"
             className="mb-8 inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-800"
           >
             ← Ürünlere dön
@@ -78,7 +76,7 @@ export default async function UrunPage({ params }: Props) {
                     Bu ürün için iletişime geçin →
                   </Link>
                   <Link
-                    href="/#hizmetler"
+                    href="/#services"
                     className="inline-flex items-center gap-2 rounded-full border border-[#e0e0e0] bg-white px-6 py-3 text-sm font-medium text-[#333] transition hover:bg-[#f8f8f8]"
                   >
                     Diğer ürünler
