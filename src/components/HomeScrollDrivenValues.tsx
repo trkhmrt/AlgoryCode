@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /** Fade in (in0→in1), tam (in1→out0), fade out (out0→out1). */
 function crossfade(p: number, in0: number, in1: number, out0: number, out1: number): number {
@@ -20,11 +20,10 @@ function smoothstep01(t: number): number {
 export default function HomeScrollDrivenValues() {
   const trackRef = useRef<HTMLDivElement>(null);
   const tickingRef = useRef(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useLayoutEffect(() => {
-    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
+  const [reduceMotion, setReduceMotion] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");

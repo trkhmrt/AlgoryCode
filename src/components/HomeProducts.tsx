@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 const products = [
   {
     slug: "qr",
@@ -83,10 +87,30 @@ function ProductIcon({ slug }: { slug: ProductSlug }) {
 }
 
 export default function HomeProducts() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+    const items = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+    );
+    for (const item of items) observer.observe(item);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="urunler" className="site-products" aria-labelledby="site-products-title">
+    <section ref={sectionRef} id="urunler" className="site-products" aria-labelledby="site-products-title">
       <div className="site-products-inner">
-        <header className="site-products-head">
+        <header className="site-products-head" data-reveal>
           <p className="site-home-section-kicker">Ürünler</p>
           <h2 id="site-products-title" className="site-home-section-title">
             Algory ürün ailesi
@@ -97,8 +121,13 @@ export default function HomeProducts() {
         </header>
 
         <ul className="site-products-grid">
-          {products.map((p) => (
-            <li key={p.slug} className={`site-product-card site-product-card--${p.slug}`}>
+          {products.map((p, index) => (
+            <li
+              key={p.slug}
+              data-reveal
+              className={`site-product-card site-product-card--${p.slug}`}
+              style={{ transitionDelay: `${index * 80}ms` }}
+            >
               <div className="site-product-card-rays" aria-hidden />
               <div className="site-product-card-header">
                 <div className="site-product-card-icon">

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { services } from "@/lib/services";
 
 type ServiceItem = (typeof services)[number];
@@ -21,9 +24,31 @@ function ServiceCard({ item }: { item: ServiceItem }) {
 }
 
 export default function Services() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+
+    const items = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    for (const item of items) observer.observe(item);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="services" className="site-services" aria-labelledby="site-services-title">
-      <div className="site-services-head">
+    <section ref={sectionRef} id="services" className="site-services" aria-labelledby="site-services-title">
+      <div className="site-services-head" data-reveal>
         <h2 id="site-services-title" className="site-services-title">
           Hizmetlerimiz
         </h2>
@@ -33,8 +58,10 @@ export default function Services() {
       </div>
 
       <div className="site-services-grid">
-        {services.map((item) => (
-          <ServiceCard key={item.slug} item={item} />
+        {services.map((item, index) => (
+          <div key={item.slug} data-reveal style={{ transitionDelay: `${index * 70}ms` }}>
+            <ServiceCard item={item} />
+          </div>
         ))}
       </div>
     </section>

@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const navLinks = [
-  { label: "Hizmetler", href: "#services" },
-  { label: "Yorumlar", href: "#musteri-yorumlari" },
-  { label: "SSS", href: "#sikca-sorulan-sorular" },
-  { label: "Eğitim", href: "/egitim" },
+  { label: "Features", href: "/#features" },
+  { label: "Integrations", href: "/#integrations" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "Reviews", href: "/#reviews" },
+  { label: "Docs", href: "/#faq" },
 ];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -37,28 +40,36 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="site-nav" role="banner">
-        <div className="site-nav-shell">
-          <Link href="/" className="site-nav-brand" onClick={closeMenu}>
-            <span className="site-nav-mark" aria-hidden />
-            <span>AlgroyCode</span>
+      <header className="ac-nav" role="banner">
+        <div className="ac-nav-shell">
+          <Link href="/" className="ac-nav-brand" onClick={closeMenu}>
+            <span className="ac-nav-brand-mark" aria-hidden />
+            <span>AlgoryCode</span>
           </Link>
 
-          <nav className="site-nav-links" aria-label="Ana menü">
+          <nav className="ac-nav-links" aria-label="Primary menu">
             {navLinks.map((item) => (
-              <Link key={item.href} href={item.href} className="site-nav-link">
+              <Link key={item.href} href={item.href} className="ac-nav-link">
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="site-nav-actions">
+          <div className="ac-nav-actions">
             <button
               type="button"
-              className={`site-nav-burger ${menuOpen ? "is-open" : ""}`}
+              className="ac-theme-btn"
+              onClick={toggleTheme}
+              aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            >
+              {theme === "light" ? "Dark" : "Light"}
+            </button>
+            <button
+              type="button"
+              className={`ac-nav-burger ${menuOpen ? "is-open" : ""}`}
               aria-expanded={menuOpen}
-              aria-controls="site-nav-drawer"
-              aria-label={menuOpen ? "Menüyü kapat" : "Menüyü aç"}
+              aria-controls="ac-nav-drawer"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
               onClick={() => setMenuOpen((o) => !o)}
             >
               <span />
@@ -70,43 +81,38 @@ export default function Navbar() {
       </header>
 
       <div
-        className={`site-nav-overlay ${menuOpen ? "is-visible" : ""}`}
+        className={`ac-nav-overlay ${menuOpen ? "is-visible" : ""}`}
         aria-hidden={!menuOpen}
         onClick={closeMenu}
       />
 
       <aside
-        id="site-nav-drawer"
-        className={`site-nav-drawer ${menuOpen ? "is-open" : ""}`}
+        id="ac-nav-drawer"
+        className={`ac-nav-drawer ${menuOpen ? "is-open" : ""}`}
         aria-hidden={!menuOpen}
       >
-        <nav className="site-nav-drawer-inner" aria-label="Mobil menü">
+        <nav className="ac-nav-drawer-inner" aria-label="Mobile menu">
+          <button
+            type="button"
+            className="ac-theme-btn"
+            onClick={toggleTheme}
+            aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+          >
+            {theme === "light" ? "Dark mode" : "Light mode"}
+          </button>
           {navLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="site-nav-drawer-link"
+              className="ac-nav-drawer-link"
               onClick={closeMenu}
             >
               {item.label}
             </Link>
           ))}
-          <div className="site-nav-drawer-foot">
-            <Link href="/iletisim" className="site-btn-sweep" onClick={closeMenu}>
-              <span>İletişim</span>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
+          <div className="ac-nav-drawer-foot">
+            <Link href="/iletisim" className="ac-btn ac-btn-primary" onClick={closeMenu}>
+              Get Started
             </Link>
           </div>
         </nav>
