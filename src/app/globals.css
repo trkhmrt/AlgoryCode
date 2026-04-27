@@ -2,8 +2,8 @@
 
 /* AlgroyCode — kurumsal mavi (#2845D6) + şeffaf yüzeyli butonlar */
 :root {
-  --background: #fafbfc;
-  --foreground: #1a1a1a;
+  --background: #ffffff;
+  --foreground: #000000;
   /* Kurumsal ana mavi */
   --accent: #2845d6;
   --accent-hover: #1e36b8;
@@ -43,7 +43,16 @@
 }
 
 html[data-theme="dark"] {
-  --nav-border: rgba(147, 168, 255, 0.22);
+  --background: #000000;
+  --foreground: #ffffff;
+  --nav-bg: rgba(0, 0, 0, 0.92);
+  --nav-border: rgba(255, 255, 255, 0.14);
+  --accent: #7cb3ff;
+  --accent-hover: #9ec5ff;
+  --accent-border: rgba(124, 179, 255, 0.45);
+  --accent-soft: rgba(124, 179, 255, 0.12);
+  --accent-soft-strong: rgba(124, 179, 255, 0.2);
+  --accent-muted: rgba(180, 200, 255, 0.55);
 }
 
 html {
@@ -2280,8 +2289,8 @@ body {
 }
 
 html[data-theme="dark"] body {
-  background: #06070d;
-  color: rgba(248, 250, 252, 0.92);
+  background: var(--background);
+  color: var(--foreground);
 }
 
 /* ========== Footer – taban; site-footer-v3 site-v3.css ile tamamlanır ========== */

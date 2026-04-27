@@ -4,23 +4,31 @@ import Link from "next/link";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const productLinks = [
-  { label: "Feature set", href: "/#features" },
-  { label: "Integrations", href: "/#integrations" },
-  { label: "Pricing", href: "/#pricing" },
-  { label: "Reviews", href: "/#reviews" },
+  { label: "Ürünler", href: "/#urunler" },
+  { label: "Algory ürünleri", href: "/#algory-urunler" },
+  { label: "Demo", href: "/#cta" },
 ];
 
 const resourceLinks = [
-  { label: "Documentation", href: "/#faq" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
-  { label: "Contact", href: "/iletisim" },
+  { label: "İletişim", href: "/iletisim" },
+  { label: "Gizlilik", href: "/privacy" },
+  { label: "Şartlar", href: "/terms" },
+  { label: "Lisans", href: "/license" },
 ];
 
 const socialLinks = [
   { label: "GitHub", href: "https://github.com" },
   { label: "X", href: "https://x.com" },
   { label: "LinkedIn", href: "https://linkedin.com" },
+];
+
+const problemFocus = [
+  "Finans & fintech",
+  "E-ticaret & perakende",
+  "SaaS & kurumsal yazılım",
+  "Operasyon & otomasyon",
+  "Müşteri deneyimi",
+  "Eğitim & içerik",
 ];
 
 export default function Footer() {
@@ -34,9 +42,7 @@ export default function Footer() {
             <Link href="/" className="ac-footer-logo">
               AlgoryCode
             </Link>
-            <p>
-              AI-native development platform for fast-moving startup SaaS teams.
-            </p>
+            <p>Yazılım, yapay zeka ve e-ticaret çözümleriyle işinizi büyütmenize yardımcı oluyoruz.</p>
             <div className="ac-footer-social">
               {socialLinks.map((item) => (
                 <a
@@ -54,7 +60,7 @@ export default function Footer() {
 
           <nav className="ac-footer-columns" aria-label="Footer links">
             <div className="ac-footer-col">
-              <h3>Product</h3>
+              <h3>Sayfa</h3>
               <ul>
                 {productLinks.map((item) => (
                   <li key={item.href}>
@@ -67,7 +73,7 @@ export default function Footer() {
             </div>
 
             <div className="ac-footer-col">
-              <h3>Resources</h3>
+              <h3>Kaynaklar</h3>
               <ul>
                 {resourceLinks.map((item) => (
                   <li key={item.href}>
@@ -78,23 +84,35 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
+
+            <div className="ac-footer-col ac-footer-col--focus">
+              <h3>Çözdüğümüz problemler</h3>
+              <ul>
+                {problemFocus.map((item) => (
+                  <li key={item}>
+                    <span className="ac-footer-focus-pill">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </nav>
         </div>
 
         <div className="ac-footer-bottom">
           <div className="ac-footer-legal">
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/license">License</Link>
+            <Link href="/privacy">Gizlilik</Link>
+            <Link href="/terms">Şartlar</Link>
+            <Link href="/license">Lisans</Link>
           </div>
           <div className="ac-footer-actions">
             <button
               type="button"
               onClick={toggleTheme}
               className="ac-theme-btn"
-              aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+              suppressHydrationWarning
+              aria-label={theme === "light" ? "Gece moduna geç" : "Gündüz moduna geç"}
             >
-              {theme === "light" ? "Dark" : "Light"}
+              <span suppressHydrationWarning>{theme === "light" ? "Gece" : "Gündüz"}</span>
             </button>
             <p>© {new Date().getFullYear()} AlgoryCode</p>
           </div>

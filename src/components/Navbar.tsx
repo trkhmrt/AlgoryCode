@@ -5,11 +5,9 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const navLinks = [
-  { label: "Features", href: "/#features" },
-  { label: "Integrations", href: "/#integrations" },
-  { label: "Pricing", href: "/#pricing" },
-  { label: "Reviews", href: "/#reviews" },
-  { label: "Docs", href: "/#faq" },
+  { label: "Ürünler", href: "/#urunler" },
+  { label: "Algory ürünleri", href: "/#algory-urunler" },
+  { label: "İletişim", href: "/iletisim" },
 ];
 
 export default function Navbar() {
@@ -60,9 +58,10 @@ export default function Navbar() {
               type="button"
               className="ac-theme-btn"
               onClick={toggleTheme}
-              aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+              suppressHydrationWarning
+              aria-label={theme === "light" ? "Gece moduna geç" : "Gündüz moduna geç"}
             >
-              {theme === "light" ? "Dark" : "Light"}
+              <span suppressHydrationWarning>{theme === "light" ? "Gece" : "Gündüz"}</span>
             </button>
             <button
               type="button"
@@ -96,9 +95,10 @@ export default function Navbar() {
             type="button"
             className="ac-theme-btn"
             onClick={toggleTheme}
-            aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            suppressHydrationWarning
+            aria-label={theme === "light" ? "Gece moduna geç" : "Gündüz moduna geç"}
           >
-            {theme === "light" ? "Dark mode" : "Light mode"}
+            <span suppressHydrationWarning>{theme === "light" ? "Gece modu" : "Gündüz modu"}</span>
           </button>
           {navLinks.map((item) => (
             <Link
