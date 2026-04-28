@@ -1,15 +1,33 @@
-import Navbar from "@/components/Navbar";
-import StartupShowcase from "@/components/StartupShowcase";
-import Footer from "@/components/Footer";
+import { Hero } from "@/components/sections/Hero";
+import { LogoBar } from "@/components/sections/LogoBar";
+import { Features } from "@/components/sections/Features";
+import { BentoGrid } from "@/components/sections/BentoGrid";
+import { Advantages } from "@/components/sections/Advantages";
+import { NodeTopology } from "@/components/sections/NodeTopology";
+import { Showcase } from "@/components/sections/Showcase";
+import { Stats } from "@/components/sections/Stats";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { Pricing } from "@/components/sections/Pricing";
+import { CTA } from "@/components/sections/CTA";
+import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="page-content home-page flex-1 flex flex-col w-full">
-        <StartupShowcase />
+    <>
+      <main>
+        <Hero />
+        <LogoBar />
+        <Features />
+        <BentoGrid />
+        <Advantages />
+        <NodeTopology />
+        <Showcase />
+        <Stats />
+        <Testimonials />
+        <Pricing />
+        <CTA />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
