@@ -7,11 +7,11 @@ import { useState } from "react";
 
 const NAV_LINKS = [
   { href: "/#features", label: "Features", highlight: true },
-  { href: "#", label: "Insights" },
-  { href: "#", label: "About" },
-  { href: "/education", label: "Education" },
-  { href: "/blog", label: "Blog" },
-  { href: "#", label: "Contact" },
+  { href: "#", label: "Insights", highlight: false },
+  { href: "#", label: "About", highlight: false },
+  { href: "/education", label: "Education", highlight: false },
+  { href: "/blog", label: "Blog", highlight: false },
+  { href: "#", label: "Contact", highlight: false },
 ] as const;
 
 export function SiteHeader() {
