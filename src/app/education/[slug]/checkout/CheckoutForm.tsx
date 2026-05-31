@@ -9,10 +9,22 @@ import {
   CHECKOUT_MOCK_DATA,
   USE_CHECKOUT_MOCK_DATA,
 } from "@/lib/checkout-mock-data";
+import {
+  formatIyzicoTestCardLabel,
+  getIyzicoTestCardsByCategory,
+  IYZICO_TEST_CARD_CATEGORY_LABELS,
+  type IyzicoTestCardCategory,
+} from "@/constants/iyzico/test-cards";
 import type { InstallmentOption } from "@/lib/iyzico/installments";
 import { submitCheckout, type CheckoutState } from "./actions";
 
 const mock = USE_CHECKOUT_MOCK_DATA ? CHECKOUT_MOCK_DATA : null;
+
+const TEST_CARD_CATEGORIES: IyzicoTestCardCategory[] = [
+  "success",
+  "foreign",
+  "error",
+];
 
 const initialState: CheckoutState = {};
 
@@ -236,17 +248,47 @@ export function CheckoutForm({
               />
             </Field>
             <Field label="Kart Numarası" name="cardNumber">
-              <input
-                id="cardNumber"
-                name="cardNumber"
-                required
-                inputMode="numeric"
-                autoComplete="cc-number"
-                value={cardNumber}
-                onChange={(event) => setCardNumber(event.target.value)}
-                className={inputClassName}
-                placeholder="5528 7900 0000 0008"
-              />
+              {USE_CHECKOUT_MOCK_DATA ? (
+                <>
+                  <select
+                    id="cardNumber"
+                    name="cardNumber"
+                    required
+                    value={cardNumber}
+                    onChange={(event) => setCardNumber(event.target.value)}
+                    className={inputClassName}
+                  >
+                    {TEST_CARD_CATEGORIES.map((category) => (
+                      <optgroup
+                        key={category}
+                        label={IYZICO_TEST_CARD_CATEGORY_LABELS[category]}
+                      >
+                        {getIyzicoTestCardsByCategory(category).map((card) => (
+                          <option key={card.cardNumber} value={card.cardNumber}>
+                            {formatIyzicoTestCardLabel(card)}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </select>
+                  <p className="text-xs text-[#666]">
+                    iyzico sandbox test kartı seçin. SKT ve CVV için geçerli formatta
+                    rastgele değer kullanılabilir.
+                  </p>
+                </>
+              ) : (
+                <input
+                  id="cardNumber"
+                  name="cardNumber"
+                  required
+                  inputMode="numeric"
+                  autoComplete="cc-number"
+                  value={cardNumber}
+                  onChange={(event) => setCardNumber(event.target.value)}
+                  className={inputClassName}
+                  placeholder="5528 7900 0000 0008"
+                />
+              )}
             </Field>
             <div className="grid gap-5 md:grid-cols-3">
               <Field label="Ay" name="expireMonth">
