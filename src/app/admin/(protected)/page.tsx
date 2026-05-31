@@ -1,12 +1,17 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/Card";
-import { EDUCATION_STATUS_LABELS, formatDateTR } from "@/lib/education";
+import {
+  EDUCATION_STATUS_LABELS,
+  formatDateTR,
+  type EducationDashboardItem,
+} from "@/lib/education";
 import {
   formatDateTimeTR,
   formatInstallmentSummary,
   formatPaymentAmount,
   PAYMENT_STATUS_LABELS,
+  type PaymentDashboardItem,
 } from "@/lib/payments";
 import { prisma } from "@/lib/prisma";
 
@@ -52,7 +57,15 @@ export default async function AdminDashboardPage() {
       orderBy: { createdAt: "desc" },
       take: 5,
     }),
-  ]);
+  ]) as [
+    number,
+    number,
+    number,
+    number,
+    EducationDashboardItem[],
+    [number, number, number, { _sum: { paidPrice: { toString(): string } | null } }],
+    PaymentDashboardItem[],
+  ];
 
   const [successfulPayments, failedPayments, installmentPayments, revenueAgg] =
     paymentStats;

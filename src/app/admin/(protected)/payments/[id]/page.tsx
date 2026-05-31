@@ -8,6 +8,7 @@ import {
   formatPaymentAmount,
   maskCard,
   PAYMENT_STATUS_LABELS,
+  type PaymentDetailRecord,
 } from "@/lib/payments";
 import { prisma } from "@/lib/prisma";
 
@@ -31,7 +32,7 @@ export async function generateMetadata({
 
 export default async function PaymentDetailPage({ params }: PaymentDetailPageProps) {
   const { id } = await params;
-  const payment = await prisma.payment.findUnique({
+  const payment: PaymentDetailRecord | null = await prisma.payment.findUnique({
     where: { id },
     include: {
       education: {

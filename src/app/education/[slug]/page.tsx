@@ -20,6 +20,7 @@ import {
   formatDateTR,
   formatEducationDuration,
   formatPrice,
+  type EducationRecord,
 } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 
@@ -52,7 +53,7 @@ export default async function EducationDetailPage({
   params,
 }: EducationDetailPageProps) {
   const { slug } = await params;
-  const education = await prisma.education.findFirst({
+  const education: EducationRecord | null = await prisma.education.findFirst({
     where: { slug, status: "PUBLISHED" },
   });
 

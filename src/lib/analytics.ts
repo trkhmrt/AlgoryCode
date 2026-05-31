@@ -1,7 +1,33 @@
 import "server-only";
 
-import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+
+type PageViewDateFilter = {
+  gte?: Date;
+  lte?: Date;
+};
+
+export type PageViewWhereInput = {
+  createdAt?: PageViewDateFilter;
+  path?: string;
+  ipAddress?: { not: null };
+};
+
+type PageViewOrderByItem =
+  | { createdAt: "asc" | "desc" }
+  | { ipAddress: "asc" | "desc" };
+
+type PageViewOrderBy = PageViewOrderByItem | PageViewOrderByItem[];
+
+type PageViewPathGroupRow = {
+  path: string;
+  _count: { _all: number };
+};
+
+type PageViewIpGroupRow = {
+  ipAddress: string | null;
+  _count: { _all: number };
+};
 
 export type TrafficFilters = {
   from?: string;
@@ -80,8 +106,8 @@ export function parseTrafficFilters(
   };
 }
 
-export function buildPageViewWhere(filters: TrafficFilters): Prisma.PageViewWhereInput {
-  const where: Prisma.PageViewWhereInput = {};
+export function buildPageViewWhere(filters: TrafficFilters): PageViewWhereInput {
+  const where: PageViewWhereInput = {};
 
   if (filters.from || filters.to) {
     where.createdAt = {};
@@ -166,9 +192,7 @@ export function parsePathVisitFilters(
   };
 }
 
-function getPathVisitOrderBy(
-  sort: PathVisitSort,
-): Prisma.PageViewOrderByWithRelationInput | Prisma.PageViewOrderByWithRelationInput[] {
+function getPathVisitOrderBy(sort: PathVisitSort): PageViewOrderBy {
   switch (sort) {
     case "oldest":
       return { createdAt: "asc" };
@@ -198,14 +222,14 @@ const visitSelect = {
 export async function getPathVisitReportData(
   filters: PathVisitFilters,
 ): Promise<PathVisitReportData> {
-  const where: Prisma.PageViewWhereInput = {
+  const where: PageViewWhereInput = {
     ...buildPageViewWhere(filters),
     path: filters.path,
   };
 
   const skip = (filters.page - 1) * PAGE_SIZE;
 
-  const [totalVisits, uniqueIps, visits] = await Promise.all([
+  const [totalVisits, uniqueIps, visits] = (await Promise.all([
     prisma.pageView.count({ where }),
     prisma.pageView.groupBy({
       by: ["ipAddress"],
@@ -222,7 +246,7 @@ export async function getPathVisitReportData(
       skip,
       take: PAGE_SIZE,
     }),
-  ]);
+  ])) as [number, PageViewIpGroupRow[], RecentVisitRow[]];
 
   return {
     filters,
@@ -310,7 +334,7 @@ export async function getTrafficReportData(
   const where = buildPageViewWhere(filters);
 
   const [totalViews, groupedPaths, uniquePaths, uniqueIps, viewsInRange, recentVisits] =
-    await Promise.all([
+    (await Promise.all([
     prisma.pageView.count({ where }),
     prisma.pageView.groupBy({
       by: ["path"],
@@ -355,7 +379,14 @@ export async function getTrafficReportData(
       orderBy: { createdAt: "desc" },
       take: 50,
     }),
-  ]);
+  ])) as [
+    number,
+    PageViewPathGroupRow[],
+    PageViewPathGroupRow[],
+    PageViewIpGroupRow[],
+    Array<{ createdAt: Date }>,
+    RecentVisitRow[],
+  ];
 
   const topPaths: PathTrafficRow[] = groupedPaths.map((row) => ({
     path: row.path,

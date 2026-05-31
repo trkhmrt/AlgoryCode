@@ -72,6 +72,49 @@ export type EducationListItem = Pick<
   slug: string;
 };
 
+export type EducationDashboardItem = Pick<
+  EducationFormValues,
+  "id" | "title" | "instructorName" | "startDate" | "status"
+>;
+
+export type EducationPublicListItem = Pick<
+  EducationFormValues,
+  | "id"
+  | "title"
+  | "shortDescription"
+  | "level"
+  | "format"
+  | "isFree"
+  | "price"
+  | "currency"
+  | "instructorName"
+  | "startDate"
+  | "durationWeeks"
+  | "durationHours"
+  | "location"
+  | "coverImageUrl"
+> & {
+  slug: string;
+};
+
+export type EducationRecord = EducationFormValues & {
+  slug: string;
+  publishedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type EducationCheckoutRecord = {
+  id: string;
+  slug: string;
+  title: string;
+  isFree: boolean;
+  price: DecimalLike | null;
+  currency: string;
+};
+
+type DecimalLike = { toString(): string };
+
 const TR_CHAR_MAP: Record<string, string> = {
   ç: "c",
   Ç: "c",

@@ -11,6 +11,7 @@ import {
   formatDateTR,
   formatEducationDuration,
   formatPrice,
+  type EducationPublicListItem,
 } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function EducationPage() {
-  const educations = await prisma.education.findMany({
+  const educations: EducationPublicListItem[] = await prisma.education.findMany({
     where: { status: "PUBLISHED" },
     orderBy: { startDate: "asc" },
   });

@@ -1,8 +1,9 @@
 import "server-only";
 
-import type { Education, Payment } from "@prisma/client";
 import { headers } from "next/headers";
+import type { EducationCheckoutRecord } from "@/lib/education";
 import { getAppBaseUrl } from "@/lib/app-url";
+import type { PaymentConversationRecord } from "@/lib/payments";
 import {
   createConversationId,
   formatIyzicoPrice,
@@ -29,7 +30,7 @@ export type CheckoutCardInput = {
 };
 
 export type ProcessPaymentInput = {
-  education: Education;
+  education: EducationCheckoutRecord;
   buyer: CheckoutBuyerInput;
   card: CheckoutCardInput;
   installmentNumber: number;
@@ -56,7 +57,7 @@ function sanitizeCardNumber(cardNumber: string): string {
   return cardNumber.replace(/\D/g, "");
 }
 
-function getEducationPrice(education: Education): number {
+function getEducationPrice(education: EducationCheckoutRecord): number {
   if (education.isFree || !education.price) {
     return 0;
   }
@@ -69,10 +70,10 @@ function formatExpireYear(expireYear: string): string {
 }
 
 function buildIyzicoPaymentRequest(input: {
-  education: Education;
+  education: EducationCheckoutRecord;
   buyer: CheckoutBuyerInput;
   card: CheckoutCardInput;
-  paymentRecord: Payment;
+  paymentRecord: PaymentConversationRecord;
   selectedInstallment: InstallmentOption;
   priceString: string;
   paidPriceString: string;
@@ -347,7 +348,7 @@ export async function processIyzicoPayment(
 }
 
 export async function processFreeEnrollment(input: {
-  education: Education;
+  education: EducationCheckoutRecord;
   buyer: CheckoutBuyerInput;
 }): Promise<FreeEnrollmentResult> {
   const paymentRecord = await prisma.payment.create({
@@ -375,6 +376,8 @@ export async function processFreeEnrollment(input: {
   };
 }
 
-export function getEducationCheckoutPrice(education: Education): number {
+export function getEducationCheckoutPrice(
+  education: EducationCheckoutRecord,
+): number {
   return getEducationPrice(education);
 }

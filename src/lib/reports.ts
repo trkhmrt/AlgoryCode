@@ -1,11 +1,15 @@
 import "server-only";
 
+import type { EducationStatus } from "@/lib/education";
 import type {
-  EducationStatus,
+  PaymentGroupByRow,
   PaymentProvider,
+  PaymentReportEducationRow,
   PaymentStatus,
-  Prisma,
-} from "@prisma/client";
+  PaymentSuccessReportRow,
+  PaymentWhereInput,
+  ReportEducationOption,
+} from "@/lib/payments";
 import { prisma } from "@/lib/prisma";
 
 export type ReportFilters = {
@@ -121,8 +125,8 @@ function endOfDay(date: Date): Date {
   return value;
 }
 
-export function buildPaymentWhere(filters: ReportFilters): Prisma.PaymentWhereInput {
-  const where: Prisma.PaymentWhereInput = {};
+export function buildPaymentWhere(filters: ReportFilters): PaymentWhereInput {
+  const where: PaymentWhereInput = {};
 
   if (filters.from || filters.to) {
     where.createdAt = {};
@@ -199,7 +203,7 @@ export async function getReportData(
   const where = buildPaymentWhere(filters);
 
   const [educations, groupedPayments, successfulPayments, installmentCount, singleCount] =
-    await Promise.all([
+    (await Promise.all([
       prisma.education.findMany({
         where: filters.educationId ? { id: filters.educationId } : undefined,
         select: {
@@ -245,7 +249,13 @@ export async function getReportData(
           installment: { lte: 1 },
         },
       }),
-    ]);
+    ])) as [
+      PaymentReportEducationRow[],
+      PaymentGroupByRow[],
+      PaymentSuccessReportRow[],
+      number,
+      number,
+    ];
 
   const aggregateByEducation = new Map<
     string,
@@ -380,9 +390,9 @@ export async function getReportData(
   };
 }
 
-export async function getReportEducationOptions() {
-  return prisma.education.findMany({
+export async function getReportEducationOptions(): Promise<ReportEducationOption[]> {
+  return (await prisma.education.findMany({
     select: { id: true, title: true },
     orderBy: { title: "asc" },
-  });
+  })) as ReportEducationOption[];
 }

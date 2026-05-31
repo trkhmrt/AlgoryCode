@@ -1,13 +1,134 @@
-import type { Payment, PaymentStatus } from "@prisma/client";
+import type { EducationStatus } from "@/lib/education";
 
-export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
+export const PAYMENT_STATUS_LABELS = {
   PENDING: "Bekliyor",
   SUCCESS: "Başarılı",
   FAILED: "Başarısız",
+} as const;
+
+export type PaymentStatus = keyof typeof PAYMENT_STATUS_LABELS;
+
+export type PaymentProvider = "IYZICO" | "FREE";
+
+export type DecimalValue = { toString(): string };
+
+export type PaymentInstallmentSummary = {
+  installment: number;
+  installmentAmount: DecimalValue | null;
+  paidPrice: DecimalValue;
+  currency: string;
+};
+
+export type PaymentWhereInput = {
+  createdAt?: {
+    gte?: Date;
+    lte?: Date;
+  };
+  educationId?: string;
+  status?: PaymentStatus;
+  provider?: PaymentProvider;
+  installment?: {
+    lte?: number;
+    gt?: number;
+  };
+};
+
+export type PaymentDashboardItem = PaymentInstallmentSummary & {
+  id: string;
+  buyerName: string;
+  buyerSurname: string;
+  status: PaymentStatus;
+  createdAt: Date;
+  education: { title: string };
+};
+
+export type PaymentListItem = PaymentInstallmentSummary & {
+  id: string;
+  buyerName: string;
+  buyerSurname: string;
+  buyerEmail: string;
+  status: PaymentStatus;
+  createdAt: Date;
+  binNumber: string | null;
+  lastFourDigits: string | null;
+  education: { title: string; slug: string };
+};
+
+export type PaymentDetailRecord = PaymentInstallmentSummary & {
+  id: string;
+  provider: PaymentProvider;
+  status: PaymentStatus;
+  createdAt: Date;
+  price: DecimalValue;
+  iyzicoPaymentId: string | null;
+  conversationId: string;
+  buyerName: string;
+  buyerSurname: string;
+  buyerEmail: string;
+  buyerPhone: string | null;
+  buyerIdentityNumber: string;
+  binNumber: string | null;
+  lastFourDigits: string | null;
+  cardBankName: string | null;
+  cardFamily: string | null;
+  cardAssociation: string | null;
+  isLimitError: boolean;
+  failureCode: string | null;
+  failureMessage: string | null;
+  iyzicoRawResponse: unknown;
+  education: { title: string; slug: string };
+};
+
+export type PaymentStatusGroupRow = {
+  status: PaymentStatus;
+  _count: { _all: number };
+  _sum: { paidPrice: DecimalValue | null };
+};
+
+export type PaymentGroupByRow = {
+  educationId: string;
+  status: PaymentStatus;
+  provider: PaymentProvider;
+  _count: { _all: number };
+  _sum: { paidPrice: DecimalValue | null };
+};
+
+export type PaymentReportEducationRow = {
+  id: string;
+  title: string;
+  slug: string;
+  status: EducationStatus;
+  isFree: boolean;
+  price: DecimalValue | null;
+  currency: string;
+};
+
+export type PaymentSuccessReportRow = {
+  createdAt: Date;
+  paidPrice: DecimalValue;
+  currency: string;
+  installment: number;
+};
+
+export type PaymentConversationRecord = {
+  id: string;
+  conversationId: string;
+};
+
+export type PaymentReceiptRecord = PaymentInstallmentSummary & {
+  provider: PaymentProvider;
+  status: PaymentStatus;
+  buyerEmail: string;
+  education: { title: string };
+};
+
+export type ReportEducationOption = {
+  id: string;
+  title: string;
 };
 
 export function formatPaymentAmount(
-  amount: { toString(): string },
+  amount: DecimalValue | number,
   currency = "TRY",
 ): string {
   const value = Number(amount.toString());
@@ -19,7 +140,9 @@ export function formatPaymentAmount(
   }).format(value);
 }
 
-export function formatInstallmentSummary(payment: Payment): string {
+export function formatInstallmentSummary(
+  payment: PaymentInstallmentSummary,
+): string {
   if (payment.installment <= 1) {
     return "Tek çekim (nakit)";
   }

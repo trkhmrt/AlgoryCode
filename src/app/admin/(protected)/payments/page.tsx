@@ -7,6 +7,8 @@ import {
   formatPaymentAmount,
   maskCard,
   PAYMENT_STATUS_LABELS,
+  type PaymentListItem,
+  type PaymentStatusGroupRow,
 } from "@/lib/payments";
 import { prisma } from "@/lib/prisma";
 
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminPaymentsPage() {
-  const [payments, stats] = await Promise.all([
+  const [payments, stats] = (await Promise.all([
     prisma.payment.findMany({
       include: {
         education: {
@@ -30,7 +32,7 @@ export default async function AdminPaymentsPage() {
       _count: { _all: true },
       _sum: { paidPrice: true },
     }),
-  ]);
+  ])) as [PaymentListItem[], PaymentStatusGroupRow[]];
 
   const successStats = stats.find((item) => item.status === "SUCCESS");
   const failedStats = stats.find((item) => item.status === "FAILED");

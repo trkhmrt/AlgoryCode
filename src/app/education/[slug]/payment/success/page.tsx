@@ -9,6 +9,7 @@ import {
   formatInstallmentSummary,
   formatPaymentAmount,
   PAYMENT_STATUS_LABELS,
+  type PaymentReceiptRecord,
 } from "@/lib/payments";
 import { prisma } from "@/lib/prisma";
 
@@ -34,13 +35,13 @@ export default async function PaymentSuccessPage({
     notFound();
   }
 
-  const payment = await prisma.payment.findFirst({
+  const payment: PaymentReceiptRecord | null = await prisma.payment.findFirst({
     where: {
       id: query.paymentId,
       status: "SUCCESS",
       education: { slug },
     },
-    include: { education: true },
+    include: { education: { select: { title: true } } },
   });
 
   if (!payment) {
