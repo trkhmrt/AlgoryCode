@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
   BLOG_STATUS_LABELS,
+  type BlogPostListItem,
   formatBlogDate,
   formatReadingTime,
   getBlogPublishedDate,
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminBlogPage() {
-  const posts = await prisma.blogPost.findMany({
+  const posts: BlogPostListItem[] = await prisma.blogPost.findMany({
     orderBy: [{ status: "asc" }, { publishedAt: "desc" }, { createdAt: "desc" }],
   });
 

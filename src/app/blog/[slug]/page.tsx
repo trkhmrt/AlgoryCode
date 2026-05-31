@@ -12,6 +12,8 @@ import {
   formatReadingTime,
   getBlogPublishedDate,
   splitBlogContent,
+  type BlogPostRecord,
+  type BlogPostRelatedItem,
 } from "@/lib/blog";
 import { prisma } from "@/lib/prisma";
 
@@ -42,7 +44,7 @@ export async function generateMetadata({
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   const { slug } = await params;
-  const post = await prisma.blogPost.findFirst({
+  const post: BlogPostRecord | null = await prisma.blogPost.findFirst({
     where: { slug, status: "PUBLISHED" },
   });
 
@@ -50,8 +52,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     notFound();
   }
 
-  const [relatedPosts, paragraphs] = await Promise.all([
-    prisma.blogPost.findMany({
+  const [relatedPosts, paragraphs]: [BlogPostRelatedItem[], string[]] =
+    await Promise.all([
+      prisma.blogPost.findMany({
       where: {
         status: "PUBLISHED",
         slug: { not: post.slug },
@@ -66,9 +69,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         publishedAt: true,
         createdAt: true,
       },
-    }),
-    Promise.resolve(splitBlogContent(post.content)),
-  ]);
+      }),
+      Promise.resolve(splitBlogContent(post.content)),
+    ]);
 
   const publishedDate = getBlogPublishedDate(post);
 

@@ -20,6 +20,34 @@ export type BlogPostFormValues = {
   coverImageUrl: string | null;
 };
 
+export type BlogPostListItem = Pick<
+  BlogPostFormValues,
+  | "id"
+  | "title"
+  | "excerpt"
+  | "readingMinutes"
+  | "tags"
+  | "authorName"
+  | "status"
+  | "coverImageUrl"
+> & {
+  slug: string;
+  publishedAt: Date | null;
+  createdAt: Date;
+};
+
+export type BlogPostRecord = BlogPostFormValues & {
+  slug: string;
+  publishedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type BlogPostRelatedItem = Pick<
+  BlogPostListItem,
+  "slug" | "title" | "excerpt" | "readingMinutes" | "publishedAt" | "createdAt"
+>;
+
 export function formatBlogDate(date: Date): string {
   return new Intl.DateTimeFormat("tr-TR", {
     day: "numeric",

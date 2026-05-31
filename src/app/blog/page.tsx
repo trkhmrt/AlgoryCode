@@ -9,6 +9,7 @@ import {
   formatBlogDate,
   formatReadingTime,
   getBlogPublishedDate,
+  type BlogPostListItem,
 } from "@/lib/blog";
 import { prisma } from "@/lib/prisma";
 
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await prisma.blogPost.findMany({
+  const posts: BlogPostListItem[] = await prisma.blogPost.findMany({
     where: { status: "PUBLISHED" },
     orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
   });
