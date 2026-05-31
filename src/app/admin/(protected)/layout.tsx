@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/auth/admin";
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "../login/actions";
+import { AdminSidebar } from "./AdminSidebar";
 
 export default async function AdminLayout({
   children,
@@ -28,7 +30,13 @@ export default async function AdminLayout({
             <p className="text-sm font-medium">Admin Paneli</p>
           </div>
           <div className="flex items-center gap-4">
-            <span className="hidden text-sm text-[#888] sm:inline">
+            <Link
+              href="/education"
+              className="hidden text-sm text-[#888] transition-colors hover:text-[#ededed] sm:inline"
+            >
+              Siteyi Gör
+            </Link>
+            <span className="hidden text-sm text-[#888] md:inline">
               {user.email}
             </span>
             <form action={logout}>
@@ -42,7 +50,13 @@ export default async function AdminLayout({
           </div>
         </div>
       </header>
-      <main className="container-x py-10">{children}</main>
+
+      <div className="container-x flex flex-col lg:flex-row">
+        <AdminSidebar />
+        <main className="min-w-0 flex-1 py-8 lg:py-10 lg:pl-10">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

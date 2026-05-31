@@ -6,3 +6,180 @@ datasource db {
   provider = "postgresql"
 }
 
+enum EducationLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  ALL_LEVELS
+}
+
+enum EducationFormat {
+  ONLINE
+  IN_PERSON
+  HYBRID
+  LIVE
+  RECORDED
+}
+
+enum EducationStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Education {
+  id                  String           @id @default(cuid())
+  slug                String           @unique
+  title               String
+  shortDescription    String
+  fullDescription     String           @db.Text
+
+  instructorName      String
+  instructorTitle     String?
+  instructorBio       String?          @db.Text
+  instructorAvatarUrl String?
+
+  startDate           DateTime
+  endDate             DateTime?
+  durationWeeks       Int?
+  durationHours       Int?
+  schedule            String?
+
+  level               EducationLevel   @default(ALL_LEVELS)
+  format              EducationFormat  @default(ONLINE)
+  language            String           @default("tr")
+
+  price               Decimal?         @db.Decimal(10, 2)
+  currency            String           @default("TRY")
+  isFree              Boolean          @default(false)
+
+  maxStudents         Int?
+  location            String?
+
+  prerequisites       String?          @db.Text
+  learningOutcomes    String[]
+  syllabus            String?          @db.Text
+
+  coverImageUrl       String?
+  status              EducationStatus  @default(DRAFT)
+  publishedAt         DateTime?
+
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  payments            Payment[]
+
+  @@index([status, startDate])
+  @@map("educations")
+}
+
+enum BlogPostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model BlogPost {
+  id              String         @id @default(cuid())
+  slug            String         @unique
+  title           String
+  excerpt         String
+  content         String         @db.Text
+
+  authorName      String
+  authorTitle     String?
+  authorAvatarUrl String?
+
+  coverImageUrl   String?
+  tags            String[]
+  readingMinutes  Int            @default(5)
+
+  status          BlogPostStatus @default(DRAFT)
+  publishedAt     DateTime?
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([status, publishedAt])
+  @@map("blog_posts")
+}
+
+enum PaymentProvider {
+  IYZICO
+  FREE
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model Payment {
+  id                   String          @id @default(cuid())
+  educationId          String
+  education            Education       @relation(fields: [educationId], references: [id], onDelete: Cascade)
+
+  conversationId       String          @unique
+  provider             PaymentProvider @default(IYZICO)
+  status               PaymentStatus   @default(PENDING)
+
+  iyzicoPaymentId      String?
+  iyzicoPaymentTransactionId String?
+
+  buyerName            String
+  buyerSurname         String
+  buyerEmail           String
+  buyerPhone           String?
+  buyerIdentityNumber  String
+
+  price                Decimal         @db.Decimal(10, 2)
+  paidPrice            Decimal         @db.Decimal(10, 2)
+  currency             String          @default("TRY")
+  installment          Int             @default(1)
+  installmentRate      Decimal?        @db.Decimal(5, 2)
+  installmentAmount    Decimal?        @db.Decimal(10, 2)
+
+  binNumber            String?
+  lastFourDigits       String?
+  cardFamily           String?
+  cardAssociation      String?
+  cardBankName         String?
+  cardType             String?
+
+  failureCode          String?
+  failureMessage       String?
+  isLimitError         Boolean         @default(false)
+
+  iyzicoRawResponse    Json?
+
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  @@index([educationId, createdAt])
+  @@index([status, createdAt])
+  @@index([buyerEmail])
+  @@index([installment])
+  @@map("payments")
+}
+
+model PageView {
+  id         String   @id @default(cuid())
+  path       String
+  ipAddress  String?
+  userAgent  String?
+  deviceType String?
+  browser    String?
+  os         String?
+  country    String?
+  city       String?
+  region     String?
+  referrer   String?
+  createdAt  DateTime @default(now())
+
+  @@index([path, createdAt])
+  @@index([createdAt])
+  @@index([ipAddress, createdAt])
+  @@index([country, createdAt])
+  @@map("page_views")
+}

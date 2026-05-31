@@ -111,6 +111,15 @@ export function Navbar() {
           />
           <li>
             <Link
+              href="/education"
+              onMouseEnter={() => setOpenMenu(null)}
+              className="px-3 py-2 text-[14px] text-[#888] hover:text-[#ededed] focus:text-[#ededed] transition-colors rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#333]"
+            >
+              Eğitim
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/#pricing"
               onMouseEnter={() => setOpenMenu(null)}
               className="px-3 py-2 text-[14px] text-[#888] hover:text-[#ededed] focus:text-[#ededed] transition-colors rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#333]"
@@ -120,7 +129,7 @@ export function Navbar() {
           </li>
           <li>
             <Link
-              href="/"
+              href="/blog"
               onMouseEnter={() => setOpenMenu(null)}
               className="px-3 py-2 text-[14px] text-[#888] hover:text-[#ededed] focus:text-[#ededed] transition-colors rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#333]"
             >
@@ -166,6 +175,15 @@ export function Navbar() {
               <ul className="flex flex-col gap-1">
                 <li>
                   <Link
+                    href="/education"
+                    onClick={() => setMobileOpen(false)}
+                    className="block px-3 py-3 text-[15px] text-[#ededed] hover:bg-[#0a0a0a] rounded-md"
+                  >
+                    Eğitim
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/#pricing"
                     onClick={() => setMobileOpen(false)}
                     className="block px-3 py-3 text-[15px] text-[#ededed] hover:bg-[#0a0a0a] rounded-md"
@@ -175,7 +193,7 @@ export function Navbar() {
                 </li>
                 <li>
                   <Link
-                    href="/"
+                    href="/blog"
                     onClick={() => setMobileOpen(false)}
                     className="block px-3 py-3 text-[15px] text-[#ededed] hover:bg-[#0a0a0a] rounded-md"
                   >

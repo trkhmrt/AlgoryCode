@@ -27,7 +27,7 @@ const COLUMNS: Array<{
     title: "Şirket",
     links: [
       { href: "/", label: "Hakkımızda" },
-      { href: "/", label: "Blog" },
+      { href: "/education", label: "Eğitimler" },
       { href: "/", label: "Kariyer" },
       { href: "/", label: "İletişim" },
     ],

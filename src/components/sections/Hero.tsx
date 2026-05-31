@@ -61,12 +61,12 @@ export function Hero() {
             <a href="#" className="text-[14px] font-medium text-white/85 transition hover:text-white">
               About
             </a>
-            <a
-              href="#"
-              className="text-[14px] font-medium text-white/45 line-through decoration-white/30 transition hover:text-white/60"
+            <Link
+              href="/education"
+              className="text-[14px] font-medium text-white/85 transition hover:text-white"
             >
-              Case Studies
-            </a>
+              Education
+            </Link>
             <a href="#" className="text-[14px] font-medium text-white/85 transition hover:text-white">
               Contact
             </a>
