@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useEffect, useRef } from "react";
-import type { Education } from "@prisma/client";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { useToast } from "@/components/ui/ToastProvider";
@@ -10,6 +9,7 @@ import {
   EDUCATION_LEVEL_LABELS,
   EDUCATION_STATUS_LABELS,
   formatDateTimeLocal,
+  type EducationFormValues,
 } from "@/lib/education";
 import {
   createEducation,
@@ -20,7 +20,7 @@ import {
 const initialState: EducationFormState = {};
 
 type EducationFormProps = {
-  education?: Education;
+  education?: EducationFormValues;
 };
 
 function Field({

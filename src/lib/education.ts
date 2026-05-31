@@ -1,28 +1,75 @@
-import type {
-  EducationFormat,
-  EducationLevel,
-  EducationStatus,
-} from "@prisma/client";
-
-export const EDUCATION_LEVEL_LABELS: Record<EducationLevel, string> = {
+export const EDUCATION_LEVEL_LABELS = {
   BEGINNER: "Başlangıç",
   INTERMEDIATE: "Orta",
   ADVANCED: "İleri",
   ALL_LEVELS: "Tüm Seviyeler",
-};
+} as const;
 
-export const EDUCATION_FORMAT_LABELS: Record<EducationFormat, string> = {
+export type EducationLevel = keyof typeof EDUCATION_LEVEL_LABELS;
+
+export const EDUCATION_FORMAT_LABELS = {
   ONLINE: "Online",
   IN_PERSON: "Yüz Yüze",
   HYBRID: "Hibrit",
   LIVE: "Canlı",
   RECORDED: "Kayıtlı",
-};
+} as const;
 
-export const EDUCATION_STATUS_LABELS: Record<EducationStatus, string> = {
+export type EducationFormat = keyof typeof EDUCATION_FORMAT_LABELS;
+
+export const EDUCATION_STATUS_LABELS = {
   DRAFT: "Taslak",
   PUBLISHED: "Yayında",
   ARCHIVED: "Arşiv",
+} as const;
+
+export type EducationStatus = keyof typeof EDUCATION_STATUS_LABELS;
+
+export type EducationFormValues = {
+  id: string;
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+  instructorName: string;
+  instructorTitle: string | null;
+  instructorBio: string | null;
+  instructorAvatarUrl: string | null;
+  startDate: Date;
+  endDate: Date | null;
+  durationWeeks: number | null;
+  durationHours: number | null;
+  schedule: string | null;
+  level: EducationLevel;
+  format: EducationFormat;
+  language: string;
+  price: { toString(): string } | null;
+  currency: string;
+  isFree: boolean;
+  maxStudents: number | null;
+  location: string | null;
+  prerequisites: string | null;
+  learningOutcomes: string[];
+  syllabus: string | null;
+  coverImageUrl: string | null;
+  status: EducationStatus;
+};
+
+export type EducationListItem = Pick<
+  EducationFormValues,
+  | "id"
+  | "title"
+  | "format"
+  | "level"
+  | "isFree"
+  | "price"
+  | "currency"
+  | "durationWeeks"
+  | "durationHours"
+  | "instructorName"
+  | "startDate"
+  | "status"
+> & {
+  slug: string;
 };
 
 const TR_CHAR_MAP: Record<string, string> = {

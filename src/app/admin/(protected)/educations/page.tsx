@@ -9,6 +9,7 @@ import {
   formatDateTR,
   formatEducationDuration,
   formatPrice,
+  type EducationListItem,
 } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 import { DeleteEducationButton } from "./DeleteEducationButton";
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminEducationsPage() {
-  const educations = await prisma.education.findMany({
+  const educations: EducationListItem[] = await prisma.education.findMany({
     orderBy: [{ status: "asc" }, { startDate: "desc" }],
   });
 

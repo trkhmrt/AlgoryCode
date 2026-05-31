@@ -6,7 +6,7 @@ import type {
   EducationFormat,
   EducationLevel,
   EducationStatus,
-} from "@prisma/client";
+} from "@/lib/education";
 import { parseLearningOutcomes, slugify } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 
