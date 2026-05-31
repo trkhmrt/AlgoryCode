@@ -1,10 +1,24 @@
-import type { BlogPost } from "@prisma/client";
-
 export const BLOG_STATUS_LABELS = {
   DRAFT: "Taslak",
   PUBLISHED: "Yayında",
   ARCHIVED: "Arşiv",
 } as const;
+
+export type BlogPostStatus = keyof typeof BLOG_STATUS_LABELS;
+
+export type BlogPostFormValues = {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  tags: string[];
+  readingMinutes: number;
+  status: BlogPostStatus;
+  authorName: string;
+  authorTitle: string | null;
+  authorAvatarUrl: string | null;
+  coverImageUrl: string | null;
+};
 
 export function formatBlogDate(date: Date): string {
   return new Intl.DateTimeFormat("tr-TR", {
@@ -18,7 +32,10 @@ export function formatReadingTime(minutes: number): string {
   return `${minutes} dk okuma`;
 }
 
-export function getBlogPublishedDate(post: BlogPost): Date {
+export function getBlogPublishedDate(post: {
+  publishedAt: Date | null;
+  createdAt: Date;
+}): Date {
   return post.publishedAt ?? post.createdAt;
 }
 

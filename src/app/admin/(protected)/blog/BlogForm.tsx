@@ -1,12 +1,12 @@
 "use client";
 
 import { useActionState, useEffect, useRef } from "react";
-import type { BlogPost } from "@prisma/client";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { useToast } from "@/components/ui/ToastProvider";
 import {
   BLOG_STATUS_LABELS,
+  type BlogPostFormValues,
   formatBlogTags,
 } from "@/lib/blog";
 import {
@@ -46,7 +46,7 @@ const textareaClassName =
   "min-h-[120px] w-full rounded-md border border-[#1a1a1a] bg-black px-3 py-3 text-sm text-[#ededed] outline-none transition-colors placeholder:text-[#444] focus:border-[#333]";
 
 type BlogFormProps = {
-  post?: BlogPost;
+  post?: BlogPostFormValues;
 };
 
 export function BlogForm({ post }: BlogFormProps) {

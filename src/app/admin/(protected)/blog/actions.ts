@@ -2,8 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { BlogPostStatus } from "@prisma/client";
-import { parseBlogTags } from "@/lib/blog";
+import { parseBlogTags, type BlogPostStatus } from "@/lib/blog";
 import { slugify } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 
