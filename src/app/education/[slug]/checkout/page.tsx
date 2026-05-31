@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Navbar } from "@/components/sections/Navbar";
+import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { getEducationCheckoutPrice } from "@/lib/iyzico/checkout";
 import { prisma } from "@/lib/prisma";
@@ -47,8 +47,8 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
 
   return (
     <>
-      <Navbar />
-      <main>
+      <SiteHeader />
+      <main className={SITE_HEADER_OFFSET_CLASS}>
         <section className="section">
           <div className="container-x max-w-3xl">
             <Link

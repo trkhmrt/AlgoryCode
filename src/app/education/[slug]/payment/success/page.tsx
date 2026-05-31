@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Navbar } from "@/components/sections/Navbar";
+import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -50,8 +50,8 @@ export default async function PaymentSuccessPage({
 
   return (
     <>
-      <Navbar />
-      <main>
+      <SiteHeader />
+      <main className={SITE_HEADER_OFFSET_CLASS}>
         <section className="section">
           <div className="container-x max-w-2xl">
             <Card className="p-8 text-center">

@@ -9,7 +9,7 @@ import {
   MapPin,
   User,
 } from "lucide-react";
-import { Navbar } from "@/components/sections/Navbar";
+import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -68,8 +68,8 @@ export default async function EducationDetailPage({
 
   return (
     <>
-      <Navbar />
-      <main>
+      <SiteHeader />
+      <main className={SITE_HEADER_OFFSET_CLASS}>
         <section className="section border-b border-[#1a1a1a]">
           <div className="container-x">
             <Link

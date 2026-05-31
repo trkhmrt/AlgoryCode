@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Navbar } from "@/components/sections/Navbar";
+import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { ProductHero } from "@/components/product/ProductHero";
 import { PurposeSection } from "@/components/product/PurposeSection";
@@ -43,8 +43,8 @@ export default async function ProductPage({ params }: { params: Params }) {
 
   return (
     <>
-      <Navbar />
-      <main>
+      <SiteHeader />
+      <main className={SITE_HEADER_OFFSET_CLASS}>
         <ProductHero product={product} />
         <PurposeSection product={product} />
         <AdvantagesBento product={product} />

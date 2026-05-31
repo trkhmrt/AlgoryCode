@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Clock3, User } from "lucide-react";
-import { Navbar } from "@/components/sections/Navbar";
+import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -77,8 +77,8 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
   return (
     <>
-      <Navbar />
-      <main>
+      <SiteHeader />
+      <main className={SITE_HEADER_OFFSET_CLASS}>
         <section className="border-b border-[#1a1a1a]">
           <div className="relative overflow-hidden">
             {post.coverImageUrl ? (

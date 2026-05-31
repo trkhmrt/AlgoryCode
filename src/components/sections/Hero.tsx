@@ -1,9 +1,9 @@
 "use client";
 
 import { VideoPlayer } from "@/components/synapse/VideoPlayer";
+import { SiteHeader } from "@/components/sections/SiteHeader";
 import { motion } from "framer-motion";
 import { Boxes, Cable, Workflow } from "lucide-react";
-import Link from "next/link";
 
 const containerVariants = {
   hidden: {},
@@ -43,43 +43,7 @@ export function Hero() {
         <VideoPlayer />
       </div>
 
-      <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/40 px-6 py-4 backdrop-blur-xl md:px-10 lg:px-14">
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-6">
-          <Link href="/" className="text-lg font-medium tracking-tight text-white">
-            Synapse
-          </Link>
-
-          <nav className="hidden items-center gap-8 lg:flex">
-            <span className="rounded-full bg-gradient-to-r from-white/40 via-white/20 to-white/40 p-[1px]">
-              <span className="block rounded-full bg-black px-4 py-2 text-[14px] font-medium text-white">
-                Features
-              </span>
-            </span>
-            <a href="#" className="text-[14px] font-medium text-white/85 transition hover:text-white">
-              Insights
-            </a>
-            <a href="#" className="text-[14px] font-medium text-white/85 transition hover:text-white">
-              About
-            </a>
-            <Link
-              href="/education"
-              className="text-[14px] font-medium text-white/85 transition hover:text-white"
-            >
-              Education
-            </Link>
-            <a href="#" className="text-[14px] font-medium text-white/85 transition hover:text-white">
-              Contact
-            </a>
-          </nav>
-
-          <button
-            type="button"
-            className="hidden shrink-0 rounded-full bg-gradient-to-b from-white to-neutral-400 px-5 py-2.5 text-[13px] font-semibold text-neutral-900 shadow-sm md:inline-flex"
-          >
-            Get Started for Free
-          </button>
-        </div>
-      </header>
+      <SiteHeader />
 
       <div className="relative z-10 flex min-h-screen flex-col px-6 pb-28 pt-28 md:px-10 lg:px-14">
         <motion.div
