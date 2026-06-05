@@ -9,6 +9,7 @@ import {
   CreditCard,
   GraduationCap,
   LayoutDashboard,
+  MessageSquare,
   PenLine,
 } from "lucide-react";
 
@@ -35,6 +36,12 @@ const NAV_ITEMS = [
     href: "/admin/payments",
     label: "Ödemeler",
     icon: CreditCard,
+    exact: false,
+  },
+  {
+    href: "/admin/contacts",
+    label: "İletişim",
+    icon: MessageSquare,
     exact: false,
   },
   {

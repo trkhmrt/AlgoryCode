@@ -2,7 +2,11 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, FileSignature, Headphones, ShieldCheck, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import {
+  submitJobRequestContact,
+  type ContactFormState,
+} from "@/app/contact/actions";
 
 const DOMAINS = [
   "E-Ticaret",
@@ -12,21 +16,20 @@ const DOMAINS = [
   "Eğitim",
 ];
 
+const initialState: ContactFormState = {};
+
 export function CTA() {
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-  const [email, setEmail] = useState("");
-  const [domain, setDomain] = useState("");
-  const [details, setDetails] = useState("");
+  const [state, formAction, pending] = useActionState(
+    submitJobRequestContact,
+    initialState,
+  );
   const [submitted, setSubmitted] = useState(false);
 
-  const valid =
-    name.trim() && company.trim() && /\S+@\S+\.\S+/.test(email) && domain;
-
-  function handleSubmit() {
-    if (!valid) return;
-    setSubmitted(true);
-  }
+  useEffect(() => {
+    if (state.success) {
+      setSubmitted(true);
+    }
+  }, [state.success]);
 
   return (
     <section id="cta" className="section relative overflow-hidden">
@@ -138,44 +141,90 @@ export function CTA() {
                       </p>
                     </motion.div>
                   ) : (
-                    <motion.div
+                    <motion.form
                       key="form"
+                      action={formAction}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
                       className="grid grid-cols-1 sm:grid-cols-2 gap-3"
                     >
-                      <Field label="Ad Soyad">
+                      <input type="hidden" name="source" value="/#cta" />
+
+                      <Field label="Ad">
                         <input
+                          name="firstName"
                           className="input-dark w-full"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
                           placeholder="Adınız"
+                          required
                         />
+                        {state.fieldErrors?.firstName ? (
+                          <span className="mt-1 block text-xs text-red-300">
+                            {state.fieldErrors.firstName}
+                          </span>
+                        ) : null}
+                      </Field>
+                      <Field label="Soyad">
+                        <input
+                          name="lastName"
+                          className="input-dark w-full"
+                          placeholder="Soyadınız"
+                          required
+                        />
+                        {state.fieldErrors?.lastName ? (
+                          <span className="mt-1 block text-xs text-red-300">
+                            {state.fieldErrors.lastName}
+                          </span>
+                        ) : null}
+                      </Field>
+                      <Field label="Telefon">
+                        <input
+                          name="phone"
+                          type="tel"
+                          className="input-dark w-full"
+                          placeholder="05xx xxx xx xx"
+                          required
+                        />
+                        {state.fieldErrors?.phone ? (
+                          <span className="mt-1 block text-xs text-red-300">
+                            {state.fieldErrors.phone}
+                          </span>
+                        ) : null}
                       </Field>
                       <Field label="Şirket">
                         <input
+                          name="company"
                           className="input-dark w-full"
-                          value={company}
-                          onChange={(e) => setCompany(e.target.value)}
                           placeholder="Şirket adı"
+                          required
                         />
+                        {state.fieldErrors?.company ? (
+                          <span className="mt-1 block text-xs text-red-300">
+                            {state.fieldErrors.company}
+                          </span>
+                        ) : null}
                       </Field>
                       <Field label="E-posta" full>
                         <input
+                          name="email"
                           type="email"
                           className="input-dark w-full"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
                           placeholder="mail@şirket.com"
+                          required
                         />
+                        {state.fieldErrors?.email ? (
+                          <span className="mt-1 block text-xs text-red-300">
+                            {state.fieldErrors.email}
+                          </span>
+                        ) : null}
                       </Field>
                       <Field label="Alan" full>
                         <select
+                          name="domain"
                           className="input-dark w-full appearance-none"
-                          value={domain}
-                          onChange={(e) => setDomain(e.target.value)}
+                          defaultValue=""
+                          required
                         >
                           <option value="" disabled>
                             Seçiniz
@@ -186,27 +235,41 @@ export function CTA() {
                             </option>
                           ))}
                         </select>
+                        {state.fieldErrors?.domain ? (
+                          <span className="mt-1 block text-xs text-red-300">
+                            {state.fieldErrors.domain}
+                          </span>
+                        ) : null}
                       </Field>
-                      <Field label="Proje detayı (opsiyonel)" full>
+                      <Field label="Proje detayı" full>
                         <textarea
+                          name="message"
                           className="input-dark w-full min-h-[96px] resize-y"
-                          value={details}
-                          onChange={(e) => setDetails(e.target.value)}
-                          placeholder="Projenizi kısaca anlatın (opsiyonel)"
+                          placeholder="Projenizi kısaca anlatın"
+                          required
                         />
+                        {state.fieldErrors?.message ? (
+                          <span className="mt-1 block text-xs text-red-300">
+                            {state.fieldErrors.message}
+                          </span>
+                        ) : null}
                       </Field>
+                      {state.error ? (
+                        <p className="sm:col-span-2 text-sm text-red-300">
+                          {state.error}
+                        </p>
+                      ) : null}
                       <div className="sm:col-span-2 mt-1">
                         <button
-                          type="button"
-                          onClick={handleSubmit}
-                          disabled={!valid}
+                          type="submit"
+                          disabled={pending}
                           className="w-full h-12 rounded-full bg-[#5ed29c] text-[#070b0a] text-[13px] font-bold uppercase hover:bg-[#6ee0ac] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5ed29c] disabled:opacity-40 disabled:pointer-events-none transition-colors"
                           style={{ fontFamily: "'Inter', sans-serif" }}
                         >
-                          Demo Talep Et →
+                          {pending ? "Gönderiliyor..." : "Demo Talep Et →"}
                         </button>
                       </div>
-                    </motion.div>
+                    </motion.form>
                   )}
                 </AnimatePresence>
               </div>

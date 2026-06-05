@@ -25,6 +25,11 @@ export const EDUCATION_STATUS_LABELS = {
 
 export type EducationStatus = keyof typeof EDUCATION_STATUS_LABELS;
 
+export type EducationContentSection = {
+  title: string;
+  body: string;
+};
+
 export type EducationFormValues = {
   id: string;
   title: string;
@@ -34,6 +39,8 @@ export type EducationFormValues = {
   instructorTitle: string | null;
   instructorBio: string | null;
   instructorAvatarUrl: string | null;
+  instructorGithubUrl: string | null;
+  instructorLinkedinUrl: string | null;
   startDate: Date;
   endDate: Date | null;
   durationWeeks: number | null;
@@ -49,6 +56,7 @@ export type EducationFormValues = {
   location: string | null;
   prerequisites: string | null;
   learningOutcomes: string[];
+  contentSections: EducationContentSection[];
   syllabus: string | null;
   coverImageUrl: string | null;
   status: EducationStatus;
@@ -150,6 +158,64 @@ export function parseLearningOutcomes(value: FormDataEntryValue | null): string[
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
+}
+
+export function parseContentSections(
+  value: FormDataEntryValue | null,
+): EducationContentSection[] {
+  const raw = String(value ?? "").trim();
+  if (!raw) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed
+      .map((item) => {
+        if (!item || typeof item !== "object") {
+          return null;
+        }
+
+        const title = String((item as EducationContentSection).title ?? "").trim();
+        const body = String((item as EducationContentSection).body ?? "").trim();
+
+        if (!title || !body) {
+          return null;
+        }
+
+        return { title, body };
+      })
+      .filter((item): item is EducationContentSection => item !== null);
+  } catch {
+    return [];
+  }
+}
+
+export function normalizeContentSections(value: unknown): EducationContentSection[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => {
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const title = String((item as EducationContentSection).title ?? "").trim();
+      const body = String((item as EducationContentSection).body ?? "").trim();
+
+      if (!title || !body) {
+        return null;
+      }
+
+      return { title, body };
+    })
+    .filter((item): item is EducationContentSection => item !== null);
 }
 
 export function formatEducationDuration(

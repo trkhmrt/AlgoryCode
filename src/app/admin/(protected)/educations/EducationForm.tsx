@@ -16,6 +16,7 @@ import {
   type EducationFormState,
   updateEducation,
 } from "./actions";
+import { EducationContentSectionsField } from "./EducationContentSectionsField";
 
 const initialState: EducationFormState = {};
 
@@ -219,6 +220,30 @@ export function EducationForm({ education }: EducationFormProps) {
             placeholder="https://..."
           />
         </Field>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          <Field label="GitHub URL" name="instructorGithubUrl">
+            <input
+              id="instructorGithubUrl"
+              name="instructorGithubUrl"
+              type="url"
+              defaultValue={education?.instructorGithubUrl ?? ""}
+              className={inputClassName}
+              placeholder="https://github.com/..."
+            />
+          </Field>
+
+          <Field label="LinkedIn URL" name="instructorLinkedinUrl">
+            <input
+              id="instructorLinkedinUrl"
+              name="instructorLinkedinUrl"
+              type="url"
+              defaultValue={education?.instructorLinkedinUrl ?? ""}
+              className={inputClassName}
+              placeholder="https://linkedin.com/in/..."
+            />
+          </Field>
+        </div>
       </Card>
 
       <Card className="space-y-6 p-6">
@@ -422,6 +447,20 @@ export function EducationForm({ education }: EducationFormProps) {
             className={`${textareaClassName} min-h-[180px]`}
           />
         </Field>
+
+        <div className="space-y-2">
+          <div>
+            <p className="block text-[13px] font-medium text-[#ededed]">
+              Açılır İçerik Bölümleri
+            </p>
+            <p className="mt-1 text-xs text-[#888]">
+              Eğitim detay sayfasında tıklanınca açılan başlık ve içerik alanları.
+            </p>
+          </div>
+          <EducationContentSectionsField
+            initialSections={education?.contentSections ?? []}
+          />
+        </div>
       </Card>
 
       <div className="flex flex-wrap gap-3">

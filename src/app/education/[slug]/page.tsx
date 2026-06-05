@@ -4,15 +4,17 @@ import { notFound } from "next/navigation";
 import {
   Calendar,
   Clock3,
-  Globe,
   GraduationCap,
-  MapPin,
   User,
 } from "lucide-react";
 import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
 import { Footer } from "@/components/sections/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { EducationAboutAccordion } from "@/components/education/EducationAboutAccordion";
+import { EducationAskInstructorCard } from "@/components/education/EducationAskInstructorCard";
+import { EducationHeroBackground } from "@/components/education/EducationHeroBackground";
+import { InstructorSocialLinks } from "@/components/education/InstructorSocialLinks";
 import { Card } from "@/components/ui/Card";
 import {
   EDUCATION_FORMAT_LABELS,
@@ -20,6 +22,7 @@ import {
   formatDateTR,
   formatEducationDuration,
   formatPrice,
+  normalizeContentSections,
   type EducationRecord,
 } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
@@ -53,13 +56,18 @@ export default async function EducationDetailPage({
   params,
 }: EducationDetailPageProps) {
   const { slug } = await params;
-  const education: EducationRecord | null = await prisma.education.findFirst({
+  const educationRow = await prisma.education.findFirst({
     where: { slug, status: "PUBLISHED" },
   });
 
-  if (!education) {
+  if (!educationRow) {
     notFound();
   }
+
+  const education: EducationRecord = {
+    ...educationRow,
+    contentSections: normalizeContentSections(educationRow.contentSections),
+  };
 
   const duration = formatEducationDuration(
     education.durationWeeks,
@@ -81,184 +89,147 @@ export default async function EducationDetailPage({
 
             <div className="mt-8 grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
               <div>
-                <div className="flex flex-wrap gap-2">
-                  <Badge>{EDUCATION_LEVEL_LABELS[education.level]}</Badge>
-                  <Badge>{EDUCATION_FORMAT_LABELS[education.format]}</Badge>
-                  <Badge>
-                    {formatPrice(
-                      education.isFree,
-                      education.price,
-                      education.currency,
-                    )}
-                  </Badge>
+                <div className="relative -mx-4 overflow-hidden rounded-[12px] px-4 py-8 md:-mx-6 md:px-6">
+                  <EducationHeroBackground title={education.title} />
+
+                  <div className="relative z-10">
+                    <div className="flex flex-wrap gap-2">
+                      <Badge>{EDUCATION_LEVEL_LABELS[education.level]}</Badge>
+                      <Badge>{EDUCATION_FORMAT_LABELS[education.format]}</Badge>
+                      <Badge>
+                        {formatPrice(
+                          education.isFree,
+                          education.price,
+                          education.currency,
+                        )}
+                      </Badge>
+                    </div>
+
+                    <h1 className="heading mt-5 text-4xl font-semibold md:text-5xl">
+                      {education.title}
+                    </h1>
+                    <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#888]">
+                      {education.shortDescription}
+                    </p>
+                  </div>
                 </div>
 
-                <h1 className="heading mt-5 text-4xl font-semibold md:text-5xl">
-                  {education.title}
-                </h1>
-                <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#888]">
-                  {education.shortDescription}
-                </p>
+                <div className="mt-12 max-w-3xl">
+                  <h2 className="text-xl font-semibold">Eğitim Hakkında</h2>
+                  <EducationAboutAccordion
+                    description={education.fullDescription}
+                  />
+                </div>
               </div>
 
-              <Card className="h-fit p-6">
-                <p className="text-[13px] uppercase tracking-[0.12em] text-[#888]">
-                  Eğitim Özeti
-                </p>
-                <dl className="mt-5 space-y-4 text-sm">
-                  <div className="flex items-start gap-3">
-                    <Calendar size={16} className="mt-0.5 text-[#888]" />
-                    <div>
-                      <dt className="text-[#888]">Başlangıç</dt>
-                      <dd>{formatDateTR(new Date(education.startDate))}</dd>
-                    </div>
-                  </div>
-                  {education.endDate ? (
+              <div className="space-y-6">
+                <Card className="h-fit p-6">
+                  <p className="text-[13px] uppercase tracking-[0.12em] text-[#888]">
+                    Eğitim Özeti
+                  </p>
+                  <dl className="mt-5 space-y-4 text-sm">
                     <div className="flex items-start gap-3">
                       <Calendar size={16} className="mt-0.5 text-[#888]" />
                       <div>
-                        <dt className="text-[#888]">Bitiş</dt>
-                        <dd>{formatDateTR(new Date(education.endDate))}</dd>
+                        <dt className="text-[#888]">Başlangıç</dt>
+                        <dd>{formatDateTR(new Date(education.startDate))}</dd>
                       </div>
                     </div>
-                  ) : null}
-                  {duration ? (
-                    <div className="flex items-start gap-3">
-                      <Clock3 size={16} className="mt-0.5 text-[#888]" />
-                      <div>
-                        <dt className="text-[#888]">Süre</dt>
-                        <dd>{duration}</dd>
+                    {education.endDate ? (
+                      <div className="flex items-start gap-3">
+                        <Calendar size={16} className="mt-0.5 text-[#888]" />
+                        <div>
+                          <dt className="text-[#888]">Bitiş</dt>
+                          <dd>{formatDateTR(new Date(education.endDate))}</dd>
+                        </div>
                       </div>
-                    </div>
-                  ) : null}
-                  {education.schedule ? (
-                    <div className="flex items-start gap-3">
-                      <Clock3 size={16} className="mt-0.5 text-[#888]" />
-                      <div>
-                        <dt className="text-[#888]">Program</dt>
-                        <dd>{education.schedule}</dd>
-                      </div>
-                    </div>
-                  ) : null}
-                  {education.location ? (
-                    <div className="flex items-start gap-3">
-                      <MapPin size={16} className="mt-0.5 text-[#888]" />
-                      <div>
-                        <dt className="text-[#888]">Konum</dt>
-                        <dd>{education.location}</dd>
-                      </div>
-                    </div>
-                  ) : null}
-                  <div className="flex items-start gap-3">
-                    <Globe size={16} className="mt-0.5 text-[#888]" />
-                    <div>
-                      <dt className="text-[#888]">Dil</dt>
-                      <dd>{education.language.toUpperCase()}</dd>
-                    </div>
-                  </div>
-                  {education.maxStudents ? (
-                    <div className="flex items-start gap-3">
-                      <GraduationCap size={16} className="mt-0.5 text-[#888]" />
-                      <div>
-                        <dt className="text-[#888]">Kontenjan</dt>
-                        <dd>{education.maxStudents} kişi</dd>
-                      </div>
-                    </div>
-                  ) : null}
-                </dl>
-                <Button href={`/education/${slug}/checkout`} className="mt-6 w-full">
-                  {education.isFree ? "Kayıt Ol" : "Satın Al"}
-                </Button>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        <section className="section pt-0">
-          <div className="container-x grid gap-8 lg:grid-cols-[1.4fr_0.8fr]">
-            <div className="space-y-8">
-              <Card className="p-6">
-                <h2 className="text-xl font-semibold">Eğitim Hakkında</h2>
-                <div className="mt-4 whitespace-pre-line text-sm leading-7 text-[#888]">
-                  {education.fullDescription}
-                </div>
-              </Card>
-
-              {education.learningOutcomes.length > 0 ? (
-                <Card className="p-6">
-                  <h2 className="text-xl font-semibold">Kazanımlar</h2>
-                  <ul className="mt-4 space-y-3 text-sm text-[#888]">
-                    {education.learningOutcomes.map((outcome) => (
-                      <li key={outcome} className="flex gap-3">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#ededed]" />
-                        <span>{outcome}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              ) : null}
-
-              {education.syllabus ? (
-                <Card className="p-6">
-                  <h2 className="text-xl font-semibold">Müfredat</h2>
-                  <div className="mt-4 whitespace-pre-line text-sm leading-7 text-[#888]">
-                    {education.syllabus}
-                  </div>
-                </Card>
-              ) : null}
-
-              {education.prerequisites ? (
-                <Card className="p-6">
-                  <h2 className="text-xl font-semibold">Ön Koşullar</h2>
-                  <div className="mt-4 whitespace-pre-line text-sm leading-7 text-[#888]">
-                    {education.prerequisites}
-                  </div>
-                </Card>
-              ) : null}
-            </div>
-
-            <div className="space-y-6">
-              <Card className="p-6">
-                <h2 className="text-xl font-semibold">Eğitmen</h2>
-                <div className="mt-5 flex items-start gap-4">
-                  {education.instructorAvatarUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={education.instructorAvatarUrl}
-                      alt={education.instructorName}
-                      className="h-16 w-16 rounded-full border border-[#1a1a1a] object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#1a1a1a] bg-[#080808]">
-                      <User size={24} className="text-[#888]" />
-                    </div>
-                  )}
-                  <div>
-                    <p className="font-medium">{education.instructorName}</p>
-                    {education.instructorTitle ? (
-                      <p className="mt-1 text-sm text-[#888]">
-                        {education.instructorTitle}
-                      </p>
                     ) : null}
-                  </div>
-                </div>
-                {education.instructorBio ? (
-                  <p className="mt-4 text-sm leading-7 text-[#888]">
-                    {education.instructorBio}
-                  </p>
-                ) : null}
-              </Card>
-
-              {education.coverImageUrl ? (
-                <Card className="overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={education.coverImageUrl}
-                    alt={education.title}
-                    className="aspect-[4/3] w-full object-cover"
-                  />
+                    {duration ? (
+                      <div className="flex items-start gap-3">
+                        <Clock3 size={16} className="mt-0.5 text-[#888]" />
+                        <div>
+                          <dt className="text-[#888]">Süre</dt>
+                          <dd>{duration}</dd>
+                        </div>
+                      </div>
+                    ) : null}
+                    {education.schedule ? (
+                      <div className="flex items-start gap-3">
+                        <Clock3 size={16} className="mt-0.5 text-[#888]" />
+                        <div>
+                          <dt className="text-[#888]">Program</dt>
+                          <dd>{education.schedule}</dd>
+                        </div>
+                      </div>
+                    ) : null}
+                    {education.maxStudents ? (
+                      <div className="flex items-start gap-3">
+                        <GraduationCap size={16} className="mt-0.5 text-[#888]" />
+                        <div>
+                          <dt className="text-[#888]">Kontenjan</dt>
+                          <dd>{education.maxStudents} kişi</dd>
+                        </div>
+                      </div>
+                    ) : null}
+                  </dl>
+                  <Button href={`/education/${slug}/checkout`} className="mt-6 w-full">
+                    {education.isFree ? "Kayıt Ol" : "Satın Al"}
+                  </Button>
                 </Card>
-              ) : null}
+
+                <Card className="p-6">
+                  <h2 className="text-xl font-semibold">Eğitmen</h2>
+                  <div className="mt-5 flex items-start gap-4">
+                    {education.instructorAvatarUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={education.instructorAvatarUrl}
+                        alt={education.instructorName}
+                        className="h-16 w-16 rounded-full border border-[#1a1a1a] object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#1a1a1a] bg-[#080808]">
+                        <User size={24} className="text-[#888]" />
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium">{education.instructorName}</p>
+                      {education.instructorTitle ? (
+                        <p className="mt-1 text-sm text-[#888]">
+                          {education.instructorTitle}
+                        </p>
+                      ) : null}
+                      <InstructorSocialLinks
+                        githubUrl={education.instructorGithubUrl}
+                        linkedinUrl={education.instructorLinkedinUrl}
+                      />
+                    </div>
+                  </div>
+                  {education.instructorBio ? (
+                    <p className="mt-4 text-sm leading-7 text-[#888]">
+                      {education.instructorBio}
+                    </p>
+                  ) : null}
+                </Card>
+
+                {education.coverImageUrl ? (
+                  <Card className="overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={education.coverImageUrl}
+                      alt={education.title}
+                      className="aspect-[4/3] w-full object-cover"
+                    />
+                  </Card>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <EducationAskInstructorCard
+                educationId={education.id}
+                educationSlug={education.slug}
+              />
             </div>
           </div>
         </section>

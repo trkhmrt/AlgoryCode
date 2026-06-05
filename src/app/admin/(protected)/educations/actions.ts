@@ -7,7 +7,12 @@ import type {
   EducationLevel,
   EducationStatus,
 } from "@/lib/education";
-import { parseLearningOutcomes, slugify } from "@/lib/education";
+import {
+  normalizeContentSections,
+  parseContentSections,
+  parseLearningOutcomes,
+  slugify,
+} from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 
 export type EducationFormState = {
@@ -24,6 +29,8 @@ type ParsedEducation = {
   instructorTitle: string | null;
   instructorBio: string | null;
   instructorAvatarUrl: string | null;
+  instructorGithubUrl: string | null;
+  instructorLinkedinUrl: string | null;
   startDate: Date;
   endDate: Date | null;
   durationWeeks: number | null;
@@ -39,6 +46,7 @@ type ParsedEducation = {
   location: string | null;
   prerequisites: string | null;
   learningOutcomes: string[];
+  contentSections: ReturnType<typeof parseContentSections>;
   syllabus: string | null;
   coverImageUrl: string | null;
   status: EducationStatus;
@@ -107,6 +115,10 @@ function parseEducationForm(formData: FormData): {
       instructorBio: String(formData.get("instructorBio") ?? "").trim() || null,
       instructorAvatarUrl:
         String(formData.get("instructorAvatarUrl") ?? "").trim() || null,
+      instructorGithubUrl:
+        String(formData.get("instructorGithubUrl") ?? "").trim() || null,
+      instructorLinkedinUrl:
+        String(formData.get("instructorLinkedinUrl") ?? "").trim() || null,
       startDate,
       endDate,
       durationWeeks: parseOptionalInt(formData.get("durationWeeks")),
@@ -122,6 +134,7 @@ function parseEducationForm(formData: FormData): {
       location: String(formData.get("location") ?? "").trim() || null,
       prerequisites: String(formData.get("prerequisites") ?? "").trim() || null,
       learningOutcomes: parseLearningOutcomes(formData.get("learningOutcomes")),
+      contentSections: parseContentSections(formData.get("contentSections")),
       syllabus: String(formData.get("syllabus") ?? "").trim() || null,
       coverImageUrl: String(formData.get("coverImageUrl") ?? "").trim() || null,
       status: String(formData.get("status") ?? "DRAFT") as EducationStatus,
@@ -254,4 +267,54 @@ export async function deleteEducation(id: string) {
   await prisma.education.delete({ where: { id } });
   revalidateEducationPaths(existing.slug);
   redirect("/admin/educations");
+}
+
+export async function duplicateEducation(id: string) {
+  const existing = await prisma.education.findUnique({ where: { id } });
+
+  if (!existing) {
+    redirect("/admin/educations");
+  }
+
+  const copyTitle = `${existing.title} (Kopya)`;
+  const slug = await createUniqueSlug(copyTitle);
+  const contentSections = normalizeContentSections(existing.contentSections);
+
+  const education = await prisma.education.create({
+    data: {
+      slug,
+      title: copyTitle,
+      shortDescription: existing.shortDescription,
+      fullDescription: existing.fullDescription,
+      instructorName: existing.instructorName,
+      instructorTitle: existing.instructorTitle,
+      instructorBio: existing.instructorBio,
+      instructorAvatarUrl: existing.instructorAvatarUrl,
+      instructorGithubUrl: existing.instructorGithubUrl,
+      instructorLinkedinUrl: existing.instructorLinkedinUrl,
+      startDate: existing.startDate,
+      endDate: existing.endDate,
+      durationWeeks: existing.durationWeeks,
+      durationHours: existing.durationHours,
+      schedule: existing.schedule,
+      level: existing.level,
+      format: existing.format,
+      language: existing.language,
+      price: existing.price,
+      currency: existing.currency,
+      isFree: existing.isFree,
+      maxStudents: existing.maxStudents,
+      location: existing.location,
+      prerequisites: existing.prerequisites,
+      learningOutcomes: existing.learningOutcomes,
+      contentSections,
+      syllabus: existing.syllabus,
+      coverImageUrl: existing.coverImageUrl,
+      status: "DRAFT",
+      publishedAt: null,
+    },
+  });
+
+  revalidateEducationPaths(education.slug);
+  redirect(`/admin/educations/${education.id}/edit?duplicated=1`);
 }

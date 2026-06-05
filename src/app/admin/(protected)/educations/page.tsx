@@ -13,6 +13,7 @@ import {
 } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 import { DeleteEducationButton } from "./DeleteEducationButton";
+import { DuplicateEducationButton } from "./DuplicateEducationButton";
 
 export const metadata: Metadata = {
   title: "Eğitimler — Admin",
@@ -118,6 +119,10 @@ export default async function AdminEducationsPage() {
                             Görüntüle
                           </Link>
                         ) : null}
+                        <DuplicateEducationButton
+                          id={education.id}
+                          title={education.title}
+                        />
                         <DeleteEducationButton
                           id={education.id}
                           title={education.title}

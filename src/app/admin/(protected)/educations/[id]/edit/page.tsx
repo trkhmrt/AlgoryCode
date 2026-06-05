@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { normalizeContentSections } from "@/lib/education";
 import { prisma } from "@/lib/prisma";
 import { AdminQueryToasts } from "../../../AdminQueryToasts";
 import { EducationForm } from "../../EducationForm";
@@ -43,7 +44,12 @@ export default async function EditEducationPage({
         <h1 className="heading text-3xl font-semibold">Eğitimi Düzenle</h1>
         <p className="mt-2 text-[#888]">{education.title}</p>
       </div>
-      <EducationForm education={education} />
+      <EducationForm
+        education={{
+          ...education,
+          contentSections: normalizeContentSections(education.contentSections),
+        }}
+      />
     </div>
   );
 }

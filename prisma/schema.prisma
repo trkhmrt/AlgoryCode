@@ -38,6 +38,8 @@ model Education {
   instructorTitle     String?
   instructorBio       String?          @db.Text
   instructorAvatarUrl String?
+  instructorGithubUrl String?
+  instructorLinkedinUrl String?
 
   startDate           DateTime
   endDate             DateTime?
@@ -58,6 +60,7 @@ model Education {
 
   prerequisites       String?          @db.Text
   learningOutcomes    String[]
+  contentSections     Json             @default("[]")
   syllabus            String?          @db.Text
 
   coverImageUrl       String?
@@ -68,9 +71,42 @@ model Education {
   updatedAt           DateTime         @updatedAt
 
   payments            Payment[]
+  contactSubmissions  ContactSubmission[]
 
   @@index([status, startDate])
   @@map("educations")
+}
+
+enum ContactType {
+  EDUCATION
+  JOB_REQUEST
+}
+
+model ContactSubmission {
+  id          String      @id @default(cuid())
+  type        ContactType
+
+  firstName   String
+  lastName    String
+  phone       String
+  email       String?
+  message     String      @db.Text
+
+  educationId String?
+  education   Education?  @relation(fields: [educationId], references: [id], onDelete: SetNull)
+
+  company     String?
+  domain      String?
+  source      String?
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([type, createdAt])
+  @@index([firstName])
+  @@index([lastName])
+  @@index([phone])
+  @@map("contact_submissions")
 }
 
 enum BlogPostStatus {
