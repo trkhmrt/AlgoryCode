@@ -6,12 +6,11 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const NAV_LINKS = [
-  { href: "/#features", label: "Features", highlight: true },
-  { href: "#", label: "Insights", highlight: false },
-  { href: "#", label: "About", highlight: false },
-  { href: "/education", label: "Education", highlight: false },
+  { href: "/#features", label: "Hizmetler", highlight: true },
+  { href: "#", label: "Hakkımızda", highlight: false },
+  { href: "/education", label: "Eğitim", highlight: false },
   { href: "/blog", label: "Blog", highlight: false },
-  { href: "#", label: "Contact", highlight: false },
+  { href: "/contact", label: "İletişim", highlight: false },
 ] as const;
 
 export function SiteHeader() {
@@ -21,39 +20,36 @@ export function SiteHeader() {
     <>
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/40 px-6 py-4 backdrop-blur-xl md:px-10 lg:px-14">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4">
-          <Link href="/" className="text-lg font-medium tracking-tight text-white">
-            Synapse
+          <Link
+            href="/"
+            className="brand-logo-pixel shrink-0 text-[9px] sm:text-[10px] md:text-[11px]"
+          >
+            AlgoryCode
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
-            {NAV_LINKS.map((item) =>
-              item.highlight ? (
-                <Link key={item.label} href={item.href}>
-                  <span className="rounded-full bg-gradient-to-r from-white/40 via-white/20 to-white/40 p-[1px]">
-                    <span className="block rounded-full bg-black px-4 py-2 text-[14px] font-medium text-white">
-                      {item.label}
-                    </span>
-                  </span>
-                </Link>
-              ) : (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="text-[14px] font-medium text-white/85 transition hover:text-white"
-                >
-                  {item.label}
-                </Link>
-              ),
-            )}
+            {NAV_LINKS.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={
+                  item.highlight
+                    ? "inline-flex items-center rounded-full border border-white/25 bg-white/5 px-4 py-2 text-[14px] font-medium text-white"
+                    : "text-[14px] font-medium text-white/85 transition hover:text-white"
+                }
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              className="hidden shrink-0 rounded-full bg-gradient-to-b from-white to-neutral-400 px-5 py-2.5 text-[13px] font-semibold text-neutral-900 shadow-sm md:inline-flex"
+            <Link
+              href="/contact"
+              className="hidden shrink-0 rounded-full bg-gradient-to-b from-white to-neutral-400 px-5 py-2.5 text-[13px] font-semibold text-neutral-900 shadow-sm transition hover:bg-[#ededed] md:inline-flex"
             >
-              Get Started for Free
-            </button>
+              Ücretsiz Başla
+            </Link>
 
             <button
               type="button"
@@ -91,12 +87,13 @@ export function SiteHeader() {
                   {item.label}
                 </Link>
               ))}
-              <button
-                type="button"
-                className="mt-2 rounded-full bg-gradient-to-b from-white to-neutral-400 px-5 py-3 text-[13px] font-semibold text-neutral-900 shadow-sm"
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 block rounded-full bg-gradient-to-b from-white to-neutral-400 px-5 py-3 text-center text-[13px] font-semibold text-neutral-900 shadow-sm"
               >
-                Get Started for Free
-              </button>
+                Ücretsiz Başla
+              </Link>
             </nav>
           </motion.div>
         ) : null}

@@ -164,7 +164,7 @@ export function Pricing() {
                   )}
                 </div>
                 <Button
-                  href={t.name === "Kurumsal" ? "/#cta" : "/#cta"}
+                  href="/contact"
                   variant={t.highlight ? "primary" : "secondary"}
                   size="md"
                   className="mt-6 w-full"

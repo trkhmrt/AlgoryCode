@@ -1,6 +1,6 @@
 @import url("https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap");
 @import url("https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Inter:wght@400;700;800&family=Plus+Jakarta+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Inter:wght@400;700;800&family=Plus+Jakarta+Sans:wght@700&family=Press+Start+2P&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -26,6 +26,8 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
   --font-switzer: "Switzer", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-pixel: "Press Start 2P", ui-monospace, monospace;
 }
 
 * {
@@ -56,6 +58,19 @@ body {
 .heading-tight {
   letter-spacing: -0.03em;
   line-height: 1.1;
+}
+
+.brand-logo-pixel {
+  font-family: var(--font-pixel);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  /* Diagonal shadows stack on the last glyph and read as a vertical line in the nav gap. */
+  text-shadow:
+    0 1px 0 #a3a3a3,
+    0 2px 0 #737373,
+    0 3px 0 #525252;
 }
 
 .section {
@@ -180,6 +195,26 @@ body {
   animation: marquee 30s linear infinite;
   width: max-content;
 }
+.marquee-viewport {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 22%,
+    black 78%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 22%,
+    black 78%,
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
 .marquee-fast {
   animation: marquee 18s linear infinite;
   width: max-content;
@@ -280,72 +315,50 @@ body {
 
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 220px 220px 220px 200px;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  grid-template-rows: 132px minmax(360px, auto);
   grid-template-areas:
-    "stat   stat   beam"
-    "marq   term   beam"
-    "chart  orbit  text"
-    "wide   wide   wide";
+    "marq  marq  marq"
+    "wide  globe text";
   gap: 2px;
   background: #1a1a1a;
   border: 1px solid #1a1a1a;
   border-radius: 16px;
   overflow: hidden;
 }
-.bento-stat {
-  grid-area: stat;
-}
-.bento-beam {
-  grid-area: beam;
-}
 .bento-marq {
   grid-area: marq;
-}
-.bento-term {
-  grid-area: term;
-}
-.bento-chart {
-  grid-area: chart;
-}
-.bento-orbit {
-  grid-area: orbit;
-}
-.bento-text {
-  grid-area: text;
 }
 .bento-wide {
   grid-area: wide;
 }
+.bento-globe {
+  grid-area: globe;
+}
+.bento-text {
+  grid-area: text;
+}
 
 @media (max-width: 1024px) {
   .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(7, 200px);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 120px 300px 240px;
     grid-template-areas:
-      "stat   stat"
-      "beam   beam"
-      "marq   term"
-      "chart  orbit"
-      "text   text"
-      "wide   wide"
-      "wide   wide";
+      "marq  marq"
+      "globe globe"
+      "wide  text";
   }
 }
 
 @media (max-width: 640px) {
   .bento-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(8, 200px);
+    grid-template-rows: 120px 280px auto auto;
     grid-template-areas:
-      "stat"
-      "beam"
       "marq"
-      "term"
-      "chart"
-      "orbit"
-      "text"
-      "wide";
+      "globe"
+      "wide"
+      "text";
   }
 }
 

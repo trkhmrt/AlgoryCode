@@ -21,13 +21,13 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     icon: ShoppingCart,
-    title: "Satışa Hazır Mağazalar",
-    desc: "Ödeme entegrasyonu, stok yönetimi ve sipariş takibi dahil, hızla yayına alın.",
+    title: "E-Ticaret Hizmeti",
+    desc: "Ödeme, stok ve sipariş yönetimi entegre; mağazanızı hızla satışa hazır hale getiriyoruz.",
     accent: "#f59e0b",
   },
   {
     icon: Smartphone,
-    title: "Cross-Platform Mobil",
+    title: "Mobil Uygulama",
     desc: "iOS ve Android için tek kod tabanı. Native performans, modern kullanıcı deneyimi.",
     accent: "#3b82f6",
   },
@@ -39,20 +39,20 @@ const FEATURES: Feature[] = [
   },
   {
     icon: Monitor,
-    title: "Kurumsal Web Platformları",
-    desc: "Ölçeklenebilir SaaS mimarisi, rol tabanlı erişim ve gerçek zamanlı dashboard.",
+    title: "Kurumsal Web Hizmeti",
+    desc: "Markanıza özel kurumsal siteler, yönetim panelleri ve müşteri portalları — ölçeklenebilir, güvenli ve SEO uyumlu.",
     accent: "#00ff88",
   },
   {
     icon: GraduationCap,
-    title: "Eğitim & LMS Sistemleri",
-    desc: "Kurs yönetimi, ilerleme takibi, sertifika ve öğrenci analitikleri tek platformda.",
+    title: "Eğitim Hizmeti",
+    desc: "Bu platformda eğitim alarak uygulama geliştirmeyi öğrenin; adım adım içeriklerle kendi projelerinizi hayata geçirin.",
     accent: "#f97316",
   },
   {
     icon: Layers,
-    title: "Uçtan Uca Teslimat",
-    desc: "Keşif, tasarım, geliştirme ve destek — tüm süreç tek bir ekiple yönetilir.",
+    title: "Bireysel Web Hizmeti",
+    desc: "Kişisel portfolyo, blog ve tanıtım siteleri — modern tasarım, mobil uyum ve hızlı yayına alma.",
     accent: "#ffffff",
   },
 ];
@@ -72,17 +72,21 @@ export function Features() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-[640px] mb-16"
         >
-          <p className="text-[12px] uppercase tracking-[0.18em] text-[#666] mb-4">
-            Neden Biz?
+          <p className="mb-6 text-[22px] font-bold uppercase tracking-[0.06em] text-white md:text-[26px]">
+            Hizmetlerimiz
           </p>
           <h2
             id="features-heading"
-            className="heading text-[36px] md:text-[52px] font-extrabold"
+            className="heading text-[36px] font-extrabold md:text-[52px]"
           >
-            Her domain&apos;de uzman,
+            Her alanda uzman ekip,
             <br />
-            <span className="font-light text-[#888]">her projede ortak.</span>
+            <span className="font-normal text-[#888]">projenize özel çözüm.</span>
           </h2>
+          <p className="mt-4 max-w-[620px] text-[15px] leading-relaxed text-[#888]">
+            E-ticaret, mobil uygulama, yapay zeka, kurumsal ve bireysel web ile eğitim
+            hizmetlerini tek çatı altında sunuyoruz.
+          </p>
         </motion.div>
 
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1a1a1a] border border-[#1a1a1a] rounded-[8px] overflow-hidden">

@@ -134,7 +134,7 @@ export async function submitJobRequestContact(
       message: data.message,
       company: data.company,
       domain: data.domain,
-      source: data.source ?? "/#cta",
+      source: data.source ?? "/contact",
     },
   });
 
