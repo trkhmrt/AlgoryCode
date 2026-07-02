@@ -1,8 +1,11 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { isAdmin } from "@/lib/auth/admin";
-import { createClient } from "@/lib/supabase/server";
+import { authenticateAdmin } from "@/lib/auth/admin";
+import {
+  createAdminSessionCookie,
+  deleteAdminSessionCookie,
+} from "@/lib/auth/session";
 
 export type LoginState = {
   error?: string;
@@ -19,30 +22,16 @@ export async function login(
     return { error: "E-posta ve şifre zorunludur." };
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
+  const session = await authenticateAdmin(email, password);
+  if (!session) {
     return { error: "E-posta veya şifre hatalı." };
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!isAdmin(user)) {
-    await supabase.auth.signOut();
-    return { error: "Bu hesabın admin erişimi yok." };
-  }
-
+  await createAdminSessionCookie(session);
   redirect("/admin");
 }
 
 export async function logout() {
-  const supabase = await createClient();
-  await supabase.auth.signOut();
+  await deleteAdminSessionCookie();
   redirect("/admin/login");
 }

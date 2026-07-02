@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { isAdmin } from "@/lib/auth/admin";
-import { createClient } from "@/lib/supabase/server";
+import { isAuthenticatedAdmin } from "@/lib/auth/admin";
+import { getAdminSession } from "@/lib/auth/session";
 import { logout } from "../login/actions";
 import { AdminSidebar } from "./AdminSidebar";
 
@@ -10,12 +10,9 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const session = await getAdminSession();
 
-  if (!user || !isAdmin(user)) {
+  if (!isAuthenticatedAdmin(session)) {
     redirect("/admin/login");
   }
 
@@ -37,7 +34,7 @@ export default async function AdminLayout({
               Siteyi Gör
             </Link>
             <span className="hidden text-sm text-[#888] md:inline">
-              {user.email}
+              {session.name ?? session.email}
             </span>
             <form action={logout}>
               <button
