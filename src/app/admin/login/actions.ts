@@ -22,12 +22,35 @@ export async function login(
     return { error: "E-posta ve şifre zorunludur." };
   }
 
-  const session = await authenticateAdmin(email, password);
+  if (!process.env.DATABASE_URL) {
+    return { error: "Veritabanı yapılandırması eksik (DATABASE_URL)." };
+  }
+
+  if (!process.env.ADMIN_SESSION_SECRET) {
+    return { error: "Oturum yapılandırması eksik (ADMIN_SESSION_SECRET)." };
+  }
+
+  let session;
+  try {
+    session = await authenticateAdmin(email, password);
+  } catch (error) {
+    console.error("Admin login database error:", error);
+    return {
+      error: "Veritabanına bağlanılamadı. Lütfen daha sonra tekrar deneyin.",
+    };
+  }
+
   if (!session) {
     return { error: "E-posta veya şifre hatalı." };
   }
 
-  await createAdminSessionCookie(session);
+  try {
+    await createAdminSessionCookie(session);
+  } catch (error) {
+    console.error("Admin session cookie error:", error);
+    return { error: "Oturum oluşturulamadı. Sunucu yapılandırmasını kontrol edin." };
+  }
+
   redirect("/admin");
 }
 
