@@ -8,9 +8,9 @@ const VARIANTS: Record<Variant, string> = {
   primary:
     "bg-white text-black border border-white hover:bg-[#ededed] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
   secondary:
-    "bg-transparent text-[#ededed] border border-[#1a1a1a] hover:border-[#333] hover:bg-[#0a0a0a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#333]",
+    "bg-transparent text-text border border-border hover:border-border-bright hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-bright",
   ghost:
-    "bg-transparent text-[#ededed] border border-transparent hover:bg-[#0a0a0a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#333]",
+    "bg-transparent text-text border border-transparent hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-border-bright",
 };
 
 const SIZES: Record<Size, string> = {

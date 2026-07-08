@@ -89,7 +89,7 @@ function BeamConnector() {
 export function NodeTopology() {
   return (
     <section
-      className={`section border-b border-[#1a1a1a] ${spaceGrotesk.className}`}
+      className={`dark section border-b border-border bg-bg text-text ${spaceGrotesk.className}`}
       aria-labelledby="node-topology-heading"
     >
       <div className="container-x relative overflow-hidden">
@@ -100,17 +100,16 @@ export function NodeTopology() {
 
         <div className="relative z-10 mb-12 max-w-[640px]">
           <p className="mb-4 text-[12px] uppercase tracking-[0.18em] text-[#666]">
-            Mimari
+          NEDEN BİZ?
           </p>
           <h2
             id="node-topology-heading"
             className="heading text-[32px] font-extrabold tracking-tight text-[#ededed] md:text-[40px]"
           >
-            Düğüm topolojisi
+           Deneyimle Kanıtlanmış Yaklaşım
           </h2>
-          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#888]">
-            Kenar düğümlerden merkez çekirdeğe akan bağlantı hatları — altyapının canlı
-            haritası.
+          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
+          Fikirden yayına, her aşamayı birbirine bağlayan, deneyimle şekillenmiş bir geliştirme süreci.
           </p>
         </div>
 
@@ -125,9 +124,6 @@ export function NodeTopology() {
                   <Icon className="h-5 w-5 text-white sm:h-6 sm:w-6 lg:h-7 lg:w-7" strokeWidth={1.5} />
                 </div>
                 <div className="min-w-0 text-center lg:text-left">
-                  <span className="mb-0.5 block text-[8px] font-semibold uppercase tracking-wider text-[#e5e2e1]/70 sm:text-[9px] lg:text-[10px] lg:tracking-widest">
-                    Düğüm {id}
-                  </span>
                   <span className="block text-xs font-medium leading-tight text-white sm:text-sm lg:text-lg">
                     {label}
                   </span>
@@ -153,15 +149,9 @@ export function NodeTopology() {
                 <Network className="relative h-12 w-12 text-white" strokeWidth={1.25} />
               </div>
               <h3 className="mb-2 text-2xl font-medium uppercase tracking-tight text-white md:text-[28px]">
+                
                 AlgoryCode
               </h3>
-              <p className="text-base text-[#c4c7c8]">Merkez sinaps çekirdeği</p>
-              <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-4 py-2">
-                <span className="h-2 w-2 rounded-full bg-white shadow-[0_0_10px_#ffffff]" />
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-white">
-                  Sistem çevrimiçi
-                </span>
-              </div>
             </div>
           </div>
         </div>

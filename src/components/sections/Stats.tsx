@@ -57,26 +57,26 @@ export function Stats() {
 
   return (
     <section
-      className="section border-b border-[#1a1a1a]"
+      className="section border-b border-border"
       aria-labelledby="stats-heading"
     >
       <h2 id="stats-heading" className="sr-only">
         Platform istatistikleri
       </h2>
       <div ref={ref} className="container-x">
-        <ul className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-[#1a1a1a] border border-[#1a1a1a] rounded-[8px] overflow-hidden">
+        <ul className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-border border border-border rounded-[8px] overflow-hidden">
           {STATS.map((s, i) => (
             <motion.li
               key={s.label}
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
-              className="p-8 lg:p-10 bg-[#0a0a0a]"
+              className="p-8 lg:p-10 bg-surface"
             >
               <p className="text-[44px] md:text-[56px] font-extrabold heading-tight">
                 <CountStat stat={s} inView={inView} />
               </p>
-              <p className="mt-2 text-[13px] uppercase tracking-[0.16em] text-[#666]">
+              <p className="mt-2 text-[13px] uppercase tracking-[0.16em] text-dim">
                 {s.label}
               </p>
             </motion.li>

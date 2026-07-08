@@ -61,7 +61,7 @@ export function Features() {
   return (
     <section
       id="features"
-      className="section border-b border-[#1a1a1a]"
+      className="section border-b border-border"
       aria-labelledby="features-heading"
     >
       <div className="container-x">
@@ -72,7 +72,7 @@ export function Features() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-[640px] mb-16"
         >
-          <p className="mb-6 text-[22px] font-bold uppercase tracking-[0.06em] text-white md:text-[26px]">
+          <p className="mb-6 text-[22px] font-bold uppercase tracking-[0.06em] text-text md:text-[26px]">
             Hizmetlerimiz
           </p>
           <h2
@@ -81,15 +81,15 @@ export function Features() {
           >
             Her alanda uzman ekip,
             <br />
-            <span className="font-normal text-[#888]">projenize özel çözüm.</span>
+            <span className="font-normal text-muted">projenize özel çözüm.</span>
           </h2>
-          <p className="mt-4 max-w-[620px] text-[15px] leading-relaxed text-[#888]">
+          <p className="mt-4 max-w-[620px] text-[15px] leading-relaxed text-muted">
             E-ticaret, mobil uygulama, yapay zeka, kurumsal ve bireysel web ile eğitim
             hizmetlerini tek çatı altında sunuyoruz.
           </p>
         </motion.div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1a1a1a] border border-[#1a1a1a] rounded-[8px] overflow-hidden">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {FEATURES.map((f, i) => {
             const Icon = f.icon;
             return (
@@ -103,23 +103,27 @@ export function Features() {
                   delay: i * 0.08,
                   ease: "easeOut",
                 }}
-                className="group relative bg-[#0a0a0a] hover:bg-[#0d0d0d] p-8 transition-colors duration-300"
+                className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-8 shadow-[0_1px_2px_rgba(15,15,15,0.04),0_10px_28px_-14px_rgba(15,15,15,0.12)] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-border-bright hover:shadow-[0_2px_4px_rgba(15,15,15,0.05),0_22px_48px_-18px_rgba(15,15,15,0.22)] dark:shadow-[0_1px_2px_rgba(0,0,0,0.4)] dark:hover:shadow-[0_24px_48px_-18px_rgba(0,0,0,0.7)]"
               >
                 <span
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-40"
                   style={{ background: f.accent }}
                   aria-hidden
                 />
                 <div
-                  className="h-9 w-9 inline-flex items-center justify-center border border-[#1a1a1a] group-hover:border-[#333] rounded-md transition-colors duration-300"
-                  style={{ color: f.accent }}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border transition-colors duration-300"
+                  style={{
+                    color: f.accent,
+                    backgroundColor: `color-mix(in srgb, ${f.accent} 12%, transparent)`,
+                    borderColor: `color-mix(in srgb, ${f.accent} 30%, transparent)`,
+                  }}
                 >
-                  <Icon size={16} />
+                  <Icon size={18} />
                 </div>
-                <h3 className="mt-6 text-[17px] font-semibold tracking-tight">
+                <h3 className="mt-6 text-[17px] font-semibold tracking-tight text-text">
                   {f.title}
                 </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-[#888]">
+                <p className="mt-2 text-[14px] leading-relaxed text-muted">
                   {f.desc}
                 </p>
               </motion.li>

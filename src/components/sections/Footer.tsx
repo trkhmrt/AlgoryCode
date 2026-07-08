@@ -45,24 +45,24 @@ const COLUMNS: Array<{
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#1a1a1a] mt-0">
+    <footer className="mt-0 border-t border-border">
       <div className="container-x py-20">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2">
-              <span className="inline-block w-5 h-5 bg-white" aria-hidden />
+              <span className="inline-block h-5 w-5 bg-text" aria-hidden />
               <span className="text-[15px] font-semibold tracking-tight">
-                Stack
+                AlgoryCode
               </span>
             </Link>
-            <p className="mt-4 text-[13px] text-[#444] max-w-[240px] leading-relaxed">
+            <p className="mt-4 max-w-[240px] text-[13px] leading-relaxed text-dim">
               E-ticaretten yapay zekaya, beş uzmanlıkta dijital ürünler
               tasarlıyor ve geliştiriyoruz.
             </p>
           </div>
           {COLUMNS.map((c) => (
             <div key={c.title}>
-              <p className="text-[12px] uppercase tracking-[0.18em] text-[#888] mb-4">
+              <p className="mb-4 text-[12px] uppercase tracking-[0.18em] text-muted">
                 {c.title}
               </p>
               <ul className="space-y-3">
@@ -70,7 +70,7 @@ export function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-[13px] text-[#444] hover:text-[#888] transition-colors"
+                      className="text-[13px] text-dim transition-colors hover:text-muted"
                     >
                       {l.label}
                     </Link>
@@ -82,10 +82,10 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[#1a1a1a]">
-        <div className="container-x h-16 flex flex-col sm:flex-row items-center justify-between gap-4 py-4">
-          <p className="text-[12px] text-[#444]">
-            © 2025 Stack. Tüm hakları saklıdır.
+      <div className="border-t border-border">
+        <div className="container-x flex h-16 flex-col items-center justify-between gap-4 py-4 sm:flex-row">
+          <p className="text-[12px] text-dim">
+            © 2025 AlgoryCode. Tüm hakları saklıdır.
           </p>
           <ul className="flex items-center gap-1">
             {[
@@ -97,7 +97,7 @@ export function Footer() {
                 <Link
                   href="/"
                   aria-label={label}
-                  className="h-9 w-9 inline-flex items-center justify-center text-[#444] hover:text-[#888] transition-colors"
+                  className="inline-flex h-9 w-9 items-center justify-center text-dim transition-colors hover:text-muted"
                 >
                   <Icon size={15} />
                 </Link>

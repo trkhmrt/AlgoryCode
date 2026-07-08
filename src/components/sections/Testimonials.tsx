@@ -62,7 +62,7 @@ const TESTIMONIALS: Testimonial[] = [
 export function Testimonials() {
   return (
     <section
-      className="section border-b border-[#1a1a1a]"
+      className="section border-b border-border"
       aria-labelledby="testimonials-heading"
     >
       <div className="container-x">
@@ -73,7 +73,7 @@ export function Testimonials() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-[640px] mb-16"
         >
-          <p className="text-[12px] uppercase tracking-[0.18em] text-[#666] mb-4">
+          <p className="text-[12px] uppercase tracking-[0.18em] text-dim mb-4">
             Müşterilerimiz
           </p>
           <h2
@@ -92,12 +92,12 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
-              className="bg-[#0a0a0a] border border-[#1a1a1a] rounded-[8px] p-7 hover:border-[#333] transition-colors duration-300"
+              className="rounded-2xl border border-border bg-surface p-7 shadow-[0_1px_2px_rgba(15,15,15,0.04),0_10px_28px_-14px_rgba(15,15,15,0.12)] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5 hover:border-border-bright hover:shadow-[0_2px_4px_rgba(15,15,15,0.05),0_20px_44px_-18px_rgba(15,15,15,0.2)] dark:shadow-[0_1px_2px_rgba(0,0,0,0.4)] dark:hover:shadow-[0_22px_44px_-18px_rgba(0,0,0,0.7)]"
             >
-              <p className="text-[15px] leading-relaxed text-[#ededed]">
+              <p className="text-[15px] leading-relaxed text-text">
                 &ldquo;{t.quote}&rdquo;
               </p>
-              <div className="mt-7 pt-6 border-t border-[#1a1a1a] flex items-center gap-3">
+              <div className="mt-7 flex items-center gap-3 border-t border-border pt-6">
                 <span
                   className="h-9 w-9 rounded-full grid place-items-center text-[12px] font-semibold text-black"
                   style={{
@@ -110,8 +110,8 @@ export function Testimonials() {
                   {t.initials}
                 </span>
                 <div>
-                  <p className="text-[13px] text-[#ededed] font-medium">{t.name}</p>
-                  <p className="text-[12px] text-[#666]">
+                  <p className="text-[13px] text-text font-medium">{t.name}</p>
+                  <p className="text-[12px] text-muted">
                     {t.role} · {t.company}
                   </p>
                 </div>

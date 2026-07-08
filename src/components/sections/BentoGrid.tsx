@@ -191,7 +191,7 @@ export function BentoGrid() {
   return (
     <section
       id="bento"
-      className="section border-b border-[#1a1a1a]"
+      className="dark section border-b border-border bg-bg text-text"
       aria-labelledby="bento-heading"
     >
       <div className="container-x">

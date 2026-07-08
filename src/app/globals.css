@@ -3,20 +3,54 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Inter:wght@400;700;800&family=Plus+Jakarta+Sans:wght@700&family=Press+Start+2P&display=swap");
 @import "tailwindcss";
 
-@theme {
-  --color-foreground: #ffffff;
-  --color-background: #070612;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --color-bg: #000000;
-  --color-surface: #0a0a0a;
-  --color-surface-2: #080808;
-  --color-surface-3: #0d0d0d;
-  --color-border: #1a1a1a;
-  --color-border-bright: #2e2e2e;
-  --color-text: #ededed;
-  --color-muted: #888888;
-  --color-dim: #444444;
-  --color-faint: #333333;
+:root {
+  --theme-bg: #f5f5f3;
+  --theme-surface: #ffffff;
+  --theme-surface-2: #f0f0ee;
+  --theme-surface-3: #e8e8e5;
+  --theme-text: #121212;
+  --theme-muted: #646464;
+  --theme-dim: #949494;
+  --theme-border: #e0e0dc;
+  --theme-border-bright: #cbcbc7;
+  --theme-header-bg: rgba(255, 255, 255, 0.78);
+  --theme-header-border: rgba(0, 0, 0, 0.08);
+  --theme-selection-bg: #121212;
+  --theme-selection-fg: #f5f5f3;
+}
+
+.dark {
+  --theme-bg: #000000;
+  --theme-surface: #0a0a0a;
+  --theme-surface-2: #080808;
+  --theme-surface-3: #0d0d0d;
+  --theme-text: #ededed;
+  --theme-muted: #888888;
+  --theme-dim: #444444;
+  --theme-border: #1a1a1a;
+  --theme-border-bright: #2e2e2e;
+  --theme-header-bg: rgba(0, 0, 0, 0.4);
+  --theme-header-border: rgba(255, 255, 255, 0.1);
+  --theme-selection-bg: #ededed;
+  --theme-selection-fg: #000000;
+}
+
+@theme inline {
+  --color-foreground: var(--theme-text);
+  --color-background: var(--theme-bg);
+
+  --color-bg: var(--theme-bg);
+  --color-surface: var(--theme-surface);
+  --color-surface-2: var(--theme-surface-2);
+  --color-surface-3: var(--theme-surface-3);
+  --color-border: var(--theme-border);
+  --color-border-bright: var(--theme-border-bright);
+  --color-text: var(--theme-text);
+  --color-muted: var(--theme-muted);
+  --color-dim: var(--theme-dim);
+  --color-faint: var(--theme-dim);
 
   --color-accent-speed: #00ff88;
   --color-accent-security: #3b82f6;
@@ -31,19 +65,27 @@
 }
 
 * {
-  border-color: #1a1a1a;
+  border-color: var(--theme-border);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 html,
 body {
-  background: #000;
-  color: #ededed;
+  background: var(--theme-bg);
+  color: var(--theme-text);
   font-feature-settings: "ss01", "cv11";
 }
 
 ::selection {
-  background: #ededed;
-  color: #000;
+  background: var(--theme-selection-bg);
+  color: var(--theme-selection-fg);
 }
 
 .tabular {
@@ -65,8 +107,15 @@ body {
   line-height: 1.4;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  color: #121212;
+  text-shadow:
+    0 1px 0 #d4d4d4,
+    0 2px 0 #b3b3b3,
+    0 3px 0 #8f8f8f;
+}
+
+.dark .brand-logo-pixel {
   color: #ffffff;
-  /* Diagonal shadows stack on the last glyph and read as a vertical line in the nav gap. */
   text-shadow:
     0 1px 0 #a3a3a3,
     0 2px 0 #737373,
@@ -178,7 +227,7 @@ body {
 }
 
 .nav-blur {
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--theme-header-bg);
   backdrop-filter: saturate(180%) blur(12px);
   -webkit-backdrop-filter: saturate(180%) blur(12px);
 }
@@ -459,14 +508,19 @@ body {
 }
 
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.01);
+  background: rgba(255, 255, 255, 0.55);
   background-blend-mode: luminosity;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: none;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.65);
   position: relative;
   overflow: hidden;
+}
+
+.dark .liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .liquid-glass::before {

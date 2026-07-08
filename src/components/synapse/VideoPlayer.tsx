@@ -61,7 +61,7 @@ export const VideoPlayer = memo(function VideoPlayer() {
       loop
       playsInline
       preload="auto"
-      className="absolute inset-0 h-full w-full object-cover"
+      className="absolute inset-0 h-full w-full object-cover object-center"
       aria-hidden
     />
   );
