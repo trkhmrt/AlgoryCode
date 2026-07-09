@@ -1,6 +1,7 @@
 @import url("https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap");
 @import url("https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Inter:wght@400;700;800&family=Plus+Jakarta+Sans:wght@700&family=Press+Start+2P&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=open-sauce-one@400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Inter:wght@400;700;800&family=Plus+Jakarta+Sans:wght@700&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap");
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -19,6 +20,27 @@
   --theme-header-border: rgba(0, 0, 0, 0.08);
   --theme-selection-bg: #121212;
   --theme-selection-fg: #f5f5f3;
+
+  --background: #fafafa;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+  --primary: #171717;
+  --primary-foreground: #fafafa;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #a3a3a3;
+  --radius: 0.625rem;
 }
 
 .dark {
@@ -31,15 +53,58 @@
   --theme-dim: #444444;
   --theme-border: #1a1a1a;
   --theme-border-bright: #2e2e2e;
-  --theme-header-bg: rgba(0, 0, 0, 0.4);
-  --theme-header-border: rgba(255, 255, 255, 0.1);
+  --theme-header-bg: rgba(0, 0, 0, 0.72);
+  --theme-header-border: rgba(255, 255, 255, 0.08);
   --theme-selection-bg: #ededed;
   --theme-selection-fg: #000000;
+
+  --background: #000000;
+  --foreground: #ededed;
+  --card: #0a0a0a;
+  --card-foreground: #ededed;
+  --popover: #0a0a0a;
+  --popover-foreground: #ededed;
+  --primary: #fafafa;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ededed;
+  --muted: #1a1a1a;
+  --muted-foreground: #888888;
+  --accent: #1a1a1a;
+  --accent-foreground: #ededed;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #ededed;
+  --border: #1a1a1a;
+  --input: #1a1a1a;
+  --ring: #404040;
 }
 
 @theme inline {
-  --color-foreground: var(--theme-text);
-  --color-background: var(--theme-bg);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 
   --color-bg: var(--theme-bg);
   --color-surface: var(--theme-surface);
@@ -60,8 +125,10 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
   --font-switzer: "Switzer", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-pixel: "Press Start 2P", ui-monospace, monospace;
+  --font-heading: "Lora", ui-serif, Georgia, serif;
+  --font-open-sauce: "Open Sauce One", ui-sans-serif, system-ui, sans-serif;
+  --font-pixel: "Pixelify Sans", "Press Start 2P", ui-monospace, monospace;
+  --color-heading: #745000;
 }
 
 * {
@@ -93,8 +160,17 @@ body {
 }
 
 .heading {
-  letter-spacing: -0.04em;
+  font-family: var(--font-heading);
+  color: var(--color-heading);
+  letter-spacing: -0.02em;
   line-height: 1.05;
+}
+
+.section-desc {
+  font-family: var(--font-open-sauce);
+  color: #000000;
+  font-size: 24px;
+  line-height: 1.5;
 }
 
 .heading-tight {
@@ -103,23 +179,25 @@ body {
 }
 
 .brand-logo-pixel {
-  font-family: var(--font-pixel);
-  line-height: 1.4;
-  letter-spacing: 0.02em;
+  font-family: var(--font-pixel) !important;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #121212;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-synthesis: none;
   text-shadow:
-    0 1px 0 #d4d4d4,
-    0 2px 0 #b3b3b3,
-    0 3px 0 #8f8f8f;
+    -2px 0 #2ee8ff,
+    2px 0 #ff2ea6;
 }
 
 .dark .brand-logo-pixel {
   color: #ffffff;
   text-shadow:
-    0 1px 0 #a3a3a3,
-    0 2px 0 #737373,
-    0 3px 0 #525252;
+    -2px 0 #2ee8ff,
+    2px 0 #ff2ea6;
 }
 
 .section {
@@ -142,9 +220,64 @@ body {
   padding-right: 24px;
 }
 
+.vercel-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.vercel-glow {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% -20%,
+    rgba(120, 119, 198, 0.18),
+    transparent
+  );
+}
+
+.gradient-text {
+  background-image: linear-gradient(to bottom, #ededed 30%, #888888 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .dot-grid {
   background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+.admin-shell {
+  color-scheme: dark;
+}
+
+.admin-shell .heading {
+  color: #ededed;
+}
+
+.admin-shell .admin-stat-card {
+  border-color: #1a1a1a;
+  background: #0a0a0a;
+}
+
+.admin-shell .admin-row {
+  border-color: #1a1a1a;
+  background: #080808;
+}
+
+.admin-shell .admin-input {
+  border: 1px solid #1a1a1a;
+  background: #000000;
+  color: #ededed;
+}
+
+.admin-shell .admin-input::placeholder {
+  color: #444444;
+}
+
+.admin-shell .admin-input:focus {
+  border-color: #333333;
+  outline: none;
 }
 
 .grid-lines {

@@ -114,7 +114,7 @@ export default async function AdminDashboardPage() {
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {stats.map((stat) => (
-          <Card key={stat.label} className="p-5">
+          <Card key={stat.label} className="admin-stat-card p-5">
             <p className="text-[13px] uppercase tracking-[0.12em] text-[#888]">
               {stat.label}
             </p>
@@ -130,7 +130,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <Card className="p-6">
+        <Card className="admin-stat-card p-6">
           <div className="mb-5 flex items-center justify-between gap-4">
             <div>
               <h2 className="text-lg font-semibold">Son Ödemeler</h2>
@@ -153,7 +153,7 @@ export default async function AdminDashboardPage() {
               {recentPayments.map((payment) => (
                 <div
                   key={payment.id}
-                  className="rounded-md border border-[#1a1a1a] bg-[#080808] p-4"
+                  className="admin-row rounded-md border p-4"
                 >
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
@@ -181,7 +181,7 @@ export default async function AdminDashboardPage() {
           )}
         </Card>
 
-        <Card className="p-6">
+        <Card className="admin-stat-card p-6">
           <div className="mb-5 flex items-center justify-between gap-4">
             <div>
               <h2 className="text-lg font-semibold">Son Eğitimler</h2>
@@ -206,7 +206,7 @@ export default async function AdminDashboardPage() {
               {recentEducations.map((education) => (
                 <div
                   key={education.id}
-                  className="flex flex-col gap-3 rounded-md border border-[#1a1a1a] bg-[#080808] p-4 sm:flex-row sm:items-center sm:justify-between"
+                  className="admin-row flex flex-col gap-3 rounded-md border p-4 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
                     <p className="font-medium">{education.title}</p>

@@ -22,6 +22,7 @@ const initialState: EducationFormState = {};
 
 type EducationFormProps = {
   education?: EducationFormValues;
+  curricula?: Array<{ id: string; title: string }>;
 };
 
 function Field({
@@ -52,7 +53,7 @@ const inputClassName =
 const textareaClassName =
   "min-h-[120px] w-full rounded-md border border-[#1a1a1a] bg-black px-3 py-3 text-sm text-[#ededed] outline-none transition-colors placeholder:text-[#444] focus:border-[#333]";
 
-export function EducationForm({ education }: EducationFormProps) {
+export function EducationForm({ education, curricula = [] }: EducationFormProps) {
   const action = education
     ? updateEducation.bind(null, education.id)
     : createEducation;
@@ -439,7 +440,32 @@ export function EducationForm({ education }: EducationFormProps) {
           />
         </Field>
 
-        <Field label="Müfredat" name="syllabus">
+        <Field label="Müfredat" name="curriculumId" error={state.fieldErrors?.curriculumId}>
+          <select
+            id="curriculumId"
+            name="curriculumId"
+            defaultValue={education?.curriculumId ?? ""}
+            className={inputClassName}
+          >
+            <option value="">Müfredat seçilmedi</option>
+            {curricula.map((curriculum) => (
+              <option key={curriculum.id} value={curriculum.id}>
+                {curriculum.title}
+              </option>
+            ))}
+          </select>
+          <p className="text-xs text-[#888]">
+            İçerikler Müfredatlar sayfasından düzenlenir.{" "}
+            <a
+              href="/admin/curriculums"
+              className="text-[#ededed] underline-offset-2 hover:underline"
+            >
+              Müfredatlara git
+            </a>
+          </p>
+        </Field>
+
+        <Field label="Müfredat notu (opsiyonel)" name="syllabus">
           <textarea
             id="syllabus"
             name="syllabus"

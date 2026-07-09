@@ -31,7 +31,13 @@ export default async function EditEducationPage({
 }: EditEducationPageProps) {
   const { id } = await params;
   const query = await searchParams;
-  const education = await prisma.education.findUnique({ where: { id } });
+  const [education, curricula] = await Promise.all([
+    prisma.education.findUnique({ where: { id } }),
+    prisma.curriculum.findMany({
+      orderBy: { title: "asc" },
+      select: { id: true, title: true },
+    }),
+  ]);
 
   if (!education) {
     notFound();
@@ -45,6 +51,7 @@ export default async function EditEducationPage({
         <p className="mt-2 text-[#888]">{education.title}</p>
       </div>
       <EducationForm
+        curricula={curricula}
         education={{
           ...education,
           contentSections: normalizeContentSections(education.contentSections),

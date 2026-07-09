@@ -2,41 +2,121 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import {
+  ArrowRight,
+  BookOpen,
+  GraduationCap,
+  Menu,
+  MessageSquare,
+  PenLine,
+  X,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/#features", label: "Hizmetler", highlight: true },
-  { href: "#", label: "Hakkımızda", highlight: false },
-  { href: "/education", label: "Eğitim", highlight: false },
-  { href: "/blog", label: "Blog", highlight: false },
-  { href: "/contact", label: "İletişim", highlight: false },
+  {
+    href: "/#features",
+    label: "Hizmetler",
+    description: "Çözümlerimizi keşfedin",
+    icon: BookOpen,
+    highlight: true,
+  },
+  {
+    href: "/education",
+    label: "Eğitim",
+    description: "Programları inceleyin",
+    icon: GraduationCap,
+    highlight: false,
+  },
+  {
+    href: "/blog",
+    label: "Blog",
+    description: "Yazılar ve güncellemeler",
+    icon: PenLine,
+    highlight: false,
+  },
+  {
+    href: "/contact",
+    label: "İletişim",
+    description: "Bizimle konuşun",
+    icon: MessageSquare,
+    highlight: false,
+  },
 ] as const;
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  transparent?: boolean;
+};
+
+export function SiteHeader({ transparent = false }: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!transparent) return;
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [transparent]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileOpen]);
+
+  const headerSolid =
+    mobileOpen ||
+    (transparent ? scrolled : true);
 
   return (
     <>
-      <header className="fixed left-0 right-0 top-0 z-50 border-b border-[color:var(--theme-header-border)] bg-[color:var(--theme-header-bg)] px-6 py-4 backdrop-blur-xl md:px-10 lg:px-14">
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4">
+      <header
+        className={cn(
+          "fixed left-0 right-0 top-0 z-50 px-6 py-3.5 transition-[background-color,border-color,backdrop-filter] duration-300 md:px-10 lg:px-14",
+          headerSolid
+            ? "border-b border-black/10 bg-white/95 backdrop-blur-xl"
+            : "border-none bg-transparent",
+        )}
+      >
+        <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 lg:justify-start">
           <Link
             href="/"
-            className="brand-logo-pixel shrink-0 text-[9px] sm:text-[10px] md:text-[11px]"
+            onClick={() => setMobileOpen(false)}
+            className="brand-logo-pixel shrink-0 text-[22px] sm:text-[24px] md:text-[28px]"
           >
-            AlgoryCode
+            ALGORYCODE
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex">
+          <nav className="hidden items-center gap-1 lg:ml-auto lg:flex">
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
                 className={
                   item.highlight
-                    ? "inline-flex items-center rounded-full border border-border bg-surface px-4 py-2 text-[14px] font-medium text-text dark:border-white/25 dark:bg-white/5 dark:text-white"
-                    : "text-[14px] font-medium text-muted transition hover:text-text dark:text-white/85 dark:hover:text-white"
+                    ? "inline-flex items-center rounded-full border border-border bg-secondary/80 px-4 py-2 text-[14px] font-medium text-foreground"
+                    : "rounded-md px-3 py-2 text-[14px] font-medium text-muted-foreground transition hover:text-foreground"
                 }
               >
                 {item.label}
@@ -44,25 +124,18 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-
-            <Link
-              href="/contact"
-              className="hidden shrink-0 rounded-full bg-gradient-to-b from-white to-neutral-400 px-5 py-2.5 text-[13px] font-semibold text-neutral-900 shadow-sm transition hover:bg-[#ededed] md:inline-flex"
-            >
-              Ücretsiz Başla
-            </Link>
-
-            <button
+          <div className="flex items-center gap-2 lg:ml-0">
+            <Button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-text transition hover:border-border-bright lg:hidden dark:border-white/15 dark:text-white dark:hover:border-white/30"
+              variant="outline"
+              size="icon"
+              className="rounded-full border-black/10 bg-white text-black shadow-sm hover:bg-white hover:text-black lg:hidden"
               aria-label={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((open) => !open)}
             >
-              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
+              {mobileOpen ? <X size={16} /> : <Menu size={16} />}
+            </Button>
           </div>
         </div>
       </header>
@@ -71,33 +144,92 @@ export function SiteHeader() {
         {mobileOpen ? (
           <motion.div
             key="mobile-nav"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className="fixed inset-x-0 top-[73px] z-40 border-b border-border bg-bg/95 backdrop-blur-xl lg:hidden dark:border-white/10 dark:bg-black/95"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="fixed inset-0 z-40 lg:hidden"
           >
-            <nav className="mx-auto flex max-w-[1280px] flex-col gap-1 px-6 py-4 md:px-10">
-              {NAV_LINKS.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`rounded-lg px-3 py-3 text-[15px] font-medium transition hover:bg-surface dark:hover:bg-white/5 ${
-                    item.highlight ? "text-text dark:text-white" : "text-muted dark:text-white/85"
-                  }`}
+            <button
+              type="button"
+              aria-label="Menüyü kapat"
+              className="absolute inset-0 bg-[#121212]/25 backdrop-blur-sm"
+              onClick={() => setMobileOpen(false)}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-x-0 top-0 flex h-[100dvh] flex-col bg-[#faf9f6] pt-[65px]"
+            >
+              <div className="flex min-h-0 flex-1 flex-col px-6 pb-8 pt-2 md:px-10">
+                <p className="mb-3 text-[11px] uppercase tracking-[0.2em] text-[#888]">
+                  Menü
+                </p>
+
+                <nav className="flex flex-1 flex-col gap-1.5 overflow-y-auto">
+                  {NAV_LINKS.map((item, index) => {
+                    const Icon = item.icon;
+
+                    return (
+                      <motion.div
+                        key={item.label}
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: 0.05 + index * 0.05,
+                          duration: 0.3,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                      >
+                        <Link
+                          href={item.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="group flex items-center gap-4 rounded-2xl border border-transparent bg-white/70 px-4 py-4 shadow-[0_1px_0_rgba(0,0,0,0.03)] transition-colors hover:border-black/8 hover:bg-white"
+                        >
+                          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#121212] text-white">
+                            <Icon size={18} strokeWidth={1.75} />
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-[17px] font-semibold tracking-tight text-[#121212]">
+                              {item.label}
+                            </span>
+                            <span className="mt-0.5 block text-[13px] text-[#888]">
+                              {item.description}
+                            </span>
+                          </span>
+                          <ArrowRight
+                            size={16}
+                            className="shrink-0 text-[#bbb] transition-transform group-hover:translate-x-0.5 group-hover:text-[#121212]"
+                          />
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </nav>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.28, duration: 0.3 }}
+                  className="mt-6 space-y-4 border-t border-black/8 pt-6"
                 >
-                  {item.label}
-                </Link>
-              ))}
-              <Link
-                href="/contact"
-                onClick={() => setMobileOpen(false)}
-                className="mt-2 block rounded-full bg-gradient-to-b from-white to-neutral-400 px-5 py-3 text-center text-[13px] font-semibold text-neutral-900 shadow-sm"
-              >
-                Ücretsiz Başla
-              </Link>
-            </nav>
+                  <Link
+                    href="/contact"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#121212] px-6 text-[15px] font-medium text-white transition-colors hover:bg-[#2a2a2a]"
+                  >
+                    Ücretsiz Görüşme Ayarla
+                    <ArrowRight size={16} />
+                  </Link>
+                  <p className="text-center text-[13px] text-[#888]">
+                    48 saat içinde dönüş yapıyoruz.
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -105,4 +237,4 @@ export function SiteHeader() {
   );
 }
 
-export const SITE_HEADER_OFFSET_CLASS = "pt-[73px]";
+export const SITE_HEADER_OFFSET_CLASS = "pt-[65px]";

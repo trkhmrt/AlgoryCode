@@ -3,27 +3,30 @@
 import { FileText, LayoutList } from "lucide-react";
 import { useState } from "react";
 import { CourseCurriculumAccordion } from "@/components/education/CourseCurriculumAccordion";
+import type { CourseModuleView } from "@/lib/curriculum";
 
 type EducationAboutAccordionProps = {
   description: string;
+  modules?: CourseModuleView[];
 };
 
 type TabKey = "aciklama" | "icerik";
 
 const tabClass = (active: boolean, disabled: boolean) =>
-  `inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#333] ${
+  `inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212] ${
     disabled
-      ? "cursor-not-allowed text-[#444]"
+      ? "cursor-not-allowed text-[#bbb]"
       : active
-        ? "bg-[#1a1a1a] font-medium text-[#ededed]"
-        : "font-normal text-[#666] hover:text-[#888]"
+        ? "bg-white font-medium text-foreground shadow-sm"
+        : "font-normal text-[#888] hover:text-foreground"
   }`;
 
 export function EducationAboutAccordion({
   description,
+  modules = [],
 }: EducationAboutAccordionProps) {
   const hasAciklama = description.trim().length > 0;
-  const hasIcerik = true;
+  const hasIcerik = modules.length > 0;
 
   const [activeTab, setActiveTab] = useState<TabKey>(
     hasAciklama ? "aciklama" : "icerik",
@@ -34,7 +37,7 @@ export function EducationAboutAccordion({
       <div
         role="tablist"
         aria-label="Eğitim hakkında sekmeleri"
-        className="inline-flex gap-0.5 rounded-md bg-[#0a0a0a] p-1"
+        className="inline-flex gap-0.5 rounded-md border border-border bg-white/60 p-1"
       >
         <button
           type="button"
@@ -85,7 +88,15 @@ export function EducationAboutAccordion({
           aria-labelledby="education-tab-icerik"
           className="pt-5"
         >
-          <CourseCurriculumAccordion />
+          <CourseCurriculumAccordion modules={modules} />
+        </div>
+      ) : null}
+
+      {activeTab === "icerik" && !hasIcerik ? (
+        <div className="pt-5">
+          <p className="text-sm text-[#888]">
+            Bu eğitime henüz müfredat atanmamış.
+          </p>
         </div>
       ) : null}
     </div>

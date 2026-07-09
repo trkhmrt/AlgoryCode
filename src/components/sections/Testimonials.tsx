@@ -1,6 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { AuraCard } from "@/components/ui/AuraCard";
+import { Badge } from "@/components/ui/Badge";
+import { CardContent } from "@/components/ui/Card";
+import { Separator } from "@/components/ui/Separator";
 
 type Testimonial = {
   quote: string;
@@ -8,7 +12,7 @@ type Testimonial = {
   role: string;
   company: string;
   initials: string;
-  hue: number;
+  accent: string;
 };
 
 const TESTIMONIALS: Testimonial[] = [
@@ -19,7 +23,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "E-Ticaret Direktörü",
     company: "Volthane",
     initials: "AK",
-    hue: 38,
+    accent: "#f59e0b",
   },
   {
     quote:
@@ -28,7 +32,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "CTO",
     company: "Lumencore",
     initials: "MD",
-    hue: 217,
+    accent: "#3b82f6",
   },
   {
     quote:
@@ -37,7 +41,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Ürün Müdürü",
     company: "Halyx",
     initials: "ST",
-    hue: 270,
+    accent: "#a855f7",
   },
   {
     quote:
@@ -46,7 +50,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Operasyon Müdürü",
     company: "Caret",
     initials: "BA",
-    hue: 142,
+    accent: "#00ff88",
   },
   {
     quote:
@@ -55,14 +59,14 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Kurucu",
     company: "Sintel",
     initials: "FY",
-    hue: 18,
+    accent: "#f97316",
   },
 ];
 
 export function Testimonials() {
   return (
     <section
-      className="section border-b border-border"
+      className="section border-b border-border bg-[#f3efe9]"
       aria-labelledby="testimonials-heading"
     >
       <div className="container-x">
@@ -71,20 +75,23 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-[640px] mb-16"
+          className="mb-16 max-w-[640px]"
         >
-          <p className="text-[12px] uppercase tracking-[0.18em] text-dim mb-4">
+          <Badge
+            variant="outline"
+            className="mb-4 border-border bg-secondary/50 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground"
+          >
             Müşterilerimiz
-          </p>
+          </Badge>
           <h2
             id="testimonials-heading"
-            className="heading text-[36px] md:text-[52px] font-extrabold"
+            className="heading text-[36px] font-extrabold md:text-[52px]"
           >
             Beş alanda, tek ekibe güveniyorlar.
           </h2>
         </motion.div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-2">
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
             <motion.li
               key={t.name}
@@ -92,30 +99,34 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
-              className="rounded-2xl border border-border bg-surface p-7 shadow-[0_1px_2px_rgba(15,15,15,0.04),0_10px_28px_-14px_rgba(15,15,15,0.12)] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5 hover:border-border-bright hover:shadow-[0_2px_4px_rgba(15,15,15,0.05),0_20px_44px_-18px_rgba(15,15,15,0.2)] dark:shadow-[0_1px_2px_rgba(0,0,0,0.4)] dark:hover:shadow-[0_22px_44px_-18px_rgba(0,0,0,0.7)]"
             >
-              <p className="text-[15px] leading-relaxed text-text">
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <div className="mt-7 flex items-center gap-3 border-t border-border pt-6">
-                <span
-                  className="h-9 w-9 rounded-full grid place-items-center text-[12px] font-semibold text-black"
-                  style={{
-                    background: `linear-gradient(135deg, hsl(${t.hue} 70% 70%), hsl(${
-                      (t.hue + 40) % 360
-                    } 70% 60%))`,
-                  }}
-                  aria-hidden
-                >
-                  {t.initials}
-                </span>
-                <div>
-                  <p className="text-[13px] text-text font-medium">{t.name}</p>
-                  <p className="text-[12px] text-muted">
-                    {t.role} · {t.company}
+              <AuraCard accent={t.accent} className="h-full">
+                <CardContent className="p-7">
+                  <p className="section-desc leading-relaxed">
+                    &ldquo;{t.quote}&rdquo;
                   </p>
-                </div>
-              </div>
+                  <Separator className="my-6 bg-border" />
+                  <div className="flex items-center gap-3">
+                    <span
+                      className="grid h-9 w-9 place-items-center rounded-full text-[12px] font-semibold text-black"
+                      style={{
+                        background: `linear-gradient(135deg, color-mix(in srgb, ${t.accent} 70%, white), ${t.accent})`,
+                      }}
+                      aria-hidden
+                    >
+                      {t.initials}
+                    </span>
+                    <div>
+                      <p className="text-[13px] font-medium text-foreground">
+                        {t.name}
+                      </p>
+                      <p className="text-[12px] text-muted-foreground">
+                        {t.role} · {t.company}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </AuraCard>
             </motion.li>
           ))}
         </ul>

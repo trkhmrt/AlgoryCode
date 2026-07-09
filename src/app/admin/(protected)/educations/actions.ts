@@ -50,6 +50,7 @@ type ParsedEducation = {
   syllabus: string | null;
   coverImageUrl: string | null;
   status: EducationStatus;
+  curriculumId: string | null;
 };
 
 function parseOptionalInt(value: FormDataEntryValue | null): number | null {
@@ -75,6 +76,8 @@ function parseEducationForm(formData: FormData): {
   const endDateRaw = String(formData.get("endDate") ?? "").trim();
   const isFree = formData.get("isFree") === "on";
   const priceRaw = String(formData.get("price") ?? "").trim();
+  const curriculumIdRaw = String(formData.get("curriculumId") ?? "").trim();
+  const curriculumId = curriculumIdRaw || null;
 
   if (!title) fieldErrors.title = "Başlık zorunludur.";
   if (!shortDescription) fieldErrors.shortDescription = "Kısa açıklama zorunludur.";
@@ -138,6 +141,7 @@ function parseEducationForm(formData: FormData): {
       syllabus: String(formData.get("syllabus") ?? "").trim() || null,
       coverImageUrl: String(formData.get("coverImageUrl") ?? "").trim() || null,
       status: String(formData.get("status") ?? "DRAFT") as EducationStatus,
+      curriculumId,
     },
     fieldErrors,
   };
@@ -189,6 +193,17 @@ export async function createEducation(
   const slug = await createUniqueSlug(data.title);
   const publishedAt = data.status === "PUBLISHED" ? new Date() : null;
 
+  if (data.curriculumId) {
+    const curriculum = await prisma.curriculum.findUnique({
+      where: { id: data.curriculumId },
+      select: { id: true },
+    });
+
+    if (!curriculum) {
+      return { fieldErrors: { curriculumId: "Seçilen müfredat bulunamadı." } };
+    }
+  }
+
   const education = await prisma.education.create({
     data: {
       ...data,
@@ -219,6 +234,17 @@ export async function updateEducation(
   }
 
   try {
+    if (data.curriculumId) {
+      const curriculum = await prisma.curriculum.findUnique({
+        where: { id: data.curriculumId },
+        select: { id: true },
+      });
+
+      if (!curriculum) {
+        return { fieldErrors: { curriculumId: "Seçilen müfredat bulunamadı." } };
+      }
+    }
+
     const slug =
       data.title !== existing.title
         ? await createUniqueSlug(data.title, id)
@@ -310,6 +336,7 @@ export async function duplicateEducation(id: string) {
       contentSections,
       syllabus: existing.syllabus,
       coverImageUrl: existing.coverImageUrl,
+      curriculumId: existing.curriculumId,
       status: "DRAFT",
       publishedAt: null,
     },

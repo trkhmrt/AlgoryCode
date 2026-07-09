@@ -8,11 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "seed:admins": "node scripts/seed-admins.mjs",
-    "seed:blog": "node scripts/seed-blog.mjs"
+    "seed:blog": "node scripts/seed-blog.mjs",
+    "seed:curriculum": "node scripts/seed-curriculum.mjs"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@radix-ui/react-slot": "^1.3.0",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

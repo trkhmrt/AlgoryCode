@@ -29,13 +29,15 @@ function createPrismaClient() {
 }
 
 function isPrismaClientStale(client: PrismaClient): boolean {
-  const adminUser = (
-    client as PrismaClient & {
-      adminUser?: { findUnique?: unknown };
-    }
-  ).adminUser;
+  const typed = client as PrismaClient & {
+    adminUser?: { findUnique?: unknown };
+    curriculum?: { findMany?: unknown };
+  };
 
-  return typeof adminUser?.findUnique !== "function";
+  return (
+    typeof typed.adminUser?.findUnique !== "function" ||
+    typeof typed.curriculum?.findMany !== "function"
+  );
 }
 
 function getPrismaClient(): PrismaClient {

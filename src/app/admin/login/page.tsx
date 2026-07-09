@@ -8,8 +8,13 @@ export const metadata: Metadata = {
 
 export default function AdminLoginPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-12">
-      <div className="w-full max-w-md space-y-4">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-12">
+      <div className="pointer-events-none absolute inset-0 dot-grid opacity-[0.18]" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black via-black to-[#0a0a0a]"
+        aria-hidden
+      />
+      <div className="relative w-full max-w-md space-y-4">
         <LoginForm />
       </div>
     </main>

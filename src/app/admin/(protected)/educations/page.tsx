@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Eye, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
@@ -103,20 +104,24 @@ export default async function AdminEducationsPage() {
                         {EDUCATION_STATUS_LABELS[education.status]}
                       </span>
                     </td>
-                    <td className="px-4 py-4 align-top">
-                      <div className="flex flex-col gap-2">
+                    <td className="px-4 py-4 align-middle">
+                      <div className="flex items-center gap-1.5">
                         <Link
                           href={`/admin/educations/${education.id}/edit`}
-                          className="text-sm text-[#ededed] transition-colors hover:text-white"
+                          aria-label="Düzenle"
+                          title="Düzenle"
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-sky-500/20 bg-sky-500/10 text-sky-300 transition-colors hover:border-sky-500/40 hover:bg-sky-500/20 hover:text-sky-200"
                         >
-                          Düzenle
+                          <Pencil size={15} />
                         </Link>
                         {education.status === "PUBLISHED" ? (
                           <Link
                             href={`/education/${education.slug}`}
-                            className="text-sm text-[#888] transition-colors hover:text-[#ededed]"
+                            aria-label="Görüntüle"
+                            title="Görüntüle"
+                            className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-emerald-500/20 bg-emerald-500/10 text-emerald-300 transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/20 hover:text-emerald-200"
                           >
-                            Görüntüle
+                            <Eye size={15} />
                           </Link>
                         ) : null}
                         <DuplicateEducationButton

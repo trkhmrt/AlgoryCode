@@ -24,17 +24,17 @@ function BeamConnector() {
       >
         <path
           d="M0 60 C 64 60, 64 200, 128 200"
-          stroke="rgba(255,255,255,0.05)"
+          stroke="rgba(0,0,0,0.08)"
           strokeWidth={1}
         />
         <path
           d="M0 200 L 128 200"
-          stroke="rgba(255,255,255,0.05)"
+          stroke="rgba(0,0,0,0.08)"
           strokeWidth={1}
         />
         <path
           d="M0 340 C 64 340, 64 200, 128 200"
-          stroke="rgba(255,255,255,0.05)"
+          stroke="rgba(0,0,0,0.08)"
           strokeWidth={1}
         />
         <path
@@ -89,26 +89,26 @@ function BeamConnector() {
 export function NodeTopology() {
   return (
     <section
-      className={`dark section border-b border-border bg-bg text-text ${spaceGrotesk.className}`}
+      className={`section border-b border-border bg-[#f3efe9] text-[#121212] ${spaceGrotesk.className}`}
       aria-labelledby="node-topology-heading"
     >
       <div className="container-x relative overflow-hidden">
         <div
-          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(800px,120vw)] w-[min(800px,120vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] opacity-20 blur-[120px]"
+          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(800px,120vw)] w-[min(800px,120vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f97316]/10 opacity-40 blur-[120px]"
           aria-hidden
         />
 
         <div className="relative z-10 mb-12 max-w-[640px]">
-          <p className="mb-4 text-[12px] uppercase tracking-[0.18em] text-[#666]">
+          <p className="mb-4 text-[12px] uppercase tracking-[0.18em] text-[#8a8378]">
           NEDEN BİZ?
           </p>
           <h2
             id="node-topology-heading"
-            className="heading text-[32px] font-extrabold tracking-tight text-[#ededed] md:text-[40px]"
+            className="heading text-[32px] font-extrabold tracking-tight md:text-[40px]"
           >
            Deneyimle Kanıtlanmış Yaklaşım
           </h2>
-          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
+          <p className="section-desc mt-3 max-w-xl leading-relaxed">
           Fikirden yayına, her aşamayı birbirine bağlayan, deneyimle şekillenmiş bir geliştirme süreci.
           </p>
         </div>
@@ -118,13 +118,13 @@ export function NodeTopology() {
             {NODES.map(({ id, label, Icon }) => (
               <div
                 key={id}
-                className="group relative flex min-w-0 flex-col items-center gap-2 overflow-hidden rounded-xl border border-white/10 border-l-white/20 border-t-white/20 bg-[rgba(255,255,255,0.03)] p-3 backdrop-blur-[12px] sm:p-4 lg:max-w-64 lg:w-full lg:flex-row lg:items-center lg:gap-4 lg:p-6"
+                className="group relative flex min-w-0 flex-col items-center gap-2 overflow-hidden rounded-xl border border-black/10 bg-white/55 p-3 backdrop-blur-[12px] sm:p-4 lg:max-w-64 lg:w-full lg:flex-row lg:items-center lg:gap-4 lg:p-6"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors group-hover:bg-white/10 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
-                  <Icon className="h-5 w-5 text-white sm:h-6 sm:w-6 lg:h-7 lg:w-7" strokeWidth={1.5} />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-black/5 transition-colors group-hover:bg-black/10 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
+                  <Icon className="h-5 w-5 text-[#121212] sm:h-6 sm:w-6 lg:h-7 lg:w-7" strokeWidth={1.5} />
                 </div>
                 <div className="min-w-0 text-center lg:text-left">
-                  <span className="block text-xs font-medium leading-tight text-white sm:text-sm lg:text-lg">
+                  <span className="block text-xs font-medium leading-tight text-[#121212] sm:text-sm lg:text-lg">
                     {label}
                   </span>
                 </div>
@@ -135,20 +135,20 @@ export function NodeTopology() {
           <BeamConnector />
 
           <div className="flex justify-center lg:justify-start">
-            <div className="relative w-full max-w-80 overflow-hidden rounded-2xl border border-white/20 border-l-white/30 border-t-white/30 bg-[rgba(255,255,255,0.08)] p-10 text-center shadow-[0_0_60px_rgba(255,255,255,0.05)] backdrop-blur-[24px]">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 to-transparent" />
-              <div className="relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-black/50">
+            <div className="relative w-full max-w-80 overflow-hidden rounded-2xl border border-black/10 bg-white/60 p-10 text-center shadow-[0_8px_40px_rgba(0,0,0,0.06)] backdrop-blur-[24px]">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 to-transparent" />
+              <div className="relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-black/15 bg-white/70">
                 <span
                   aria-hidden
-                  className="absolute inset-0 scale-110 rounded-full border border-white/10"
+                  className="absolute inset-0 scale-110 rounded-full border border-black/10"
                 />
                 <span
                   aria-hidden
-                  className="absolute inset-0 scale-125 rounded-full border border-white/5"
+                  className="absolute inset-0 scale-125 rounded-full border border-black/5"
                 />
-                <Network className="relative h-12 w-12 text-white" strokeWidth={1.25} />
+                <Network className="relative h-12 w-12 text-[#121212]" strokeWidth={1.25} />
               </div>
-              <h3 className="mb-2 text-2xl font-medium uppercase tracking-tight text-white md:text-[28px]">
+              <h3 className="heading mb-2 text-2xl font-medium uppercase tracking-tight md:text-[28px]">
                 
                 AlgoryCode
               </h3>

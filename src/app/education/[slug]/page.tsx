@@ -25,6 +25,10 @@ import {
   normalizeContentSections,
   type EducationRecord,
 } from "@/lib/education";
+import {
+  normalizeCurriculumLessons,
+  toCourseModuleViews,
+} from "@/lib/curriculum";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -58,15 +62,26 @@ export default async function EducationDetailPage({
   const { slug } = await params;
   const educationRow = await prisma.education.findFirst({
     where: { slug, status: "PUBLISHED" },
+    include: {
+      curriculum: {
+        include: {
+          details: {
+            orderBy: { sortOrder: "asc" },
+          },
+        },
+      },
+    },
   });
 
   if (!educationRow) {
     notFound();
   }
 
+  const { curriculum, ...educationFields } = educationRow;
+
   const education: EducationRecord = {
-    ...educationRow,
-    contentSections: normalizeContentSections(educationRow.contentSections),
+    ...educationFields,
+    contentSections: normalizeContentSections(educationFields.contentSections),
   };
 
   const duration = formatEducationDuration(
@@ -74,29 +89,43 @@ export default async function EducationDetailPage({
     education.durationHours,
   );
 
+  const curriculumModules = toCourseModuleViews(
+    (curriculum?.details ?? []).map((detail) => ({
+      id: detail.id,
+      title: detail.title,
+      sortOrder: detail.sortOrder,
+      totalDuration: detail.totalDuration,
+      lessons: normalizeCurriculumLessons(detail.lessons),
+    })),
+  );
+
   return (
     <>
       <SiteHeader />
-      <main className={SITE_HEADER_OFFSET_CLASS}>
-        <section className="section border-b border-[#1a1a1a]">
+      <main className={`${SITE_HEADER_OFFSET_CLASS} bg-[#f3efe9]`}>
+        <section className="section border-b border-border">
           <div className="container-x">
             <Link
               href="/education"
-              className="text-sm text-[#888] transition-colors hover:text-[#ededed]"
+              className="text-sm text-[#888] transition-colors hover:text-foreground"
             >
               ← Tüm Eğitimler
             </Link>
 
             <div className="mt-8 grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
               <div>
-                <div className="relative -mx-4 overflow-hidden rounded-[12px] px-4 py-8 md:-mx-6 md:px-6">
+                <Card className="relative overflow-hidden border-0 bg-transparent p-6 md:p-8">
                   <EducationHeroBackground title={education.title} />
 
                   <div className="relative z-10">
                     <div className="flex flex-wrap gap-2">
-                      <Badge>{EDUCATION_LEVEL_LABELS[education.level]}</Badge>
-                      <Badge>{EDUCATION_FORMAT_LABELS[education.format]}</Badge>
-                      <Badge>
+                      <Badge className="border-white/20 bg-white/10 text-white">
+                        {EDUCATION_LEVEL_LABELS[education.level]}
+                      </Badge>
+                      <Badge className="border-white/20 bg-white/10 text-white">
+                        {EDUCATION_FORMAT_LABELS[education.format]}
+                      </Badge>
+                      <Badge className="border-white/20 bg-white/10 text-white">
                         {formatPrice(
                           education.isFree,
                           education.price,
@@ -105,25 +134,26 @@ export default async function EducationDetailPage({
                       </Badge>
                     </div>
 
-                    <h1 className="heading mt-5 text-4xl font-semibold md:text-5xl">
+                    <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
                       {education.title}
                     </h1>
-                    <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#888]">
+                    <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/80">
                       {education.shortDescription}
                     </p>
                   </div>
-                </div>
+                </Card>
 
                 <div className="mt-12 max-w-3xl">
-                  <h2 className="text-xl font-semibold">Eğitim Hakkında</h2>
+                  <h2 className="heading text-xl font-semibold">Eğitim Hakkında</h2>
                   <EducationAboutAccordion
                     description={education.fullDescription}
+                    modules={curriculumModules}
                   />
                 </div>
               </div>
 
               <div className="space-y-6">
-                <Card className="h-fit p-6">
+                <Card className="h-fit bg-white/80 p-6">
                   <p className="text-[13px] uppercase tracking-[0.12em] text-[#888]">
                     Eğitim Özeti
                   </p>
@@ -132,7 +162,9 @@ export default async function EducationDetailPage({
                       <Calendar size={16} className="mt-0.5 text-[#888]" />
                       <div>
                         <dt className="text-[#888]">Başlangıç</dt>
-                        <dd>{formatDateTR(new Date(education.startDate))}</dd>
+                        <dd className="text-foreground">
+                          {formatDateTR(new Date(education.startDate))}
+                        </dd>
                       </div>
                     </div>
                     {education.endDate ? (
@@ -140,7 +172,9 @@ export default async function EducationDetailPage({
                         <Calendar size={16} className="mt-0.5 text-[#888]" />
                         <div>
                           <dt className="text-[#888]">Bitiş</dt>
-                          <dd>{formatDateTR(new Date(education.endDate))}</dd>
+                          <dd className="text-foreground">
+                            {formatDateTR(new Date(education.endDate))}
+                          </dd>
                         </div>
                       </div>
                     ) : null}
@@ -149,7 +183,7 @@ export default async function EducationDetailPage({
                         <Clock3 size={16} className="mt-0.5 text-[#888]" />
                         <div>
                           <dt className="text-[#888]">Süre</dt>
-                          <dd>{duration}</dd>
+                          <dd className="text-foreground">{duration}</dd>
                         </div>
                       </div>
                     ) : null}
@@ -158,7 +192,7 @@ export default async function EducationDetailPage({
                         <Clock3 size={16} className="mt-0.5 text-[#888]" />
                         <div>
                           <dt className="text-[#888]">Program</dt>
-                          <dd>{education.schedule}</dd>
+                          <dd className="text-foreground">{education.schedule}</dd>
                         </div>
                       </div>
                     ) : null}
@@ -167,33 +201,40 @@ export default async function EducationDetailPage({
                         <GraduationCap size={16} className="mt-0.5 text-[#888]" />
                         <div>
                           <dt className="text-[#888]">Kontenjan</dt>
-                          <dd>{education.maxStudents} kişi</dd>
+                          <dd className="text-foreground">
+                            {education.maxStudents} kişi
+                          </dd>
                         </div>
                       </div>
                     ) : null}
                   </dl>
-                  <Button href={`/education/${slug}/checkout`} className="mt-6 w-full">
+                  <Button
+                    href={`/education/${slug}/checkout`}
+                    className="mt-6 w-full rounded-full border-0 bg-[#121212] text-white hover:bg-[#2a2a2a]"
+                  >
                     {education.isFree ? "Kayıt Ol" : "Satın Al"}
                   </Button>
                 </Card>
 
-                <Card className="p-6">
-                  <h2 className="text-xl font-semibold">Eğitmen</h2>
+                <Card className="bg-white/80 p-6">
+                  <h2 className="heading text-xl font-semibold">Eğitmen</h2>
                   <div className="mt-5 flex items-start gap-4">
                     {education.instructorAvatarUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={education.instructorAvatarUrl}
                         alt={education.instructorName}
-                        className="h-16 w-16 rounded-full border border-[#1a1a1a] object-cover"
+                        className="h-16 w-16 rounded-full border border-border object-cover"
                       />
                     ) : (
-                      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#1a1a1a] bg-[#080808]">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary">
                         <User size={24} className="text-[#888]" />
                       </div>
                     )}
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium">{education.instructorName}</p>
+                      <p className="font-medium text-foreground">
+                        {education.instructorName}
+                      </p>
                       {education.instructorTitle ? (
                         <p className="mt-1 text-sm text-[#888]">
                           {education.instructorTitle}
@@ -213,7 +254,7 @@ export default async function EducationDetailPage({
                 </Card>
 
                 {education.coverImageUrl ? (
-                  <Card className="overflow-hidden">
+                  <Card className="overflow-hidden bg-white/80">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={education.coverImageUrl}

@@ -17,8 +17,8 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-black text-[#ededed]">
-      <header className="border-b border-[#1a1a1a]">
+    <div className="min-h-screen bg-black">
+      <header className="border-b border-[#1a1a1a] bg-black/90 backdrop-blur-sm">
         <div className="container-x flex h-16 items-center justify-between">
           <div>
             <p className="text-[13px] uppercase tracking-[0.2em] text-[#888]">

@@ -6,7 +6,7 @@ type InstructorSocialLinksProps = {
 };
 
 const linkClassName =
-  "inline-flex h-7 w-7 items-center justify-center rounded-md border border-[#1a1a1a] text-[#888] transition-colors hover:border-[#333] hover:text-[#ededed] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#333]";
+  "inline-flex h-7 w-7 items-center justify-center rounded-md border border-border text-[#888] transition-colors hover:border-[#121212]/20 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212]";
 
 export function InstructorSocialLinks({
   githubUrl,

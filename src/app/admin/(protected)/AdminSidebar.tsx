@@ -9,6 +9,7 @@ import {
   CreditCard,
   GraduationCap,
   LayoutDashboard,
+  ListTree,
   MessageSquare,
   PenLine,
 } from "lucide-react";
@@ -24,6 +25,12 @@ const NAV_ITEMS = [
     href: "/admin/educations",
     label: "Eğitimler",
     icon: GraduationCap,
+    exact: false,
+  },
+  {
+    href: "/admin/curriculums",
+    label: "Müfredatlar",
+    icon: ListTree,
     exact: false,
   },
   {
@@ -62,7 +69,7 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-full shrink-0 border-b border-[#1a1a1a] lg:w-56 lg:border-b-0 lg:border-r">
+    <aside className="w-full shrink-0 border-b border-[#1a1a1a] bg-black lg:w-56 lg:border-b-0 lg:border-r">
       <div className="flex gap-2 overflow-x-auto p-4 lg:flex-col lg:overflow-visible lg:p-6">
         {NAV_ITEMS.map(({ href, label, icon: Icon, exact }) => {
           const active = exact
@@ -73,10 +80,10 @@ export function AdminSidebar() {
             <Link
               key={href}
               href={href}
-              className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${
+              className={`inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors ${
                 active
-                  ? "bg-[#0a0a0a] text-[#ededed] border border-[#333]"
-                  : "text-[#888] hover:bg-[#0a0a0a] hover:text-[#ededed] border border-transparent"
+                  ? "border-[#333] bg-[#0a0a0a] text-[#ededed]"
+                  : "border-transparent text-[#888] hover:border-[#1a1a1a] hover:bg-[#0a0a0a] hover:text-[#ededed]"
               }`}
             >
               <Icon size={16} />

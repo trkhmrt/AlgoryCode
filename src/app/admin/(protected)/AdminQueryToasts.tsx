@@ -5,9 +5,13 @@ import { useToast } from "@/components/ui/ToastProvider";
 
 type AdminQueryToastsProps = {
   created?: boolean;
+  entityLabel?: string;
 };
 
-export function AdminQueryToasts({ created }: AdminQueryToastsProps) {
+export function AdminQueryToasts({
+  created,
+  entityLabel = "Eğitim",
+}: AdminQueryToastsProps) {
   const { success } = useToast();
   const shown = useRef(false);
 
@@ -17,8 +21,12 @@ export function AdminQueryToasts({ created }: AdminQueryToastsProps) {
     }
 
     shown.current = true;
-    success("Eğitim oluşturuldu. Yayınlamak için durumu “Yayında” yapın.");
-  }, [created, success]);
+    success(
+      entityLabel === "Müfredat"
+        ? "Müfredat oluşturuldu. Eğitimlere atayabilirsiniz."
+        : "Eğitim oluşturuldu. Yayınlamak için durumu “Yayında” yapın.",
+    );
+  }, [created, entityLabel, success]);
 
   return null;
 }

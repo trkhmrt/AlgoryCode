@@ -67,6 +67,9 @@ model Education {
   status              EducationStatus  @default(DRAFT)
   publishedAt         DateTime?
 
+  curriculumId        String?
+  curriculum          Curriculum?      @relation(fields: [curriculumId], references: [id], onDelete: SetNull)
+
   createdAt           DateTime         @default(now())
   updatedAt           DateTime         @updatedAt
 
@@ -74,7 +77,38 @@ model Education {
   contactSubmissions  ContactSubmission[]
 
   @@index([status, startDate])
+  @@index([curriculumId])
   @@map("educations")
+}
+
+model Curriculum {
+  id          String             @id @default(cuid())
+  title       String
+  description String?            @db.Text
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  details     CurriculumDetail[]
+  educations  Education[]
+
+  @@map("curriculums")
+}
+
+model CurriculumDetail {
+  id           String     @id @default(cuid())
+  curriculumId String
+  curriculum   Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
+
+  title          String
+  sortOrder      Int      @default(0)
+  totalDuration  String?
+  lessons        Json     @default("[]")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([curriculumId, sortOrder])
+  @@map("curriculum_details")
 }
 
 enum ContactType {

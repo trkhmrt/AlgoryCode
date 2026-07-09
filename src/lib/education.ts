@@ -60,6 +60,7 @@ export type EducationFormValues = {
   syllabus: string | null;
   coverImageUrl: string | null;
   status: EducationStatus;
+  curriculumId: string | null;
 };
 
 export type EducationListItem = Pick<
