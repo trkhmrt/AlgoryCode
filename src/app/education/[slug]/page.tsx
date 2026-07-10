@@ -7,12 +7,15 @@ import {
   GraduationCap,
   User,
 } from "lucide-react";
-import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
+import { SiteHeader } from "@/components/sections/SiteHeader";
+import { SITE_HEADER_OFFSET_CLASS } from "@/lib/layout";
 import { Footer } from "@/components/sections/Footer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EducationAboutAccordion } from "@/components/education/EducationAboutAccordion";
 import { EducationAskInstructorCard } from "@/components/education/EducationAskInstructorCard";
+import { EducationBackToListLink } from "@/components/education/EducationBackToListLink";
+import { EducationFaqSection } from "@/components/education/EducationFaqSection";
 import { EducationHeroBackground } from "@/components/education/EducationHeroBackground";
 import { InstructorSocialLinks } from "@/components/education/InstructorSocialLinks";
 import { Card } from "@/components/ui/Card";
@@ -105,51 +108,49 @@ export default async function EducationDetailPage({
       <main className={`${SITE_HEADER_OFFSET_CLASS} bg-[#f3efe9]`}>
         <section className="section border-b border-border">
           <div className="container-x">
-            <Link
-              href="/education"
-              className="text-sm text-[#888] transition-colors hover:text-foreground"
-            >
-              ← Tüm Eğitimler
-            </Link>
+            <EducationBackToListLink />
 
-            <div className="mt-8 grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
-              <div>
-                <Card className="relative overflow-hidden border-0 bg-transparent p-6 md:p-8">
-                  <EducationHeroBackground title={education.title} />
+            <Card className="relative mt-8 min-h-[280px] overflow-hidden border-0 bg-transparent p-6 md:min-h-[340px] md:p-10">
+              <EducationHeroBackground
+                title={education.title}
+                coverImageUrl={education.coverImageUrl}
+              />
 
-                  <div className="relative z-10">
-                    <div className="flex flex-wrap gap-2">
-                      <Badge className="border-white/20 bg-white/10 text-white">
-                        {EDUCATION_LEVEL_LABELS[education.level]}
-                      </Badge>
-                      <Badge className="border-white/20 bg-white/10 text-white">
-                        {EDUCATION_FORMAT_LABELS[education.format]}
-                      </Badge>
-                      <Badge className="border-white/20 bg-white/10 text-white">
-                        {formatPrice(
-                          education.isFree,
-                          education.price,
-                          education.currency,
-                        )}
-                      </Badge>
-                    </div>
-
-                    <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-                      {education.title}
-                    </h1>
-                    <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/80">
-                      {education.shortDescription}
-                    </p>
-                  </div>
-                </Card>
-
-                <div className="mt-12 max-w-3xl">
-                  <h2 className="heading text-xl font-semibold">Eğitim Hakkında</h2>
-                  <EducationAboutAccordion
-                    description={education.fullDescription}
-                    modules={curriculumModules}
-                  />
+              <div className="relative z-10 flex h-full min-h-[232px] flex-col justify-end md:min-h-[260px]">
+                <div className="flex flex-wrap gap-2">
+                  <Badge className="border-white/20 bg-white/10 text-white">
+                    {EDUCATION_LEVEL_LABELS[education.level]}
+                  </Badge>
+                  <Badge className="border-white/20 bg-white/10 text-white">
+                    {EDUCATION_FORMAT_LABELS[education.format]}
+                  </Badge>
+                  <Badge className="border-white/20 bg-white/10 text-white">
+                    {formatPrice(
+                      education.isFree,
+                      education.price,
+                      education.currency,
+                    )}
+                  </Badge>
                 </div>
+
+                <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+                  {education.title}
+                </h1>
+                <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/80">
+                  {education.shortDescription}
+                </p>
+              </div>
+            </Card>
+
+            <div className="mt-10 grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
+              <div>
+                <h2 className="heading text-xl font-semibold">Eğitim Hakkında</h2>
+                <EducationAboutAccordion
+                  description={education.fullDescription}
+                  learningOutcomes={education.learningOutcomes}
+                  prerequisites={education.prerequisites}
+                  modules={curriculumModules}
+                />
               </div>
 
               <div className="space-y-6">
@@ -252,19 +253,10 @@ export default async function EducationDetailPage({
                     </p>
                   ) : null}
                 </Card>
-
-                {education.coverImageUrl ? (
-                  <Card className="overflow-hidden bg-white/80">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={education.coverImageUrl}
-                      alt={education.title}
-                      className="aspect-[4/3] w-full object-cover"
-                    />
-                  </Card>
-                ) : null}
               </div>
             </div>
+
+            <EducationFaqSection />
 
             <div className="mt-12">
               <EducationAskInstructorCard

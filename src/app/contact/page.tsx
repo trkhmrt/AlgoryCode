@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { FileSignature, Headphones, ShieldCheck, Sparkles } from "lucide-react";
 import { JobRequestContactForm } from "@/components/contact/JobRequestContactForm";
 import { Footer } from "@/components/sections/Footer";
-import {
-  SiteHeader,
-  SITE_HEADER_OFFSET_CLASS,
-} from "@/components/sections/SiteHeader";
+import { SiteHeader } from "@/components/sections/SiteHeader";
+import { SITE_HEADER_OFFSET_CLASS } from "@/lib/layout";
 import { Card } from "@/components/ui/Card";
 
 export const metadata: Metadata = {

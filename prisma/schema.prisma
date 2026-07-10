@@ -27,6 +27,16 @@ enum EducationStatus {
   ARCHIVED
 }
 
+enum EducationTrack {
+  FRONTEND
+  BACKEND
+  DEVOPS
+  DATABASE
+  MOBILE
+  AI
+  FULLSTACK
+}
+
 model Education {
   id                  String           @id @default(cuid())
   slug                String           @unique
@@ -50,6 +60,8 @@ model Education {
   level               EducationLevel   @default(ALL_LEVELS)
   format              EducationFormat  @default(ONLINE)
   language            String           @default("tr")
+  track               EducationTrack?
+  techLanguage        String?
 
   price               Decimal?         @db.Decimal(10, 2)
   currency            String           @default("TRY")
@@ -78,6 +90,8 @@ model Education {
 
   @@index([status, startDate])
   @@index([curriculumId])
+  @@index([track])
+  @@index([techLanguage])
   @@map("educations")
 }
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { MessageCircleQuestion } from "lucide-react";
 import { useActionState, useEffect } from "react";
 import {
   submitEducationContact,
@@ -16,8 +15,11 @@ type EducationAskInstructorCardProps = {
 
 const initialState: ContactFormState = {};
 
-const inputClassName =
-  "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus:border-[#121212] focus:outline-none";
+const fieldClassName =
+  "h-11 w-full rounded-lg border border-[#d9d2c8] bg-white px-3.5 text-sm text-[#121212] outline-none transition-colors placeholder:text-[#aaa] focus:border-[#2a2622]";
+
+const textareaClassName =
+  "min-h-[120px] w-full resize-y rounded-lg border border-[#d9d2c8] bg-white px-3.5 py-3 text-sm leading-relaxed text-[#121212] outline-none transition-colors placeholder:text-[#aaa] focus:border-[#2a2622]";
 
 export function EducationAskInstructorCard({
   educationId,
@@ -36,107 +38,101 @@ export function EducationAskInstructorCard({
   }, [state.success, state.error, success, error]);
 
   return (
-    <Card className="bg-white/80 p-6 md:p-8">
-      <div className="flex flex-col gap-6">
-        <div className="flex items-start gap-3">
-          <MessageCircleQuestion
-            size={22}
-            strokeWidth={1.5}
-            className="mt-0.5 shrink-0 text-foreground"
-            aria-hidden
-          />
-          <div className="space-y-1">
-            <h3 className="heading text-lg font-semibold tracking-tight">
-              Aklınıza takılanı sorun
-            </h3>
-            <p className="text-xs text-[#888]">
-              Eğitmenimize doğrudan soru gönderin.
-            </p>
-            <div className="flex items-center gap-2 pt-2 text-[11px] text-[#888]">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              <span>Yanıt süresi: 2-4 saat</span>
-            </div>
-          </div>
+    <Card className="overflow-hidden border-[#d9d2c8] bg-[#faf8f5] shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+      <div className="border-b border-[#e5dfd6] px-6 py-5 md:px-8">
+        <h3 className="heading text-lg font-semibold tracking-tight text-[#121212]">
+          Eğitmene soru sor
+        </h3>
+        <p className="mt-1 text-sm text-[#888]">
+          Formu doldurun, eğitmenimiz en kısa sürede dönüş yapsın.
+        </p>
+      </div>
+
+      <form action={formAction} className="space-y-5 px-6 py-6 md:px-8 md:py-7">
+        <input type="hidden" name="source" value={`/education/${educationSlug}`} />
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <label className="block space-y-2">
+            <span className="text-[13px] font-medium text-[#2a2622]">Ad</span>
+            <input
+              name="firstName"
+              className={fieldClassName}
+              placeholder="Adınız"
+              required
+              autoComplete="given-name"
+            />
+            {state.fieldErrors?.firstName ? (
+              <span className="block text-xs text-red-600">
+                {state.fieldErrors.firstName}
+              </span>
+            ) : null}
+          </label>
+
+          <label className="block space-y-2">
+            <span className="text-[13px] font-medium text-[#2a2622]">Soyad</span>
+            <input
+              name="lastName"
+              className={fieldClassName}
+              placeholder="Soyadınız"
+              required
+              autoComplete="family-name"
+            />
+            {state.fieldErrors?.lastName ? (
+              <span className="block text-xs text-red-600">
+                {state.fieldErrors.lastName}
+              </span>
+            ) : null}
+          </label>
         </div>
 
-        <form action={formAction} className="space-y-3">
-          <input type="hidden" name="source" value={`/education/${educationSlug}`} />
+        <label className="block space-y-2">
+          <span className="text-[13px] font-medium text-[#2a2622]">Telefon</span>
+          <input
+            name="phone"
+            type="tel"
+            className={fieldClassName}
+            placeholder="05xx xxx xx xx"
+            required
+            autoComplete="tel"
+          />
+          {state.fieldErrors?.phone ? (
+            <span className="block text-xs text-red-600">
+              {state.fieldErrors.phone}
+            </span>
+          ) : null}
+        </label>
 
-          <div className="grid gap-3 sm:grid-cols-3">
-            <label className="space-y-1.5">
-              <span className="text-xs text-[#888]">Ad</span>
-              <input
-                name="firstName"
-                className={inputClassName}
-                placeholder="Adınız"
-                required
-              />
-              {state.fieldErrors?.firstName ? (
-                <span className="text-xs text-red-600">
-                  {state.fieldErrors.firstName}
-                </span>
-              ) : null}
-            </label>
+        <label className="block space-y-2">
+          <span className="text-[13px] font-medium text-[#2a2622]">
+            Sorunuz
+          </span>
+          <textarea
+            name="message"
+            rows={5}
+            placeholder="Sorunuzu detaylıca yazın..."
+            className={textareaClassName}
+            required
+          />
+          {state.fieldErrors?.message ? (
+            <span className="block text-xs text-red-600">
+              {state.fieldErrors.message}
+            </span>
+          ) : null}
+        </label>
 
-            <label className="space-y-1.5">
-              <span className="text-xs text-[#888]">Soyad</span>
-              <input
-                name="lastName"
-                className={inputClassName}
-                placeholder="Soyadınız"
-                required
-              />
-              {state.fieldErrors?.lastName ? (
-                <span className="text-xs text-red-600">
-                  {state.fieldErrors.lastName}
-                </span>
-              ) : null}
-            </label>
-
-            <label className="space-y-1.5">
-              <span className="text-xs text-[#888]">Telefon</span>
-              <input
-                name="phone"
-                type="tel"
-                className={inputClassName}
-                placeholder="05xx xxx xx xx"
-                required
-              />
-              {state.fieldErrors?.phone ? (
-                <span className="text-xs text-red-600">
-                  {state.fieldErrors.phone}
-                </span>
-              ) : null}
-            </label>
-          </div>
-
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch">
-            <label className="min-w-0 flex-1 space-y-1.5">
-              <span className="text-xs text-[#888]">Sorunuz</span>
-              <textarea
-                name="message"
-                rows={2}
-                placeholder="Sorunuzu detaylıca buraya yazın..."
-                className={`${inputClassName} min-h-[52px] resize-none py-2.5 leading-relaxed`}
-                required
-              />
-              {state.fieldErrors?.message ? (
-                <span className="text-xs text-red-600">
-                  {state.fieldErrors.message}
-                </span>
-              ) : null}
-            </label>
-
-            <button
-              type="submit"
-              disabled={pending}
-              className="shrink-0 self-end rounded-full border-0 bg-[#121212] px-8 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#2a2a2a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212] disabled:opacity-60 lg:self-stretch lg:px-6"
-            >
-              {pending ? "Gönderiliyor..." : "Gönder"}
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="flex flex-col gap-3 border-t border-[#e5dfd6] pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[12px] text-[#8a847c]">
+            Ortalama yanıt süresi: 2–4 saat
+          </p>
+          <button
+            type="submit"
+            disabled={pending}
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-[#121212] px-6 text-[14px] font-medium text-white transition-colors hover:bg-[#2a2622] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212] disabled:opacity-60"
+          >
+            {pending ? "Gönderiliyor..." : "Soruyu Gönder"}
+          </button>
+        </div>
+      </form>
     </Card>
   );
 }

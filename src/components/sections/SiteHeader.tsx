@@ -236,5 +236,3 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
     </>
   );
 }
-
-export const SITE_HEADER_OFFSET_CLASS = "pt-[65px]";

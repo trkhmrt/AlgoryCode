@@ -8,6 +8,8 @@ import {
   EDUCATION_FORMAT_LABELS,
   EDUCATION_LEVEL_LABELS,
   EDUCATION_STATUS_LABELS,
+  EDUCATION_TECH_LANGUAGES,
+  EDUCATION_TRACK_LABELS,
   formatDateTimeLocal,
   type EducationFormValues,
 } from "@/lib/education";
@@ -152,7 +154,7 @@ export function EducationForm({ education, curricula = [] }: EducationFormProps)
             required
             defaultValue={education?.fullDescription}
             className={`${textareaClassName} min-h-[180px]`}
-            placeholder="Eğitim detay sayfasında görünen tam açıklama."
+            placeholder="Detay sayfasındaki Açıklama sekmesinde görünür."
           />
         </Field>
 
@@ -364,7 +366,39 @@ export function EducationForm({ education, curricula = [] }: EducationFormProps)
             </select>
           </Field>
 
-          <Field label="Dil" name="language">
+          <Field label="Alan" name="track">
+            <select
+              id="track"
+              name="track"
+              defaultValue={education?.track ?? ""}
+              className={inputClassName}
+            >
+              <option value="">Seçilmedi</option>
+              {Object.entries(EDUCATION_TRACK_LABELS).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <Field label="Teknoloji / Dil" name="techLanguage">
+            <select
+              id="techLanguage"
+              name="techLanguage"
+              defaultValue={education?.techLanguage ?? ""}
+              className={inputClassName}
+            >
+              <option value="">Seçilmedi</option>
+              {EDUCATION_TECH_LANGUAGES.map((tech) => (
+                <option key={tech} value={tech}>
+                  {tech}
+                </option>
+              ))}
+            </select>
+          </Field>
+
+          <Field label="İçerik Dili" name="language">
             <input
               id="language"
               name="language"
@@ -420,23 +454,35 @@ export function EducationForm({ education, curricula = [] }: EducationFormProps)
       <Card className="space-y-6 p-6">
         <div>
           <h2 className="text-lg font-semibold">İçerik Detayları</h2>
+          <p className="mt-1 text-sm text-[#888]">
+            Detay sayfasındaki Açıklama, Neler öğreneceğiz ve Gereksinimler
+            sekmeleri.
+          </p>
         </div>
 
-        <Field label="Ön Koşullar" name="prerequisites">
+        <Field
+          label="Gereksinimler / Ön koşullar"
+          name="prerequisites"
+        >
           <textarea
             id="prerequisites"
             name="prerequisites"
             defaultValue={education?.prerequisites ?? ""}
             className={textareaClassName}
+            placeholder="Katılımcıdan beklenen ön bilgi ve gereksinimler."
           />
         </Field>
 
-        <Field label="Kazanımlar (her satıra bir madde)" name="learningOutcomes">
+        <Field
+          label="Neler öğreneceğiz (her satıra bir madde)"
+          name="learningOutcomes"
+        >
           <textarea
             id="learningOutcomes"
             name="learningOutcomes"
             defaultValue={education?.learningOutcomes.join("\n") ?? ""}
             className={textareaClassName}
+            placeholder={"React temelleri\nState yönetimi\nAPI entegrasyonu"}
           />
         </Field>
 

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
+import { SiteHeader } from "@/components/sections/SiteHeader";
+import { SITE_HEADER_OFFSET_CLASS } from "@/lib/layout";
 import { Footer } from "@/components/sections/Footer";
 import { getEducationCheckoutPrice } from "@/lib/iyzico/checkout";
 import { prisma } from "@/lib/prisma";

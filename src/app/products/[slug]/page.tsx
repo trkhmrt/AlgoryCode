@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { SiteHeader, SITE_HEADER_OFFSET_CLASS } from "@/components/sections/SiteHeader";
+import { SiteHeader } from "@/components/sections/SiteHeader";
+import { SITE_HEADER_OFFSET_CLASS } from "@/lib/layout";
 import { Footer } from "@/components/sections/Footer";
 import { ProductHero } from "@/components/product/ProductHero";
 import { PurposeSection } from "@/components/product/PurposeSection";

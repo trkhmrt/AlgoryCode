@@ -25,6 +25,58 @@ export const EDUCATION_STATUS_LABELS = {
 
 export type EducationStatus = keyof typeof EDUCATION_STATUS_LABELS;
 
+export const EDUCATION_TRACK_LABELS = {
+  FRONTEND: "Frontend",
+  BACKEND: "Backend",
+  DEVOPS: "DevOps",
+  DATABASE: "Veritabanı",
+  MOBILE: "Mobil",
+  AI: "Yapay Zeka",
+  FULLSTACK: "Full Stack",
+} as const;
+
+export type EducationTrack = keyof typeof EDUCATION_TRACK_LABELS;
+
+export const EDUCATION_TECH_LANGUAGES = [
+  "JavaScript",
+  "TypeScript",
+  "Python",
+  "React",
+  "Next.js",
+  "Node.js",
+  "Java",
+  "C#",
+  "Go",
+  "SQL",
+  "HTML & CSS",
+  "Docker",
+  "Kubernetes",
+  "AI & Prompt",
+  "Cursor",
+] as const;
+
+export type EducationTechLanguage = (typeof EDUCATION_TECH_LANGUAGES)[number];
+
+export const EDUCATION_TRACK_TECH_MAP: Record<
+  EducationTrack,
+  readonly EducationTechLanguage[]
+> = {
+  FRONTEND: ["JavaScript", "TypeScript", "React", "Next.js", "HTML & CSS"],
+  BACKEND: ["Node.js", "Java", "Python", "C#", "Go"],
+  DEVOPS: ["Docker", "Kubernetes"],
+  DATABASE: ["SQL"],
+  MOBILE: ["React", "JavaScript", "TypeScript"],
+  AI: ["Python", "AI & Prompt", "Cursor"],
+  FULLSTACK: [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Node.js",
+    "SQL",
+  ],
+};
+
 export type EducationContentSection = {
   title: string;
   body: string;
@@ -49,6 +101,8 @@ export type EducationFormValues = {
   level: EducationLevel;
   format: EducationFormat;
   language: string;
+  track: EducationTrack | null;
+  techLanguage: string | null;
   price: { toString(): string } | null;
   currency: string;
   isFree: boolean;
@@ -93,6 +147,8 @@ export type EducationPublicListItem = Pick<
   | "shortDescription"
   | "level"
   | "format"
+  | "track"
+  | "techLanguage"
   | "isFree"
   | "price"
   | "currency"

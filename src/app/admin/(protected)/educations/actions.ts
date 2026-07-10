@@ -6,8 +6,10 @@ import type {
   EducationFormat,
   EducationLevel,
   EducationStatus,
+  EducationTrack,
 } from "@/lib/education";
 import {
+  EDUCATION_TRACK_LABELS,
   normalizeContentSections,
   parseContentSections,
   parseLearningOutcomes,
@@ -39,6 +41,8 @@ type ParsedEducation = {
   level: EducationLevel;
   format: EducationFormat;
   language: string;
+  track: EducationTrack | null;
+  techLanguage: string | null;
   price: string | null;
   currency: string;
   isFree: boolean;
@@ -78,6 +82,13 @@ function parseEducationForm(formData: FormData): {
   const priceRaw = String(formData.get("price") ?? "").trim();
   const curriculumIdRaw = String(formData.get("curriculumId") ?? "").trim();
   const curriculumId = curriculumIdRaw || null;
+  const trackRaw = String(formData.get("track") ?? "").trim();
+  const techLanguageRaw = String(formData.get("techLanguage") ?? "").trim();
+  const track =
+    trackRaw && trackRaw in EDUCATION_TRACK_LABELS
+      ? (trackRaw as EducationTrack)
+      : null;
+  const techLanguage = techLanguageRaw || null;
 
   if (!title) fieldErrors.title = "Başlık zorunludur.";
   if (!shortDescription) fieldErrors.shortDescription = "Kısa açıklama zorunludur.";
@@ -130,6 +141,8 @@ function parseEducationForm(formData: FormData): {
       level: String(formData.get("level") ?? "ALL_LEVELS") as EducationLevel,
       format: String(formData.get("format") ?? "ONLINE") as EducationFormat,
       language: String(formData.get("language") ?? "tr").trim() || "tr",
+      track,
+      techLanguage,
       price: isFree || !priceRaw ? null : priceRaw,
       currency: String(formData.get("currency") ?? "TRY").trim() || "TRY",
       isFree,
@@ -326,6 +339,8 @@ export async function duplicateEducation(id: string) {
       level: existing.level,
       format: existing.format,
       language: existing.language,
+      track: existing.track,
+      techLanguage: existing.techLanguage,
       price: existing.price,
       currency: existing.currency,
       isFree: existing.isFree,
