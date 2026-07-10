@@ -99,19 +99,19 @@ export function parseCurriculumDetailsFromForm(
     .map((v) => String(v).trim());
   const lessonsRaw = formData.getAll("detailLessons").map((v) => String(v));
 
-  return titles
-    .map((title, index) => {
-      if (!title) {
-        return null;
-      }
+  return titles.flatMap((title, index) => {
+    if (!title) {
+      return [];
+    }
 
-      return {
+    return [
+      {
         title,
         totalDuration: durations[index] || null,
         lessons: parseCurriculumLessons(lessonsRaw[index] ?? "[]"),
-      };
-    })
-    .filter((item): item is CurriculumDetailInput => item !== null);
+      },
+    ];
+  });
 }
 
 export function toCourseModuleViews(
