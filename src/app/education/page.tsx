@@ -18,9 +18,9 @@ import {
   type EducationPublicListItem,
   type EducationTrack,
 } from "@/lib/education";
-import { prisma } from "@/lib/prisma";
+import { getPublishedEducationsCached } from "@/lib/education-cache";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Eğitimler — AlgoryCode",
@@ -41,14 +41,11 @@ export default async function EducationPage({ searchParams }: EducationPageProps
     params.track && isEducationTrack(params.track) ? params.track : undefined;
   const techFilter = params.tech?.trim() || undefined;
 
-  const educations = (await prisma.education.findMany({
-    where: {
-      status: "PUBLISHED",
-      ...(trackFilter ? { track: trackFilter } : {}),
-      ...(techFilter ? { techLanguage: techFilter } : {}),
-    },
-    orderBy: { startDate: "asc" },
-  })) as EducationPublicListItem[];
+  const educations: EducationPublicListItem[] =
+    await getPublishedEducationsCached({
+      track: trackFilter,
+      tech: techFilter,
+    });
 
   const hasActiveFilter = Boolean(trackFilter || techFilter);
 

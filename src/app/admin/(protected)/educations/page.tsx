@@ -15,6 +15,7 @@ import {
 import { prisma } from "@/lib/prisma";
 import { DeleteEducationButton } from "./DeleteEducationButton";
 import { DuplicateEducationButton } from "./DuplicateEducationButton";
+import { ImportEducationsJsonCard } from "./ImportEducationsJsonCard";
 
 export const metadata: Metadata = {
   title: "Eğitimler — Admin",
@@ -37,6 +38,8 @@ export default async function AdminEducationsPage() {
         </div>
         <Button href="/admin/educations/new">Yeni Eğitim</Button>
       </div>
+
+      <ImportEducationsJsonCard />
 
       <Card className="overflow-hidden">
         {educations.length === 0 ? (

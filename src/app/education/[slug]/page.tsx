@@ -25,16 +25,18 @@ import {
   formatDateTR,
   formatEducationDuration,
   formatPrice,
-  normalizeContentSections,
   type EducationRecord,
 } from "@/lib/education";
+import {
+  getPublishedEducationBySlugCached,
+  getPublishedEducationMetaCached,
+} from "@/lib/education-cache";
 import {
   normalizeCurriculumLessons,
   toCourseModuleViews,
 } from "@/lib/curriculum";
-import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 type EducationDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -44,10 +46,7 @@ export async function generateMetadata({
   params,
 }: EducationDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const education = await prisma.education.findFirst({
-    where: { slug, status: "PUBLISHED" },
-    select: { title: true, shortDescription: true },
-  });
+  const education = await getPublishedEducationMetaCached(slug);
 
   if (!education) {
     return { title: "Eğitim Bulunamadı" };
@@ -63,18 +62,7 @@ export default async function EducationDetailPage({
   params,
 }: EducationDetailPageProps) {
   const { slug } = await params;
-  const educationRow = await prisma.education.findFirst({
-    where: { slug, status: "PUBLISHED" },
-    include: {
-      curriculum: {
-        include: {
-          details: {
-            orderBy: { sortOrder: "asc" },
-          },
-        },
-      },
-    },
-  });
+  const educationRow = await getPublishedEducationBySlugCached(slug);
 
   if (!educationRow) {
     notFound();
@@ -82,10 +70,7 @@ export default async function EducationDetailPage({
 
   const { curriculum, ...educationFields } = educationRow;
 
-  const education: EducationRecord = {
-    ...educationFields,
-    contentSections: normalizeContentSections(educationFields.contentSections),
-  };
+  const education = educationFields as EducationRecord;
 
   const duration = formatEducationDuration(
     education.durationWeeks,

@@ -1,13 +1,17 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   parseCurriculumDetailsFromForm,
   type CurriculumDetailInput,
 } from "@/lib/curriculum";
+import {
+  EDUCATION_CACHE_TAG,
+  educationSlugTag,
+} from "@/lib/education-cache";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export type CurriculumFormState = {
   error?: string;
@@ -40,9 +44,11 @@ function revalidateCurriculumPaths(educationSlugs: string[] = []) {
   revalidatePath("/admin/curriculums");
   revalidatePath("/admin/educations");
   revalidatePath("/education");
+  revalidateTag(EDUCATION_CACHE_TAG, "max");
 
   for (const slug of educationSlugs) {
     revalidatePath(`/education/${slug}`);
+    revalidateTag(educationSlugTag(slug), "max");
   }
 }
 

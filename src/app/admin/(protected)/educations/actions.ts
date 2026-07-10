@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import type {
   EducationFormat,
@@ -15,6 +15,10 @@ import {
   parseLearningOutcomes,
   slugify,
 } from "@/lib/education";
+import {
+  EDUCATION_CACHE_TAG,
+  educationSlugTag,
+} from "@/lib/education-cache";
 import { prisma } from "@/lib/prisma";
 
 export type EducationFormState = {
@@ -187,9 +191,11 @@ function revalidateEducationPaths(slug?: string) {
   revalidatePath("/education");
   revalidatePath("/admin");
   revalidatePath("/admin/educations");
+  revalidateTag(EDUCATION_CACHE_TAG, "max");
 
   if (slug) {
     revalidatePath(`/education/${slug}`);
+    revalidateTag(educationSlugTag(slug), "max");
   }
 }
 
@@ -360,3 +366,204 @@ export async function duplicateEducation(id: string) {
   revalidateEducationPaths(education.slug);
   redirect(`/admin/educations/${education.id}/edit?duplicated=1`);
 }
+
+export type ImportEducationsJsonState = {
+  error?: string;
+  success?: string;
+};
+
+function asOptionalString(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  const text = String(value).trim();
+  return text || null;
+}
+
+function asStringArray(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item).trim()).filter(Boolean);
+  }
+  if (typeof value === "string") {
+    return value
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function parseJsonEducationItem(raw: unknown): {
+  data: ParsedEducation | null;
+  error?: string;
+} {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    return { data: null, error: "Her eğitim bir JSON nesnesi olmalıdır." };
+  }
+
+  const item = raw as Record<string, unknown>;
+  const title = String(item.title ?? "").trim();
+  const shortDescription = String(item.shortDescription ?? "").trim();
+  const fullDescription = String(item.fullDescription ?? "").trim();
+  const instructorName = String(item.instructorName ?? "").trim();
+  const startDateRaw = String(item.startDate ?? "").trim();
+
+  if (!title || !shortDescription || !fullDescription || !instructorName || !startDateRaw) {
+    return {
+      data: null,
+      error: `"${title || "Adsız"}" için title, shortDescription, fullDescription, instructorName ve startDate zorunludur.`,
+    };
+  }
+
+  const startDate = new Date(startDateRaw);
+  if (Number.isNaN(startDate.getTime())) {
+    return { data: null, error: `"${title}" için geçersiz startDate.` };
+  }
+
+  const endDateRaw = asOptionalString(item.endDate);
+  const endDate = endDateRaw ? new Date(endDateRaw) : null;
+  if (endDateRaw && endDate && Number.isNaN(endDate.getTime())) {
+    return { data: null, error: `"${title}" için geçersiz endDate.` };
+  }
+
+  const isFree = Boolean(item.isFree);
+  const priceRaw = asOptionalString(item.price);
+  const trackRaw = asOptionalString(item.track);
+  const track =
+    trackRaw && trackRaw in EDUCATION_TRACK_LABELS
+      ? (trackRaw as EducationTrack)
+      : null;
+
+  const level = String(item.level ?? "ALL_LEVELS") as EducationLevel;
+  const format = String(item.format ?? "ONLINE") as EducationFormat;
+  const status = String(item.status ?? "DRAFT") as EducationStatus;
+
+  return {
+    data: {
+      title,
+      shortDescription,
+      fullDescription,
+      instructorName,
+      instructorTitle: asOptionalString(item.instructorTitle),
+      instructorBio: asOptionalString(item.instructorBio),
+      instructorAvatarUrl: asOptionalString(item.instructorAvatarUrl),
+      instructorGithubUrl: asOptionalString(item.instructorGithubUrl),
+      instructorLinkedinUrl: asOptionalString(item.instructorLinkedinUrl),
+      startDate,
+      endDate,
+      durationWeeks:
+        item.durationWeeks === null || item.durationWeeks === undefined
+          ? null
+          : Number(item.durationWeeks),
+      durationHours:
+        item.durationHours === null || item.durationHours === undefined
+          ? null
+          : Number(item.durationHours),
+      schedule: asOptionalString(item.schedule),
+      level,
+      format,
+      language: asOptionalString(item.language) ?? "tr",
+      track,
+      techLanguage: asOptionalString(item.techLanguage),
+      price: isFree || !priceRaw ? null : priceRaw,
+      currency: asOptionalString(item.currency) ?? "TRY",
+      isFree,
+      maxStudents:
+        item.maxStudents === null || item.maxStudents === undefined
+          ? null
+          : Number(item.maxStudents),
+      location: asOptionalString(item.location),
+      prerequisites: asOptionalString(item.prerequisites),
+      learningOutcomes: asStringArray(item.learningOutcomes),
+      contentSections: normalizeContentSections(item.contentSections),
+      syllabus: asOptionalString(item.syllabus),
+      coverImageUrl: asOptionalString(item.coverImageUrl),
+      status,
+      curriculumId: asOptionalString(item.curriculumId),
+    },
+  };
+}
+
+export async function importEducationsFromJson(
+  _prevState: ImportEducationsJsonState,
+  formData: FormData,
+): Promise<ImportEducationsJsonState> {
+  const raw = String(formData.get("json") ?? "").trim();
+  if (!raw) {
+    return { error: "JSON içeriği boş olamaz." };
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return { error: "Geçersiz JSON. Lütfen formatı kontrol edin." };
+  }
+
+  const items = Array.isArray(parsed) ? parsed : [parsed];
+  if (items.length === 0) {
+    return { error: "İçe aktarılacak eğitim bulunamadı." };
+  }
+
+  const createdIds: string[] = [];
+
+  try {
+    for (const item of items) {
+      const { data, error } = parseJsonEducationItem(item);
+      if (!data) {
+        return { error: error ?? "JSON öğesi okunamadı." };
+      }
+
+      if (
+        data.durationWeeks !== null &&
+        !Number.isFinite(data.durationWeeks)
+      ) {
+        return { error: `"${data.title}" için geçersiz durationWeeks.` };
+      }
+      if (
+        data.durationHours !== null &&
+        !Number.isFinite(data.durationHours)
+      ) {
+        return { error: `"${data.title}" için geçersiz durationHours.` };
+      }
+      if (data.maxStudents !== null && !Number.isFinite(data.maxStudents)) {
+        return { error: `"${data.title}" için geçersiz maxStudents.` };
+      }
+
+      if (data.curriculumId) {
+        const curriculum = await prisma.curriculum.findUnique({
+          where: { id: data.curriculumId },
+          select: { id: true },
+        });
+        if (!curriculum) {
+          return {
+            error: `"${data.title}" için curriculumId bulunamadı: ${data.curriculumId}`,
+          };
+        }
+      }
+
+      const slug = await createUniqueSlug(data.title);
+      const education = await prisma.education.create({
+        data: {
+          ...data,
+          slug,
+          publishedAt: data.status === "PUBLISHED" ? new Date() : null,
+        },
+      });
+      createdIds.push(education.id);
+      revalidateEducationPaths(education.slug);
+    }
+  } catch {
+    return {
+      error: "İçe aktarma sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+    };
+  }
+
+  if (createdIds.length === 1) {
+    redirect(`/admin/educations/${createdIds[0]}/edit?created=1`);
+  }
+
+  revalidatePath("/admin/educations");
+  return {
+    success: `${createdIds.length} eğitim başarıyla içe aktarıldı.`,
+  };
+}
+
