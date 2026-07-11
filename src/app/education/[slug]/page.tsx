@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
@@ -11,7 +10,7 @@ import { SiteHeader } from "@/components/sections/SiteHeader";
 import { SITE_HEADER_OFFSET_CLASS } from "@/lib/layout";
 import { Footer } from "@/components/sections/Footer";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { EducationApplicationCard } from "@/components/education/EducationApplicationCard";
 import { EducationAboutAccordion } from "@/components/education/EducationAboutAccordion";
 import { EducationAskInstructorCard } from "@/components/education/EducationAskInstructorCard";
 import { EducationBackToListLink } from "@/components/education/EducationBackToListLink";
@@ -24,7 +23,6 @@ import {
   EDUCATION_LEVEL_LABELS,
   formatDateTR,
   formatEducationDuration,
-  formatPrice,
   type EducationRecord,
 } from "@/lib/education";
 import {
@@ -110,11 +108,7 @@ export default async function EducationDetailPage({
                     {EDUCATION_FORMAT_LABELS[education.format]}
                   </Badge>
                   <Badge className="border-white/20 bg-white/10 text-white">
-                    {formatPrice(
-                      education.isFree,
-                      education.price,
-                      education.currency,
-                    )}
+                    Başvuru ile
                   </Badge>
                 </div>
 
@@ -139,6 +133,11 @@ export default async function EducationDetailPage({
               </div>
 
               <div className="space-y-6">
+                <EducationApplicationCard
+                  educationId={education.id}
+                  educationTitle={education.title}
+                />
+
                 <Card className="h-fit bg-white/80 p-6">
                   <p className="text-[13px] uppercase tracking-[0.12em] text-[#888]">
                     Eğitim Özeti
@@ -194,12 +193,6 @@ export default async function EducationDetailPage({
                       </div>
                     ) : null}
                   </dl>
-                  <Button
-                    href={`/education/${slug}/checkout`}
-                    className="mt-6 w-full rounded-full border-0 bg-[#121212] text-white hover:bg-[#2a2a2a]"
-                  >
-                    {education.isFree ? "Kayıt Ol" : "Satın Al"}
-                  </Button>
                 </Card>
 
                 <Card className="bg-white/80 p-6">
