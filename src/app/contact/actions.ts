@@ -5,6 +5,10 @@ import {
   isValidPhone,
   normalizePhone,
 } from "@/lib/contact";
+import {
+  notifyAdminAboutContactForm,
+  sendContactConfirmationToUser,
+} from "@/lib/mail-api";
 import { prisma } from "@/lib/prisma";
 
 export type ContactFormState = {
@@ -97,6 +101,23 @@ export async function submitEducationContact(
     },
   });
 
+  await notifyAdminAboutContactForm({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    phone: data.phone,
+    message: data.message,
+    email: data.email,
+    source: data.source ?? `/education/${education.slug}`,
+  });
+
+  if (data.email) {
+    await sendContactConfirmationToUser({
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+    });
+  }
+
   revalidatePath("/admin/contacts");
 
   return { success: "Sorunuz başarıyla gönderildi." };
@@ -137,6 +158,25 @@ export async function submitJobRequestContact(
       source: data.source ?? "/contact",
     },
   });
+
+  await notifyAdminAboutContactForm({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    phone: data.phone,
+    message: data.message,
+    email: data.email,
+    company: data.company,
+    domain: data.domain,
+    source: data.source ?? "/contact",
+  });
+
+  if (data.email) {
+    await sendContactConfirmationToUser({
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+    });
+  }
 
   revalidatePath("/admin/contacts");
 

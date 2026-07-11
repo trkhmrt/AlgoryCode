@@ -4,6 +4,7 @@ import {
   getIyzicoClient,
 } from "@/lib/iyzico/client";
 import { getPublicPaymentErrorMessage, isLimitError } from "@/lib/iyzico/errors";
+import { sendEducationEnrollmentEmails } from "@/lib/mail-api";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -140,6 +141,20 @@ export async function POST(request: Request) {
           lastFourDigits: result.lastFourDigits ?? payment.lastFourDigits,
           iyzicoRawResponse: result as object,
         },
+      });
+
+      await sendEducationEnrollmentEmails({
+        buyerEmail: payment.buyerEmail,
+        buyerName: payment.buyerName,
+        buyerSurname: payment.buyerSurname,
+        educationId: payment.education.id,
+        educationTitle: payment.education.title,
+        currency: payment.currency,
+        price: Number(payment.price.toString()),
+        paidPrice: Number(payment.paidPrice.toString()),
+        conversationId: payment.conversationId,
+        paymentId: payment.id,
+        isFree: false,
       });
 
       return redirectToSuccess(origin, payment.education.slug, localPaymentId);

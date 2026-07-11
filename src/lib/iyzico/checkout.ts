@@ -12,6 +12,7 @@ import {
 import { findInstallmentOption, type InstallmentOption } from "@/lib/iyzico/installments";
 import { getPublicPaymentErrorMessage, isLimitError } from "@/lib/iyzico/errors";
 import { prisma } from "@/lib/prisma";
+import { sendEducationEnrollmentEmails } from "@/lib/mail-api";
 
 export type CheckoutBuyerInput = {
   name: string;
@@ -298,6 +299,20 @@ export async function processIyzicoPayment(
         },
       });
 
+      await sendEducationEnrollmentEmails({
+        buyerEmail: input.buyer.email,
+        buyerName: input.buyer.name,
+        buyerSurname: input.buyer.surname,
+        educationId: input.education.id,
+        educationTitle: input.education.title,
+        currency: input.education.currency,
+        price,
+        paidPrice: selectedInstallment.totalPrice,
+        conversationId: paymentRecord.conversationId,
+        paymentId: paymentRecord.id,
+        isFree: false,
+      });
+
       return {
         success: true,
         paymentId: paymentRecord.id,
@@ -367,6 +382,20 @@ export async function processFreeEnrollment(input: {
       currency: input.education.currency,
       installment: 1,
     },
+  });
+
+  await sendEducationEnrollmentEmails({
+    buyerEmail: input.buyer.email,
+    buyerName: input.buyer.name,
+    buyerSurname: input.buyer.surname,
+    educationId: input.education.id,
+    educationTitle: input.education.title,
+    currency: input.education.currency,
+    price: 0,
+    paidPrice: 0,
+    conversationId: paymentRecord.conversationId,
+    paymentId: paymentRecord.id,
+    isFree: true,
   });
 
   return {
