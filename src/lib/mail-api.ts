@@ -28,19 +28,16 @@ type EnqueueMailResponse = {
   queuedAt: string;
 };
 
-function getMailApiBaseUrl(): string | null {
-  const baseUrl = process.env.MAIL_API_BASE_URL?.replace(/\/$/, "");
-  return baseUrl || null;
+function getMailApiBaseUrl(): string {
+  return (
+    process.env.MAIL_API_BASE_URL ?? "https://prod.mail.api.algorycode.com"
+  ).replace(/\/$/, "");
 }
 
 export async function enqueueMail(
   payload: EnqueueMailPayload,
-): Promise<EnqueueMailResponse | null> {
+): Promise<EnqueueMailResponse> {
   const baseUrl = getMailApiBaseUrl();
-  if (!baseUrl) {
-    console.warn("[mail-api] MAIL_API_BASE_URL is not configured; skipping email.");
-    return null;
-  }
 
   const response = await fetch(`${baseUrl}/api/v1/mails`, {
     method: "POST",
