@@ -1,10 +1,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import {
   isValidPhone,
   normalizePhone,
 } from "@/lib/contact";
+import {
+  formatVisitDevice,
+  getClientRequestMeta,
+} from "@/lib/client-request-meta";
+import { KVKK_CONSENT_ERROR } from "@/lib/kvkk";
 import { sendEducationApplicationNotifications } from "@/lib/push-notification-service";
 import { prisma } from "@/lib/prisma";
 
@@ -19,6 +25,7 @@ function parseApplicationFields(formData: FormData) {
   const lastName = String(formData.get("lastName") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const phone = normalizePhone(String(formData.get("phone") ?? ""));
+  const kvkkAccepted = formData.get("kvkkAccepted") === "on";
 
   const fieldErrors: Record<string, string> = {};
 
@@ -42,14 +49,34 @@ function parseApplicationFields(formData: FormData) {
     fieldErrors.phone = "Geçerli bir telefon numarası girin.";
   }
 
+  if (!kvkkAccepted) {
+    fieldErrors.kvkkAccepted = KVKK_CONSENT_ERROR;
+  }
+
   return {
     data: {
       firstName,
       lastName,
       email,
       phone,
+      kvkkAccepted,
     },
     fieldErrors,
+  };
+}
+
+async function getNotificationClientMetadata() {
+  const headerStore = await headers();
+  const request = new Request("http://localhost", {
+    headers: headerStore,
+  });
+  const meta = await getClientRequestMeta(request);
+
+  return {
+    ipAddress: meta.ipAddress,
+    userAgent: meta.userAgent,
+    deviceInfo: formatVisitDevice(meta),
+    deviceType: meta.deviceType,
   };
 }
 
@@ -93,6 +120,8 @@ export async function submitEducationApplication(
     phone: data.phone,
     educationTitle: education.title,
     educationSlug: education.slug,
+    kvkkApproved: data.kvkkAccepted,
+    client: await getNotificationClientMetadata(),
   });
 
   revalidatePath("/admin/contacts");

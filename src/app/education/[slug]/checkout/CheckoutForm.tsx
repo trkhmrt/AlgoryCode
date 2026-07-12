@@ -4,6 +4,7 @@ import { useActionState, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { InfoTooltip } from "@/components/ui/InfoTooltip";
+import { KvkkConsent } from "@/components/legal/KvkkConsent";
 import { formatPrice } from "@/lib/education";
 import {
   CHECKOUT_MOCK_DATA,
@@ -424,6 +425,8 @@ export function CheckoutForm({
           {state.error}
         </p>
       ) : null}
+
+      <KvkkConsent tone="dark" />
 
       <Button type="submit" className="w-full" disabled={pending || !!state.threeDSHtmlContent}>
         {pending

@@ -7,6 +7,7 @@ import {
   submitJobRequestContact,
   type ContactFormState,
 } from "@/app/contact/actions";
+import { KvkkConsent } from "@/components/legal/KvkkConsent";
 
 const DOMAINS = ["E-Ticaret", "Mobil App", "AI", "Web App", "Eğitim"];
 
@@ -170,6 +171,9 @@ export function JobRequestContactForm({
           {state.error ? (
             <p className="text-sm text-red-600 sm:col-span-2">{state.error}</p>
           ) : null}
+          <div className="sm:col-span-2">
+            <KvkkConsent error={state.fieldErrors?.kvkkAccepted} />
+          </div>
           <div className="mt-1 sm:col-span-2">
             <button
               type="submit"

@@ -23,6 +23,19 @@ type EnqueueNotificationPayload = {
   };
   subject?: string;
   templateData?: Record<string, unknown>;
+  kvkkApproved?: boolean;
+  contact?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+  };
+  client?: {
+    ipAddress?: string | null;
+    userAgent?: string | null;
+    deviceInfo?: string | null;
+    deviceType?: string | null;
+  };
 };
 
 type ChannelResult = {
@@ -41,9 +54,15 @@ const MAIL_SERVICE_NAME = "algorycode-web-site";
 const TELEGRAM_SERVICE_NAME = "algory-site";
 
 function getPushNotificationServiceBaseUrl(): string {
-  return (
-    process.env.PUSH_NOTIFICATION_SERVICE_BASE_URL ?? DEFAULT_BASE_URL
-  ).replace(/\/$/, "");
+  const configured = process.env.PUSH_NOTIFICATION_SERVICE_BASE_URL;
+
+  if (!configured && process.env.NODE_ENV === "production") {
+    console.error(
+      "[push-notification-service] PUSH_NOTIFICATION_SERVICE_BASE_URL is missing in production. Requests target localhost and will fail.",
+    );
+  }
+
+  return (configured ?? DEFAULT_BASE_URL).replace(/\/$/, "");
 }
 
 export async function enqueueNotification(
@@ -88,8 +107,16 @@ export async function sendEducationApplicationNotifications(input: {
   phone: string;
   educationTitle: string;
   educationSlug: string;
+  kvkkApproved: boolean;
+  client?: EnqueueNotificationPayload["client"];
 }): Promise<void> {
   const userName = `${input.firstName} ${input.lastName}`.trim();
+  const contact = {
+    firstName: input.firstName,
+    lastName: input.lastName,
+    email: input.email,
+    phone: input.phone,
+  };
 
   await sendNotificationSafely(
     {
@@ -99,6 +126,9 @@ export async function sendEducationApplicationNotifications(input: {
       recipients: {
         email: input.email,
       },
+      kvkkApproved: input.kvkkApproved,
+      contact,
+      client: input.client,
       templateData: {
         userName,
         educationTitle: input.educationTitle,
@@ -112,6 +142,9 @@ export async function sendEducationApplicationNotifications(input: {
       channels: ["telegram"],
       serviceName: TELEGRAM_SERVICE_NAME,
       messageType: "REQUEST_FORM",
+      kvkkApproved: input.kvkkApproved,
+      contact,
+      client: input.client,
       templateData: {
         firstName: input.firstName,
         lastName: input.lastName,

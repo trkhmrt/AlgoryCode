@@ -6,6 +6,7 @@ import {
   type EducationApplicationFormState,
 } from "@/app/education/[slug]/application/actions";
 import { Card } from "@/components/ui/Card";
+import { KvkkConsent } from "@/components/legal/KvkkConsent";
 import { useToast } from "@/components/ui/ToastProvider";
 
 type EducationApplicationCardProps = {
@@ -112,6 +113,8 @@ export function EducationApplicationCard({
             </span>
           ) : null}
         </label>
+
+        <KvkkConsent error={state.fieldErrors?.kvkkAccepted} />
 
         <button
           type="submit"

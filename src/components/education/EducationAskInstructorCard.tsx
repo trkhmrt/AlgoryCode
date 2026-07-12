@@ -6,6 +6,7 @@ import {
   type ContactFormState,
 } from "@/app/contact/actions";
 import { Card } from "@/components/ui/Card";
+import { KvkkConsent } from "@/components/legal/KvkkConsent";
 import { useToast } from "@/components/ui/ToastProvider";
 
 type EducationAskInstructorCardProps = {
@@ -120,17 +121,20 @@ export function EducationAskInstructorCard({
           ) : null}
         </label>
 
-        <div className="flex flex-col gap-3 border-t border-[#e5dfd6] pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[12px] text-[#8a847c]">
-            Ortalama yanıt süresi: 2–4 saat
-          </p>
-          <button
-            type="submit"
-            disabled={pending}
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-[#121212] px-6 text-[14px] font-medium text-white transition-colors hover:bg-[#2a2622] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212] disabled:opacity-60"
-          >
-            {pending ? "Gönderiliyor..." : "Soruyu Gönder"}
-          </button>
+        <div className="space-y-4 border-t border-[#e5dfd6] pt-5">
+          <KvkkConsent error={state.fieldErrors?.kvkkAccepted} />
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-[12px] text-[#8a847c]">
+              Ortalama yanıt süresi: 2–4 saat
+            </p>
+            <button
+              type="submit"
+              disabled={pending}
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-[#121212] px-6 text-[14px] font-medium text-white transition-colors hover:bg-[#2a2622] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212] disabled:opacity-60"
+            >
+              {pending ? "Gönderiliyor..." : "Soruyu Gönder"}
+            </button>
+          </div>
         </div>
       </form>
     </Card>

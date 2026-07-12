@@ -5,6 +5,7 @@ import {
   isValidPhone,
   normalizePhone,
 } from "@/lib/contact";
+import { KVKK_CONSENT_ERROR } from "@/lib/kvkk";
 import {
   notifyAdminAboutContactForm,
   sendContactConfirmationToUser,
@@ -28,6 +29,7 @@ function parseContactFields(formData: FormData) {
   const company = String(formData.get("company") ?? "").trim() || null;
   const domain = String(formData.get("domain") ?? "").trim() || null;
   const source = String(formData.get("source") ?? "").trim() || null;
+  const kvkkAccepted = formData.get("kvkkAccepted") === "on";
 
   const fieldErrors = initialFieldErrors();
 
@@ -53,6 +55,10 @@ function parseContactFields(formData: FormData) {
     fieldErrors.email = "Geçerli bir e-posta girin.";
   }
 
+  if (!kvkkAccepted) {
+    fieldErrors.kvkkAccepted = KVKK_CONSENT_ERROR;
+  }
+
   return {
     data: {
       firstName,
@@ -63,6 +69,7 @@ function parseContactFields(formData: FormData) {
       company,
       domain,
       source,
+      kvkkAccepted,
     },
     fieldErrors,
   };

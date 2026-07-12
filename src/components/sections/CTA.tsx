@@ -7,6 +7,7 @@ import {
   submitJobRequestContact,
   type ContactFormState,
 } from "@/app/contact/actions";
+import { KvkkConsent } from "@/components/legal/KvkkConsent";
 
 const DOMAINS = [
   "E-Ticaret",
@@ -259,6 +260,12 @@ export function CTA() {
                           {state.error}
                         </p>
                       ) : null}
+                      <div className="sm:col-span-2">
+                        <KvkkConsent
+                          tone="dark"
+                          error={state.fieldErrors?.kvkkAccepted}
+                        />
+                      </div>
                       <div className="sm:col-span-2 mt-1">
                         <button
                           type="submit"

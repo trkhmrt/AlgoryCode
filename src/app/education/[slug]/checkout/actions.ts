@@ -68,6 +68,13 @@ export async function submitCheckout(
     return { error: "Lütfen tüm alıcı bilgilerini doldurun." };
   }
 
+  if (formData.get("kvkkAccepted") !== "on") {
+    return {
+      error:
+        "Devam etmek için KVKK Aydınlatma Metni'ni onaylamanız gerekir.",
+    };
+  }
+
   if (education.isFree) {
     const result = await processFreeEnrollment({ education, buyer });
     if (result.success) {
