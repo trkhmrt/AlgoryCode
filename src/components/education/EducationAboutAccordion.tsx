@@ -1,18 +1,17 @@
 "use client";
 
-import { CheckCircle2, FileText, LayoutList, ListChecks } from "lucide-react";
+import { FileText, LayoutList, ListChecks } from "lucide-react";
 import { useState } from "react";
 import { CourseCurriculumAccordion } from "@/components/education/CourseCurriculumAccordion";
 import type { CourseModuleView } from "@/lib/curriculum";
 
 type EducationAboutAccordionProps = {
   description: string;
-  learningOutcomes?: string[];
   prerequisites?: string | null;
   modules?: CourseModuleView[];
 };
 
-type TabKey = "aciklama" | "kazanimlar" | "gereksinimler" | "icerik";
+type TabKey = "aciklama" | "gereksinimler" | "icerik";
 
 const tabClass = (active: boolean, disabled: boolean) =>
   `inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212] ${
@@ -25,25 +24,20 @@ const tabClass = (active: boolean, disabled: boolean) =>
 
 export function EducationAboutAccordion({
   description,
-  learningOutcomes = [],
   prerequisites = null,
   modules = [],
 }: EducationAboutAccordionProps) {
-  const outcomes = learningOutcomes.map((item) => item.trim()).filter(Boolean);
   const requirements = (prerequisites ?? "").trim();
 
   const hasAciklama = description.trim().length > 0;
-  const hasKazanimlar = outcomes.length > 0;
   const hasGereksinimler = requirements.length > 0;
   const hasIcerik = modules.length > 0;
 
   const initialTab: TabKey = hasAciklama
     ? "aciklama"
-    : hasKazanimlar
-      ? "kazanimlar"
-      : hasGereksinimler
-        ? "gereksinimler"
-        : "icerik";
+    : hasGereksinimler
+      ? "gereksinimler"
+      : "icerik";
 
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
 
@@ -66,20 +60,6 @@ export function EducationAboutAccordion({
         >
           <FileText size={15} strokeWidth={1.5} />
           Açıklama
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          id="education-tab-kazanimlar"
-          aria-selected={activeTab === "kazanimlar"}
-          aria-controls="education-panel-kazanimlar"
-          onClick={() => setActiveTab("kazanimlar")}
-          className={tabClass(activeTab === "kazanimlar", !hasKazanimlar)}
-          disabled={!hasKazanimlar}
-        >
-          <CheckCircle2 size={15} strokeWidth={1.5} />
-          Neler öğreneceğiz
         </button>
 
         <button
@@ -118,34 +98,9 @@ export function EducationAboutAccordion({
           aria-labelledby="education-tab-aciklama"
           className="pt-5"
         >
-          <p className="whitespace-pre-line text-sm leading-relaxed text-[#888]">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-[#4a4640]">
             {description}
           </p>
-        </div>
-      ) : null}
-
-      {activeTab === "kazanimlar" && hasKazanimlar ? (
-        <div
-          role="tabpanel"
-          id="education-panel-kazanimlar"
-          aria-labelledby="education-tab-kazanimlar"
-          className="pt-5"
-        >
-          <ul className="space-y-3">
-            {outcomes.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2.5 text-sm leading-relaxed text-[#888]"
-              >
-                <CheckCircle2
-                  size={16}
-                  className="mt-0.5 shrink-0 text-[#2a2622]"
-                  strokeWidth={1.5}
-                />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       ) : null}
 
@@ -156,7 +111,7 @@ export function EducationAboutAccordion({
           aria-labelledby="education-tab-gereksinimler"
           className="pt-5"
         >
-          <p className="whitespace-pre-line text-sm leading-relaxed text-[#888]">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-[#4a4640]">
             {requirements}
           </p>
         </div>

@@ -39,7 +39,7 @@ export function CtaDemo() {
           <p className="text-[12px] uppercase tracking-[0.18em] text-[#666] mb-4">
             Demo
           </p>
-          <h2 className="heading text-[44px] md:text-[52px] font-extrabold">
+          <h2 className="heading text-[28px] font-semibold tracking-tight md:text-[36px]">
             Hazır mısınız?
           </h2>
           <p className="mt-6 text-[15px] text-[#888] max-w-[440px] leading-relaxed">

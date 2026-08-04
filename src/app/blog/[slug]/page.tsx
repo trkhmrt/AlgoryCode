@@ -38,8 +38,11 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.title} — AlgoryCode Blog`,
+    title: post.title,
     description: post.excerpt,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
   };
 }
 
@@ -108,10 +111,10 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                     <Badge key={tag}>{tag}</Badge>
                   ))}
                 </div>
-                <h1 className="heading mt-6 text-4xl font-semibold md:text-6xl">
+                <h1 className="heading mt-6 text-[28px] font-semibold tracking-tight md:text-[40px]">
                   {post.title}
                 </h1>
-                <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#bdbdbd] md:text-lg">
+                <p className="mt-4 max-w-3xl text-[16px] leading-relaxed text-[#bdbdbd]">
                   {post.excerpt}
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-5 text-sm text-[#888]">
@@ -212,9 +215,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
               {relatedPosts.length > 0 ? (
                 <Card className="p-6">
-                  <p className="text-[13px] uppercase tracking-[0.12em] text-[#888]">
+                  <h2 className="heading text-[16px] font-semibold tracking-tight">
                     İlgili Yazılar
-                  </p>
+                  </h2>
                   <ul className="mt-5 space-y-5">
                     {relatedPosts.map((related) => (
                       <li key={related.slug} className="border-b border-[#1a1a1a] pb-5 last:border-b-0 last:pb-0">
@@ -222,9 +225,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                           href={`/blog/${related.slug}`}
                           className="group block"
                         >
-                          <p className="font-medium transition-colors group-hover:text-white">
+                          <h3 className="text-[15px] font-medium leading-snug transition-colors group-hover:text-white">
                             {related.title}
-                          </p>
+                          </h3>
                           <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[#888]">
                             {related.excerpt}
                           </p>
@@ -243,7 +246,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
               ) : null}
 
               <Card className="p-6">
-                <p className="text-lg font-semibold">Eğitimleri keşfedin</p>
+                <h2 className="heading text-[16px] font-semibold tracking-tight">
+                  Eğitimleri keşfedin
+                </h2>
                 <p className="mt-2 text-sm leading-relaxed text-[#888]">
                   Blog yazılarımızın ötesinde, uygulamalı eğitim programlarımıza
                   göz atın.

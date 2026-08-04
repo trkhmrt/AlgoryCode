@@ -1,62 +1,99 @@
 import type { Metadata } from "next";
-import { FileSignature, Headphones, ShieldCheck, Sparkles } from "lucide-react";
+import { Mail } from "lucide-react";
 import { JobRequestContactForm } from "@/components/contact/JobRequestContactForm";
 import { Footer } from "@/components/sections/Footer";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { SITE_HEADER_OFFSET_CLASS } from "@/lib/layout";
-import { Card } from "@/components/ui/Card";
+
+const CONTACT_DESCRIPTION =
+  "Projeniz, ürün fikriniz veya eğitim talebiniz için AlgoryCode ile iletişime geçin. Formu doldurun, ekibimiz size özel dönüş yapsın.";
 
 export const metadata: Metadata = {
-  title: "İletişim — AlgoryCode",
-  description: "Projeniz için bizimle iletişime geçin.",
+  title: "İletişim",
+  description: CONTACT_DESCRIPTION,
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "İletişim — AlgoryCode",
+    description: CONTACT_DESCRIPTION,
+    url: "/contact",
+    type: "website",
+    locale: "tr_TR",
+    siteName: "AlgoryCode",
+  },
+  twitter: {
+    card: "summary",
+    title: "İletişim — AlgoryCode",
+    description: CONTACT_DESCRIPTION,
+  },
+};
+
+const contactStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://algorycode.com/#organization",
+      name: "AlgoryCode",
+      url: "https://algorycode.com",
+      email: "info@algorycode.com",
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://algorycode.com/#website",
+      url: "https://algorycode.com",
+      name: "AlgoryCode",
+      inLanguage: "tr-TR",
+      publisher: { "@id": "https://algorycode.com/#organization" },
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://algorycode.com/contact#webpage",
+      url: "https://algorycode.com/contact",
+      name: "İletişim — AlgoryCode",
+      description: CONTACT_DESCRIPTION,
+      inLanguage: "tr-TR",
+      isPartOf: { "@id": "https://algorycode.com/#website" },
+      about: { "@id": "https://algorycode.com/#organization" },
+    },
+  ],
 };
 
 export default function ContactPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(contactStructuredData),
+        }}
+      />
       <SiteHeader />
       <main className={`${SITE_HEADER_OFFSET_CLASS} bg-[#f3efe9]`}>
-        <section className="section border-b border-border">
-          <div className="container-x">
-            <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12">
-              <div className="lg:col-span-5">
-                <p className="text-[13px] uppercase tracking-[0.2em] text-[#888]">
+        <section className="border-b border-border py-8 md:py-10">
+          <div className="container-x flex justify-center">
+            <div className="w-full max-w-md">
+              <header className="mb-5 md:mb-6">
+                <p className="text-[11px] uppercase tracking-[0.14em] text-[#888]">
                   İletişim
                 </p>
-                <h1 className="heading mt-4 text-4xl font-semibold md:text-5xl">
-                  Projenizi birlikte hayata geçirelim.
+                <h1 className="heading mt-1.5 text-xl font-semibold tracking-tight md:text-2xl">
+                  Projenizi konuşalım
                 </h1>
-                <p className="mt-4 text-base leading-relaxed text-[#888]">
-                  Hangi alanda olursa olsun — e-ticaret, mobil, AI, web veya eğitim —
-                  48 saat içinde ilk adımı atıyoruz.
+                <p className="mt-1.5 text-[13px] leading-relaxed text-[#666]">
+                  48 saat içinde dönüş yapıyoruz.
                 </p>
+                <a
+                  href="mailto:info@algorycode.com"
+                  className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-[#121212] underline-offset-2 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212]"
+                >
+                  <Mail size={13} strokeWidth={1.75} aria-hidden />
+                  info@algorycode.com
+                </a>
+              </header>
 
-                <ul className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-[#888]">
-                  {[
-                    { icon: Sparkles, label: "Ücretsiz Keşif" },
-                    { icon: Headphones, label: "48s Geri Dönüş" },
-                    { icon: ShieldCheck, label: "KVKK Uyumlu" },
-                    { icon: FileSignature, label: "NDA İmzalarız" },
-                  ].map(({ icon: Icon, label }) => (
-                    <li
-                      key={label}
-                      className="inline-flex items-center gap-1.5 text-[12px] tracking-tight"
-                    >
-                      <Icon size={12} />
-                      {label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="lg:col-span-7">
-                <Card className="p-7 md:p-8">
-                  <p className="mb-5 text-[12px] uppercase tracking-[0.18em] text-[#888]">
-                    Demo Talep Et
-                  </p>
-                  <JobRequestContactForm source="/contact" />
-                </Card>
-              </div>
+              <JobRequestContactForm source="/contact" />
             </div>
           </div>
         </section>

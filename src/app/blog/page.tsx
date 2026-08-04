@@ -17,8 +17,12 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Blog — AlgoryCode",
-  description: "Ürün geliştirme, platform mimarisi ve büyüme üzerine yazılar.",
+  title: "Blog",
+  description:
+    "Ürün geliştirme, ödeme altyapısı, analytics ve eğitim platformları hakkında rehberler ve saha notları.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default async function BlogPage() {
@@ -39,10 +43,10 @@ export default async function BlogPage() {
               <p className="text-[13px] uppercase tracking-[0.2em] text-[#888]">
                 AlgoryCode Blog
               </p>
-              <h1 className="heading mt-4 text-4xl font-semibold md:text-5xl">
+              <h1 className="heading mt-4 text-[28px] font-semibold tracking-tight md:text-[36px]">
                 Fikirler, rehberler ve saha notları
               </h1>
-              <p className="mt-4 text-base leading-relaxed text-[#888]">
+              <p className="section-desc mt-4 max-w-xl !text-[#888]">
                 Ürün geliştirme, ödeme altyapısı, analytics ve eğitim platformları
                 hakkında ekip içi deneyimlerimizi paylaşıyoruz.
               </p>
@@ -88,7 +92,7 @@ export default async function BlogPage() {
                             <Badge key={tag}>{tag}</Badge>
                           ))}
                         </div>
-                        <h2 className="heading mt-5 text-3xl font-semibold md:text-4xl">
+                        <h2 className="heading mt-5 text-[24px] font-semibold tracking-tight md:text-[28px]">
                           <Link
                             href={`/blog/${featured.slug}`}
                             className="transition-colors hover:text-white"
@@ -145,7 +149,7 @@ export default async function BlogPage() {
                             ))}
                           </div>
                           <div>
-                            <h3 className="heading text-2xl font-semibold">
+                            <h3 className="heading text-[18px] font-semibold tracking-tight md:text-[20px]">
                               <Link
                                 href={`/blog/${post.slug}`}
                                 className="transition-colors hover:text-white"

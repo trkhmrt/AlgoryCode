@@ -30,8 +30,11 @@ export async function generateMetadata({
   const product = getProductBySlug(slug);
   if (!product) return { title: "Ürün bulunamadı" };
   return {
-    title: `${product.name} — Stack`,
+    title: product.name,
     description: product.purpose,
+    alternates: {
+      canonical: `/products/${slug}`,
+    },
   };
 }
 

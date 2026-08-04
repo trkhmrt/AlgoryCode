@@ -9,7 +9,12 @@
     "lint": "eslint",
     "seed:admins": "node scripts/seed-admins.mjs",
     "seed:blog": "node scripts/seed-blog.mjs",
-    "seed:curriculum": "node scripts/seed-curriculum.mjs"
+    "seed:curriculum": "node scripts/seed-curriculum.mjs",
+    "seed:java101": "node scripts/seed-java101.mjs",
+    "seed:cursor-cover": "node scripts/seed-cursor-cover.mjs",
+    "seed:java-cover": "node scripts/seed-java-cover.mjs",
+    "seed:python-cover": "node scripts/seed-python-cover.mjs",
+    "remove:courses": "node scripts/remove-courses.mjs"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",

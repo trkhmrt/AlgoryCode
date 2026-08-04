@@ -13,7 +13,7 @@ export function PurposeSection({ product }: { product: Product }) {
             <p className="text-[12px] uppercase tracking-[0.18em] text-[#666] mb-6">
               Ne Çözer?
             </p>
-            <h2 className="heading text-[36px] md:text-[48px] font-extrabold">
+            <h2 className="heading text-[28px] font-semibold tracking-tight md:text-[36px]">
               {product.rhetoricalQuestion}
             </h2>
 

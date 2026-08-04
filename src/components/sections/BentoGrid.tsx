@@ -23,13 +23,13 @@ export function BentoGrid() {
             style={{ backgroundImage: "url(/images/cta-bg.png)" }}
           >
             <div className="relative z-10 flex max-w-[640px] flex-col items-center">
-              <span className="mb-5 inline-block rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">
+              <p className="mb-5 text-[13px] uppercase tracking-[0.16em] text-white/80">
                 Hadi başlayalım
-              </span>
+              </p>
 
               <h2
                 id="cta-heading"
-                className="heading !text-white text-[32px] font-bold leading-[1.1] md:text-[48px] lg:text-[52px]"
+                className="heading !text-white text-[28px] font-semibold tracking-tight md:text-[36px]"
               >
                 Fikriniz hazır.
                 <br />
@@ -38,20 +38,19 @@ export function BentoGrid() {
                 </span>
               </h2>
 
-              <p className="section-desc mt-6 max-w-[520px] !text-white/95">
+              <p className="section-desc mt-5 max-w-[520px] !text-white/90 md:mt-6">
                 Ücretsiz keşif görüşmesinde projenizi dinliyor, ihtiyacınıza özel
-                yol haritasını birlikte çıkarıyoruz. 48 saat içinde size dönüş
-                yapıyoruz.
+                yol haritasını birlikte çıkarıyoruz.
               </p>
 
               <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-                <li className="inline-flex items-center gap-2 text-[14px] text-white/85">
+                <li className="inline-flex items-center gap-2 text-[14px] leading-none text-white/85">
                   <Sparkles size={15} strokeWidth={1.75} />
                   Ücretsiz keşif
                 </li>
-                <li className="inline-flex items-center gap-2 text-[14px] text-white/85">
+                <li className="inline-flex items-center gap-2 text-[14px] leading-none text-white/85">
                   <Headphones size={15} strokeWidth={1.75} />
-                  48 saat geri dönüş
+                  Hızlı geri dönüş
                 </li>
               </ul>
 

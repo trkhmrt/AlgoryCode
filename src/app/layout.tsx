@@ -18,9 +18,21 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Stack — The platform for developer teams",
+  title: {
+    default: "AlgoryCode — Yazılım, Eğitim ve Dijital Çözümler",
+    template: "%s — AlgoryCode",
+  },
   description:
-    "Ship faster with a modern developer platform. Built for teams that move fast and break nothing.",
+    "E-ticaret, mobil uygulama, yapay zeka ve web geliştirme ile eğitim programları. AlgoryCode ile dijital ürünlerinizi büyütün.",
+  metadataBase: new URL("https://algorycode.com"),
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    siteName: "AlgoryCode",
+    title: "AlgoryCode — Yazılım, Eğitim ve Dijital Çözümler",
+    description:
+      "E-ticaret, mobil uygulama, yapay zeka ve web geliştirme ile eğitim programları.",
+  },
 };
 
 export default function RootLayout({

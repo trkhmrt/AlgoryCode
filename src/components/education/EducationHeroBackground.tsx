@@ -32,38 +32,44 @@ export function EducationHeroBackground({
   coverImageUrl,
 }: EducationHeroBackgroundProps) {
   const keywords = getAccentKeywords(title);
-  const backgroundImage = coverImageUrl
-    ? `url(${coverImageUrl})`
-    : "url(/images/education-card-bg.png)";
+
+  if (coverImageUrl) {
+    return (
+      <div
+        className="relative aspect-[16/9] overflow-hidden rounded-[12px] bg-black md:aspect-[21/9]"
+        aria-hidden
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={coverImageUrl}
+          alt=""
+          className="h-full w-full object-contain"
+        />
+      </div>
+    );
+  }
 
   return (
     <div
-      className="pointer-events-none absolute inset-0 overflow-hidden rounded-[12px]"
+      className="relative aspect-[16/9] overflow-hidden rounded-[12px] bg-cover bg-center bg-no-repeat md:aspect-[21/9]"
+      style={{ backgroundImage: "url(/images/education-card-bg.png)" }}
       aria-hidden
     >
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/10" />
-
-      {!coverImageUrl ? (
-        <div className="absolute inset-0">
-          {keywords.map((keyword, index) => (
-            <span
-              key={keyword}
-              className="absolute select-none font-mono text-[11px] uppercase tracking-[0.2em] text-white/[0.06] md:text-xs"
-              style={{
-                top: `${12 + index * 18}%`,
-                left: `${8 + index * 22}%`,
-                transform: `rotate(${-6 + index * 4}deg)`,
-              }}
-            >
-              {keyword}
-            </span>
-          ))}
-        </div>
-      ) : null}
+      <div className="absolute inset-0">
+        {keywords.map((keyword, index) => (
+          <span
+            key={keyword}
+            className="absolute select-none font-mono text-[11px] uppercase tracking-[0.2em] text-white/[0.06] md:text-xs"
+            style={{
+              top: `${12 + index * 18}%`,
+              left: `${8 + index * 22}%`,
+              transform: `rotate(${-6 + index * 4}deg)`,
+            }}
+          >
+            {keyword}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

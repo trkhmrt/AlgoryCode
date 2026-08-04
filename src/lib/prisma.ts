@@ -2,7 +2,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Pool } from "pg";
 
-const PRISMA_SCHEMA_REVISION = 5;
+const PRISMA_SCHEMA_REVISION = 6;
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

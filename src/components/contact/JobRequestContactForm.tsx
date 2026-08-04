@@ -8,13 +8,14 @@ import {
   type ContactFormState,
 } from "@/app/contact/actions";
 import { KvkkConsent } from "@/components/legal/KvkkConsent";
+import { Button } from "@/components/ui/Button";
 
 const DOMAINS = ["E-Ticaret", "Mobil App", "AI", "Web App", "Eğitim"];
 
 const initialState: ContactFormState = {};
 
 const inputClassName =
-  "w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus:border-[#121212] focus:outline-none";
+  "h-9 w-full rounded-md border border-border bg-white/70 px-2.5 text-[13px] text-foreground transition-colors placeholder:text-muted-foreground focus:border-[#121212] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212]";
 
 type JobRequestContactFormProps = {
   source?: string;
@@ -40,17 +41,17 @@ export function JobRequestContactForm({
       {submitted ? (
         <motion.div
           key="success"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="py-12 text-center"
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="py-6 text-center"
         >
-          <CheckCircle2 size={36} className="mx-auto text-[#121212]" />
-          <p className="mt-5 text-[18px] font-semibold tracking-tight text-foreground">
+          <CheckCircle2 size={24} className="mx-auto text-[#121212]" />
+          <p className="mt-2.5 text-[15px] font-semibold tracking-tight text-foreground">
             Talebiniz alındı.
           </p>
-          <p className="mt-2 text-[14px] text-muted-foreground">
+          <p className="mt-1 text-[12px] text-muted-foreground">
             48 saat içinde sizinle iletişime geçeceğiz.
           </p>
         </motion.div>
@@ -61,8 +62,8 @@ export function JobRequestContactForm({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+          transition={{ duration: 0.25 }}
+          className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-3 md:gap-y-2"
         >
           <input type="hidden" name="source" value={source} />
 
@@ -74,7 +75,7 @@ export function JobRequestContactForm({
               required
             />
             {state.fieldErrors?.firstName ? (
-              <span className="mt-1 block text-xs text-red-600">
+              <span className="mt-0.5 block text-[11px] text-red-600">
                 {state.fieldErrors.firstName}
               </span>
             ) : null}
@@ -87,12 +88,12 @@ export function JobRequestContactForm({
               required
             />
             {state.fieldErrors?.lastName ? (
-              <span className="mt-1 block text-xs text-red-600">
+              <span className="mt-0.5 block text-[11px] text-red-600">
                 {state.fieldErrors.lastName}
               </span>
             ) : null}
           </Field>
-          <Field label="Telefon">
+          <Field label="Telefon" full>
             <input
               name="phone"
               type="tel"
@@ -101,7 +102,7 @@ export function JobRequestContactForm({
               required
             />
             {state.fieldErrors?.phone ? (
-              <span className="mt-1 block text-xs text-red-600">
+              <span className="mt-0.5 block text-[11px] text-red-600">
                 {state.fieldErrors.phone}
               </span>
             ) : null}
@@ -114,12 +115,12 @@ export function JobRequestContactForm({
               required
             />
             {state.fieldErrors?.company ? (
-              <span className="mt-1 block text-xs text-red-600">
+              <span className="mt-0.5 block text-[11px] text-red-600">
                 {state.fieldErrors.company}
               </span>
             ) : null}
           </Field>
-          <Field label="E-posta" full>
+          <Field label="E-posta">
             <input
               name="email"
               type="email"
@@ -128,7 +129,7 @@ export function JobRequestContactForm({
               required
             />
             {state.fieldErrors?.email ? (
-              <span className="mt-1 block text-xs text-red-600">
+              <span className="mt-0.5 block text-[11px] text-red-600">
                 {state.fieldErrors.email}
               </span>
             ) : null}
@@ -150,7 +151,7 @@ export function JobRequestContactForm({
               ))}
             </select>
             {state.fieldErrors?.domain ? (
-              <span className="mt-1 block text-xs text-red-600">
+              <span className="mt-0.5 block text-[11px] text-red-600">
                 {state.fieldErrors.domain}
               </span>
             ) : null}
@@ -158,30 +159,35 @@ export function JobRequestContactForm({
           <Field label="Proje detayı" full>
             <textarea
               name="message"
-              className={`${inputClassName} min-h-[96px] resize-y`}
-              placeholder="Projenizi kısaca anlatın"
+              className={`${inputClassName} min-h-[60px] resize-y py-2`}
+              placeholder="Kısaca anlatın"
               required
             />
             {state.fieldErrors?.message ? (
-              <span className="mt-1 block text-xs text-red-600">
+              <span className="mt-0.5 block text-[11px] text-red-600">
                 {state.fieldErrors.message}
               </span>
             ) : null}
           </Field>
           {state.error ? (
-            <p className="text-sm text-red-600 sm:col-span-2">{state.error}</p>
+            <p className="text-[12px] text-red-600 md:col-span-2">{state.error}</p>
           ) : null}
-          <div className="sm:col-span-2">
-            <KvkkConsent error={state.fieldErrors?.kvkkAccepted} />
+          <div className="md:col-span-2">
+            <KvkkConsent
+              error={state.fieldErrors?.kvkkAccepted}
+              className="[&_p]:text-[12px] [&_p]:leading-snug"
+            />
           </div>
-          <div className="mt-1 sm:col-span-2">
-            <button
+          <div className="md:col-span-2">
+            <Button
               type="submit"
               disabled={pending}
-              className="h-12 w-full rounded-full border-0 bg-[#121212] text-[13px] font-bold uppercase text-white transition-colors hover:bg-[#2a2a2a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212] disabled:pointer-events-none disabled:opacity-40"
+              aria-busy={pending}
+              size="sm"
+              className="h-9 w-full"
             >
-              {pending ? "Gönderiliyor..." : "Demo Talep Et →"}
-            </button>
+              {pending ? "Gönderiliyor..." : "Gönder"}
+            </Button>
           </div>
         </motion.form>
       )}
@@ -199,10 +205,8 @@ function Field({
   full?: boolean;
 }) {
   return (
-    <label className={`block ${full ? "sm:col-span-2" : ""}`}>
-      <span className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-[#888]">
-        {label}
-      </span>
+    <label className={`block ${full ? "md:col-span-2" : ""}`}>
+      <span className="mb-0.5 block text-[12px] text-[#666]">{label}</span>
       {children}
     </label>
   );

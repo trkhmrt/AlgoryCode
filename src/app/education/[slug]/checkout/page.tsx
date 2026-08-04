@@ -24,9 +24,11 @@ export async function generateMetadata({
   });
 
   return {
-    title: education
-      ? `Ödeme — ${education.title}`
-      : "Ödeme — AlgoryCode",
+    title: education ? `Ödeme — ${education.title}` : "Ödeme",
+    description: education
+      ? `${education.title} eğitimi için güvenli ödeme sayfası.`
+      : "Eğitim ödemesi için güvenli ödeme sayfası.",
+    robots: { index: false, follow: false },
   };
 }
 

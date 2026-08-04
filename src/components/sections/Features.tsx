@@ -11,7 +11,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AuraCard } from "@/components/ui/AuraCard";
-import { Badge } from "@/components/ui/Badge";
 import { CardContent } from "@/components/ui/Card";
 
 type Feature = {
@@ -75,23 +74,20 @@ export function Features() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mb-16 max-w-[640px]"
         >
-          <Badge
-            variant="outline"
-            className="mb-6 border-border bg-secondary/50 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground"
-          >
+          <p className="mb-4 text-[13px] uppercase tracking-[0.16em] text-[#8a8378]">
             Hizmetlerimiz
-          </Badge>
+          </p>
           <h2
             id="features-heading"
-            className="heading text-[36px] font-extrabold md:text-[52px]"
+            className="heading text-[28px] font-semibold tracking-tight text-[#121212] md:text-[36px]"
           >
             Her alanda uzman ekip,
             <br />
-            <span className="font-normal">
+            <span className="font-normal text-[#2a2a2a]">
               projenize özel çözüm.
             </span>
           </h2>
-          <p className="section-desc mt-4 max-w-[620px] leading-relaxed">
+          <p className="section-desc mt-4 max-w-[580px]">
             E-ticaret, mobil uygulama, yapay zeka, kurumsal ve bireysel web ile
             eğitim hizmetlerini tek çatı altında sunuyoruz.
           </p>
@@ -124,10 +120,10 @@ export function Features() {
                     >
                       <Icon size={18} />
                     </div>
-                    <h3 className="heading mt-6 text-[17px] font-semibold tracking-tight">
+                    <h3 className="heading mt-6 text-[17px] font-semibold leading-snug tracking-tight text-[#121212]">
                       {f.title}
                     </h3>
-                    <p className="section-desc mt-2 leading-relaxed">
+                    <p className="section-desc mt-2 text-[14px] leading-[1.65]">
                       {f.desc}
                     </p>
                   </CardContent>

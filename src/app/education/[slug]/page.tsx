@@ -51,8 +51,11 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${education.title} — AlgoryCode`,
+    title: education.title,
     description: education.shortDescription,
+    alternates: {
+      canonical: `/education/${slug}`,
+    },
   };
 }
 
@@ -93,46 +96,43 @@ export default async function EducationDetailPage({
           <div className="container-x">
             <EducationBackToListLink />
 
-            <Card className="relative mt-8 min-h-[280px] overflow-hidden border-0 bg-transparent p-6 md:min-h-[340px] md:p-10">
+            <div className="mt-8">
               <EducationHeroBackground
                 title={education.title}
                 coverImageUrl={education.coverImageUrl}
               />
 
-              <div className="relative z-10 flex h-full min-h-[232px] flex-col justify-end md:min-h-[260px]">
+              <div className="mt-6">
                 <div className="flex flex-wrap gap-2">
-                  <Badge className="border-white/20 bg-white/10 text-white">
+                  <Badge variant="outline">
                     {EDUCATION_LEVEL_LABELS[education.level]}
                   </Badge>
-                  <Badge className="border-white/20 bg-white/10 text-white">
+                  <Badge variant="outline">
                     {EDUCATION_FORMAT_LABELS[education.format]}
                   </Badge>
-                  <Badge className="border-white/20 bg-white/10 text-white">
-                    Başvuru ile
-                  </Badge>
+                  <Badge variant="outline">Başvuru ile</Badge>
                 </div>
 
-                <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+                <h1 className="heading mt-5 text-[28px] font-semibold tracking-tight text-foreground md:text-[36px]">
                   {education.title}
                 </h1>
-                <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/80">
+                <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#888]">
                   {education.shortDescription}
                 </p>
               </div>
-            </Card>
+            </div>
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
-              <div>
+            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,360px)] lg:items-start">
+              <div className="min-w-0">
                 <h2 className="heading text-xl font-semibold">Eğitim Hakkında</h2>
                 <EducationAboutAccordion
                   description={education.fullDescription}
-                  learningOutcomes={education.learningOutcomes}
                   prerequisites={education.prerequisites}
                   modules={curriculumModules}
                 />
               </div>
 
-              <div className="space-y-6">
+              <div className="min-w-0 space-y-6 lg:sticky lg:top-24">
                 <EducationApplicationCard
                   educationId={education.id}
                   educationTitle={education.title}
@@ -195,53 +195,59 @@ export default async function EducationDetailPage({
                   </dl>
                 </Card>
 
-                <Card className="bg-white/80 p-6">
-                  <h2 className="heading text-xl font-semibold">Eğitmen</h2>
-                  <div className="mt-5 flex items-start gap-4">
-                    {education.instructorAvatarUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={education.instructorAvatarUrl}
-                        alt={education.instructorName}
-                        className="h-16 w-16 rounded-full border border-border object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary">
-                        <User size={24} className="text-[#888]" />
-                      </div>
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-foreground">
-                        {education.instructorName}
-                      </p>
-                      {education.instructorTitle ? (
-                        <p className="mt-1 text-sm text-[#888]">
-                          {education.instructorTitle}
+                {/* TODO: show instructor later */}
+                {false ? (
+                  <Card className="bg-white/80 p-6">
+                    <h2 className="heading text-xl font-semibold">Eğitmen</h2>
+                    <div className="mt-5 flex items-start gap-4">
+                      {education.instructorAvatarUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={education.instructorAvatarUrl}
+                          alt={education.instructorName}
+                          className="h-16 w-16 rounded-full border border-border object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary">
+                          <User size={24} className="text-[#888]" />
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-foreground">
+                          {education.instructorName}
                         </p>
-                      ) : null}
-                      <InstructorSocialLinks
-                        githubUrl={education.instructorGithubUrl}
-                        linkedinUrl={education.instructorLinkedinUrl}
-                      />
+                        {education.instructorTitle ? (
+                          <p className="mt-1 text-sm text-[#888]">
+                            {education.instructorTitle}
+                          </p>
+                        ) : null}
+                        <InstructorSocialLinks
+                          githubUrl={education.instructorGithubUrl}
+                          linkedinUrl={education.instructorLinkedinUrl}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  {education.instructorBio ? (
-                    <p className="mt-4 text-sm leading-7 text-[#888]">
-                      {education.instructorBio}
-                    </p>
-                  ) : null}
-                </Card>
+                    {education.instructorBio ? (
+                      <p className="mt-4 text-sm leading-7 text-[#888]">
+                        {education.instructorBio}
+                      </p>
+                    ) : null}
+                  </Card>
+                ) : null}
               </div>
             </div>
 
             <EducationFaqSection />
 
-            <div className="mt-12">
-              <EducationAskInstructorCard
-                educationId={education.id}
-                educationSlug={education.slug}
-              />
-            </div>
+            {/* TODO: show instructor later */}
+            {false ? (
+              <div className="mt-12">
+                <EducationAskInstructorCard
+                  educationId={education.id}
+                  educationSlug={education.slug}
+                />
+              </div>
+            ) : null}
           </div>
         </section>
       </main>

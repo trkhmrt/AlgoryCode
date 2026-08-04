@@ -17,7 +17,9 @@ type FailedPageProps = {
 };
 
 export const metadata: Metadata = {
-  title: "Ödeme Başarısız — AlgoryCode",
+  title: "Ödeme Başarısız",
+  description: "Ödeme işlemi tamamlanamadı. Lütfen tekrar deneyin.",
+  robots: { index: false, follow: false },
 };
 
 export default async function PaymentFailedPage({

@@ -37,12 +37,12 @@ export function EducationApplicationCard({
 
   return (
     <Card className="h-fit bg-white/80 p-6">
-      <p className="text-[13px] uppercase tracking-[0.12em] text-[#888]">
+      <h2 className="heading text-xl font-semibold tracking-tight text-[#121212]">
         Eğitime Başvur
-      </p>
-      <h2 className="heading mt-2 text-xl font-semibold">{educationTitle}</h2>
-      <p className="mt-2 text-sm leading-relaxed text-[#888]">
-        Bilgilerinizi bırakın, ekibimiz en kısa sürede sizinle iletişime geçsin.
+      </h2>
+      <p className="mt-2 text-sm leading-relaxed text-[#555]">
+        {educationTitle} için bilgilerinizi bırakın; ekibimiz en kısa sürede
+        sizinle iletişime geçsin.
       </p>
 
       <form action={formAction} className="mt-5 space-y-4">

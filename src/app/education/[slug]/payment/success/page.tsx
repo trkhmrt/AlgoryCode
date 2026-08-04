@@ -22,7 +22,9 @@ type SuccessPageProps = {
 };
 
 export const metadata: Metadata = {
-  title: "Ödeme Başarılı — AlgoryCode",
+  title: "Ödeme Başarılı",
+  description: "Eğitim ödemeniz başarıyla tamamlandı.",
+  robots: { index: false, follow: false },
 };
 
 export default async function PaymentSuccessPage({

@@ -20,7 +20,7 @@ export function CourseCurriculumAccordion({
   }
 
   return (
-    <div className="overflow-hidden rounded-[8px] border border-border bg-white/80">
+    <div className="min-w-0 overflow-hidden rounded-[8px] border border-border bg-white/80">
       {modules.map((module, index) => {
         const isOpen = openModuleId === module.id;
         const isLast = index === modules.length - 1;
@@ -47,7 +47,7 @@ export function CourseCurriculumAccordion({
                     isOpen ? "rotate-180" : ""
                   }`}
                 />
-                <span className="truncate text-[15px] font-semibold text-foreground">
+                <span className="min-w-0 break-words text-[15px] font-semibold text-foreground">
                   {module.title}
                 </span>
               </span>
@@ -65,22 +65,21 @@ export function CourseCurriculumAccordion({
                   return (
                     <div
                       key={lesson.id}
-                      className={`flex items-center justify-between gap-4 px-5 py-3.5 pl-12 ${
+                      className={`flex items-start justify-between gap-4 px-5 py-3.5 pl-12 ${
                         isLastLesson ? "" : "border-b border-border"
                       }`}
                     >
-                      <span className="flex min-w-0 items-center gap-3">
-                        <PlayCircle
-                          size={16}
-                          className="shrink-0 text-[#888]"
-                          strokeWidth={1.75}
+                      <span className="flex min-w-0 items-start gap-3">
+                        <span
+                          className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#2a2622]"
+                          aria-hidden
                         />
-                        <span className="truncate text-[14px] text-[#888]">
+                        <span className="min-w-0 break-words text-[14px] leading-relaxed text-[#4a4640]">
                           {lesson.title}
                         </span>
                       </span>
 
-                      <span className="flex shrink-0 items-center gap-4">
+                      <span className="flex shrink-0 items-center gap-4 pt-0.5">
                         {lesson.previewUrl ? (
                           <a
                             href={lesson.previewUrl}

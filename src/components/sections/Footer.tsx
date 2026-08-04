@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 import { Separator } from "@/components/ui/Separator";
 
 const COLUMNS: Array<{
@@ -47,34 +47,52 @@ const COLUMNS: Array<{
 export function Footer() {
   return (
     <footer className="mt-0 border-t border-border bg-[#f3efe9]">
-      <div className="container-x py-20">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <span
-                className="inline-block h-5 w-5 rounded-sm bg-foreground"
-                aria-hidden
-              />
-              <span className="text-[15px] font-semibold tracking-tight text-foreground">
-                AlgoryCode
-              </span>
+      <div className="container-x py-12 md:py-16 lg:py-20">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8 xl:gap-12">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Link
+              href="/"
+              className="brand-logo-pixel inline-block text-[18px] text-[#121212] [text-shadow:none] sm:text-[20px]"
+            >
+              ALGORYCODE
             </Link>
-            <p className="mt-4 max-w-[240px] text-[13px] leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-sm text-[13px] leading-relaxed text-muted-foreground lg:max-w-[220px]">
               E-ticaretten yapay zekaya, beş uzmanlıkta dijital ürünler
               tasarlıyor ve geliştiriyoruz.
             </p>
+            <div className="mt-5 flex items-center gap-3">
+              <a
+                href="https://www.instagram.com/algorycode/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white text-[#121212] shadow-sm transition-colors hover:bg-[#121212] hover:text-white"
+              >
+                <Instagram size={22} strokeWidth={1.75} />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61590947153152"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white text-[#121212] shadow-sm transition-colors hover:bg-[#121212] hover:text-white"
+              >
+                <Facebook size={22} strokeWidth={1.75} />
+              </a>
+            </div>
           </div>
+
           {COLUMNS.map((c) => (
-            <div key={c.title}>
-              <p className="mb-4 text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
+            <div key={c.title} className="min-w-0">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.16em] text-muted-foreground sm:mb-4 sm:text-[12px] sm:tracking-[0.18em]">
                 {c.title}
               </p>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5 sm:space-y-3">
                 {c.links.map((l) => (
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
+                      className="text-[13px] leading-snug text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {l.label}
                     </Link>
@@ -88,27 +106,10 @@ export function Footer() {
 
       <Separator className="bg-border" />
 
-      <div className="container-x flex h-16 flex-col items-center justify-between gap-4 py-4 sm:flex-row">
-        <p className="text-[12px] text-muted-foreground">
+      <div className="container-x flex items-center justify-center py-5 sm:justify-start sm:py-4">
+        <p className="text-center text-[12px] text-muted-foreground sm:text-left">
           © 2025 AlgoryCode. Tüm hakları saklıdır.
         </p>
-        <ul className="flex items-center gap-1">
-          {[
-            { icon: Github, label: "GitHub" },
-            { icon: Twitter, label: "Twitter" },
-            { icon: Linkedin, label: "LinkedIn" },
-          ].map(({ icon: Icon, label }) => (
-            <li key={label}>
-              <Link
-                href="/"
-                aria-label={label}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-              >
-                <Icon size={15} />
-              </Link>
-            </li>
-          ))}
-        </ul>
       </div>
     </footer>
   );

@@ -23,7 +23,7 @@ export function ProductHero({ product }: { product: Product }) {
           <Badge>{product.category}</Badge>
         </motion.div>
 
-        <h1 className="heading mt-8 text-[44px] sm:text-[64px] md:text-[80px] font-extrabold">
+        <h1 className="heading mt-8 text-[clamp(2rem,5vw,3.25rem)] font-semibold tracking-tight">
           {words.map((w, i) => (
             <motion.span
               key={`${w}-${i}`}

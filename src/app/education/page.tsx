@@ -23,8 +23,12 @@ import { getPublishedEducationsCached } from "@/lib/education-cache";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Eğitimler — AlgoryCode",
-  description: "AlgoryCode tarafından yayınlanan eğitim programları.",
+  title: "Eğitimler",
+  description:
+    "Uzman eğitmenlerle hazırlanan yazılım ve dijital beceri eğitimleri. Canlı, online ve kayıtlı programları keşfedin.",
+  alternates: {
+    canonical: "/education",
+  },
 };
 
 type EducationPageProps = {
@@ -68,14 +72,14 @@ export default async function EducationPage({ searchParams }: EducationPageProps
                 <p className="mb-4 text-[12px] uppercase tracking-[0.2em] text-white/75">
                   AlgoryCode Education
                 </p>
-                <h1 className="text-[32px] font-semibold leading-[1.1] tracking-tight text-white md:text-[48px]">
+                <h1 className="heading text-[28px] font-semibold tracking-tight text-white md:text-[36px]">
                   Öğrenmeye bugün başla.
                   <br />
                   <span className="font-normal text-white/90">
                     Kariyerini bir adım öne taşı.
                   </span>
                 </h1>
-                <p className="mt-5 max-w-[480px] text-[15px] leading-relaxed text-white/80 md:text-base">
+                <p className="mt-4 max-w-[480px] text-[15px] leading-relaxed text-white/80 md:text-[16px]">
                   Uzman eğitmenlerle hazırlanan programlarla pratik beceriler
                   kazan. Canlı, online ve kayıtlı formatlarda seni bekleyen
                   eğitimleri keşfet.
@@ -92,6 +96,10 @@ export default async function EducationPage({ searchParams }: EducationPageProps
           className="section scroll-mt-[80px] pt-0"
         >
           <div className="container-x">
+            <h2 className="heading mb-6 text-[22px] font-semibold tracking-tight text-[#121212] md:mb-8 md:text-[26px]">
+              Eğitim programları
+            </h2>
+
             <Suspense fallback={null}>
               <EducationScrollManager />
               <EducationFilters />
@@ -121,7 +129,7 @@ export default async function EducationPage({ searchParams }: EducationPageProps
                 ) : null}
               </Card>
             ) : (
-              <div className="grid gap-6 lg:grid-cols-2">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
                 {educations.map((education) => (
                   <EducationCard key={education.id} education={education} />
                 ))}

@@ -1,7 +1,6 @@
 "use client";
 
 import { SiteHeader } from "@/components/sections/SiteHeader";
-import { LogoBar } from "@/components/sections/LogoBar";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
@@ -49,7 +48,7 @@ export function Hero() {
         >
           <motion.h1
             variants={fadeUp}
-            className="heading max-w-[980px] !text-black text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.02] tracking-[-0.04em] xl:text-[80px]"
+            className="heading max-w-[900px] !text-[#121212] text-[clamp(2rem,5vw,3.25rem)] font-semibold leading-[1.12] tracking-[-0.03em]"
           >
             İşinizi
             <br />
@@ -58,7 +57,7 @@ export function Hero() {
 
           <motion.p
             variants={fadeUp}
-            className="section-desc mt-8 max-w-[560px] leading-relaxed"
+            className="section-desc mt-5 max-w-[520px] md:mt-6"
           >
             E-ticaretten yapay zekaya — modern, ölçeklenebilir dijital
             çözümlerle büyümenize odaklanın.
@@ -85,8 +84,6 @@ export function Hero() {
             </Button>
           </motion.div>
         </motion.div>
-
-        <LogoBar embedded warm />
       </div>
     </section>
   );

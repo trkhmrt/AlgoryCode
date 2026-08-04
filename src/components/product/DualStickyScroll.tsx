@@ -56,9 +56,9 @@ function LeftPanel({
 
   return (
     <div className="lg:col-span-5">
-      <p className="text-[12px] uppercase tracking-[0.18em] text-[#666] mb-6">
+      <h2 className="heading mb-6 text-[22px] font-semibold tracking-tight md:text-[26px]">
         Ürün Detayı
-      </p>
+      </h2>
 
       <ul className="space-y-2">
         {product.steps.map((s, i) => (
@@ -87,7 +87,7 @@ function LeftPanel({
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <h3 className="heading text-[28px] md:text-[36px] font-extrabold">
+            <h3 className="heading text-[22px] font-semibold tracking-tight md:text-[26px]">
               {current.title}
             </h3>
             <p className="mt-4 text-[14px] text-[#888] max-w-[440px] leading-relaxed">
