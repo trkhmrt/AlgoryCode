@@ -203,7 +203,7 @@ export default async function EducationDetailPage({
                       {education.instructorAvatarUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={education.instructorAvatarUrl}
+                          src={education.instructorAvatarUrl ?? undefined}
                           alt={education.instructorName}
                           className="h-16 w-16 rounded-full border border-border object-cover"
                         />
