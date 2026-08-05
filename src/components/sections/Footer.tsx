@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Facebook, Instagram } from "lucide-react";
+import { PaymentMethodLogos } from "@/components/legal/PaymentMethodLogos";
 import { Separator } from "@/components/ui/Separator";
 
 const COLUMNS: Array<{
@@ -36,8 +37,9 @@ const COLUMNS: Array<{
   {
     title: "Yasal",
     links: [
-      { href: "/", label: "Gizlilik Politikası" },
-      { href: "/", label: "KVKK" },
+      { href: "/gizlilik-politikasi", label: "Gizlilik Politikası" },
+      { href: "/kvkk", label: "KVKK" },
+      { href: "/iptal-ve-iade-sartlari", label: "İptal ve İade" },
       { href: "/", label: "Çerez Politikası" },
       { href: "/", label: "Kullanım Koşulları" },
     ],
@@ -106,10 +108,11 @@ export function Footer() {
 
       <Separator className="bg-border" />
 
-      <div className="container-x flex items-center justify-center py-5 sm:justify-start sm:py-4">
+      <div className="container-x flex flex-col items-center gap-4 py-5 sm:flex-row sm:justify-between sm:py-4">
         <p className="text-center text-[12px] text-muted-foreground sm:text-left">
           © 2025 AlgoryCode. Tüm hakları saklıdır.
         </p>
+        <PaymentMethodLogos variant="footer" />
       </div>
     </footer>
   );

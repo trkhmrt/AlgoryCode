@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { InfoTooltip } from "@/components/ui/InfoTooltip";
 import { KvkkConsent } from "@/components/legal/KvkkConsent";
+import { PaymentMethodLogos } from "@/components/legal/PaymentMethodLogos";
 import { formatPrice } from "@/lib/education";
 import {
   CHECKOUT_MOCK_DATA,
@@ -427,6 +428,10 @@ export function CheckoutForm({
       ) : null}
 
       <KvkkConsent tone="dark" />
+
+      {!isFree ? (
+        <PaymentMethodLogos variant="checkout" className="pt-1" />
+      ) : null}
 
       <Button type="submit" className="w-full" disabled={pending || !!state.threeDSHtmlContent}>
         {pending
