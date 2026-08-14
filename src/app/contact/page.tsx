@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Mail } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { JobRequestContactForm } from "@/components/contact/JobRequestContactForm";
 import { Footer } from "@/components/sections/Footer";
 import { SiteHeader } from "@/components/sections/SiteHeader";
-import { SITE_HEADER_OFFSET_CLASS } from "@/lib/layout";
+import { PageHero, Section } from "@/components/site/Section";
 
 const CONTACT_DESCRIPTION =
   "Projeniz, ürün fikriniz veya eğitim talebiniz için AlgoryCode ile iletişime geçin. Formu doldurun, ekibimiz size özel dönüş yapsın.";
@@ -11,9 +11,7 @@ const CONTACT_DESCRIPTION =
 export const metadata: Metadata = {
   title: "İletişim",
   description: CONTACT_DESCRIPTION,
-  alternates: {
-    canonical: "/contact",
-  },
+  alternates: { canonical: "/contact" },
   openGraph: {
     title: "İletişim — AlgoryCode",
     description: CONTACT_DESCRIPTION,
@@ -60,43 +58,57 @@ const contactStructuredData = {
   ],
 };
 
+const INFO = [
+  { icon: Mail, title: "E-posta", detail: "info@algorycode.com" },
+  { icon: Phone, title: "Telefon", detail: "+90 850 000 00 00" },
+  { icon: MapPin, title: "Ofis", detail: "İstanbul, Türkiye" },
+] as const;
+
 export default function ContactPage() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(contactStructuredData),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactStructuredData) }}
       />
       <SiteHeader />
-      <main className={`${SITE_HEADER_OFFSET_CLASS} bg-[#f3efe9]`}>
-        <section className="border-b border-border py-8 md:py-10">
-          <div className="container-x flex justify-center">
-            <div className="w-full max-w-md">
-              <header className="mb-5 md:mb-6">
-                <p className="text-[11px] uppercase tracking-[0.14em] text-[#888]">
-                  İletişim
-                </p>
-                <h1 className="heading mt-1.5 text-xl font-semibold tracking-tight md:text-2xl">
-                  Projenizi konuşalım
-                </h1>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-[#666]">
-                  48 saat içinde dönüş yapıyoruz.
-                </p>
-                <a
-                  href="mailto:info@algorycode.com"
-                  className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-[#121212] underline-offset-2 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#121212]"
-                >
-                  <Mail size={13} strokeWidth={1.75} aria-hidden />
-                  info@algorycode.com
-                </a>
-              </header>
+      <main>
+        <PageHero
+          eyebrow="İletişim"
+          title="Kısa bir görüşmeyle başlayalım."
+          description="Formu doldurun, 1 iş günü içinde uygun ekip arkadaşımız size dönsün."
+        />
 
+        <Section>
+          <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+            {/* Form */}
+            <div className="surface-card p-7">
               <JobRequestContactForm source="/contact" />
             </div>
+
+            {/* Contact info */}
+            <div className="grid content-start gap-4">
+              {INFO.map(({ icon: Icon, title, detail }) => (
+                <div
+                  key={title}
+                  className="surface-card flex items-start gap-3 p-5"
+                >
+                  <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-secondary">
+                    <Icon className="size-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">{title}</p>
+                    <p className="text-sm text-muted-foreground">{detail}</p>
+                  </div>
+                </div>
+              ))}
+
+              <div className="rounded-2xl border border-border bg-surface-2 p-5 text-sm text-muted-foreground">
+                Çalışma saatleri: Hafta içi 09:00 – 18:00
+              </div>
+            </div>
           </div>
-        </section>
+        </Section>
       </main>
       <Footer />
     </>

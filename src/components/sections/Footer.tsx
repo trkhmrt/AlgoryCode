@@ -1,118 +1,38 @@
 import Link from "next/link";
-import { Facebook, Instagram } from "lucide-react";
-import { PaymentMethodLogos } from "@/components/legal/PaymentMethodLogos";
-import { Separator } from "@/components/ui/Separator";
 
-const COLUMNS: Array<{
-  title: string;
-  links: Array<{ href: string; label: string }>;
-}> = [
-  {
-    title: "Çözümler",
-    links: [
-      { href: "/#features", label: "E-Ticaret" },
-      { href: "/#features", label: "Mobil App" },
-      { href: "/#features", label: "AI Destekli" },
-      { href: "/#features", label: "Web App" },
-      { href: "/#features", label: "Eğitim" },
-    ],
-  },
-  {
-    title: "Ürünler",
-    links: [
-      { href: "/products/deploy-engine", label: "Deploy Engine" },
-      { href: "/products/edge-network", label: "Edge Network" },
-      { href: "/products/observe-stack", label: "Observe Stack" },
-    ],
-  },
-  {
-    title: "Şirket",
-    links: [
-      { href: "/", label: "Hakkımızda" },
-      { href: "/education", label: "Eğitimler" },
-      { href: "/", label: "Kariyer" },
-      { href: "/contact", label: "İletişim" },
-    ],
-  },
-  {
-    title: "Yasal",
-    links: [
-      { href: "/gizlilik-politikasi", label: "Gizlilik Politikası" },
-      { href: "/kvkk", label: "KVKK" },
-      { href: "/iptal-ve-iade-sartlari", label: "İptal ve İade" },
-      { href: "/", label: "Çerez Politikası" },
-      { href: "/", label: "Kullanım Koşulları" },
-    ],
-  },
-];
+const LINKS = [
+  { href: "/contact", label: "Hizmetler" },
+  { href: "/education", label: "Eğitimler" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "İletişim" },
+  { href: "/gizlilik-politikasi", label: "Gizlilik" },
+  { href: "/kvkk", label: "KVKK" },
+] as const;
 
 export function Footer() {
   return (
-    <footer className="mt-0 border-t border-border bg-[#f3efe9]">
-      <div className="container-x py-12 md:py-16 lg:py-20">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8 xl:gap-12">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Link
-              href="/"
-              className="brand-logo-pixel inline-block text-[18px] text-[#121212] [text-shadow:none] sm:text-[20px]"
-            >
-              ALGORYCODE
+    <footer className="mt-24 border-t border-border bg-surface">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <span className="brand-logo-pixel text-[14px] [text-shadow:none]">
+            algorycode
+          </span>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Yazılım geliştirme, eğitim ve dijital çözümler.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          {LINKS.map((l) => (
+            <Link key={l.label} href={l.href} className="hover:text-foreground">
+              {l.label}
             </Link>
-            <p className="mt-4 max-w-sm text-[13px] leading-relaxed text-muted-foreground lg:max-w-[220px]">
-              E-ticaretten yapay zekaya, beş uzmanlıkta dijital ürünler
-              tasarlıyor ve geliştiriyoruz.
-            </p>
-            <div className="mt-5 flex items-center gap-3">
-              <a
-                href="https://www.instagram.com/algorycode/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white text-[#121212] shadow-sm transition-colors hover:bg-[#121212] hover:text-white"
-              >
-                <Instagram size={22} strokeWidth={1.75} />
-              </a>
-              <a
-                href="https://www.facebook.com/profile.php?id=61590947153152"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white text-[#121212] shadow-sm transition-colors hover:bg-[#121212] hover:text-white"
-              >
-                <Facebook size={22} strokeWidth={1.75} />
-              </a>
-            </div>
-          </div>
-
-          {COLUMNS.map((c) => (
-            <div key={c.title} className="min-w-0">
-              <p className="mb-3 text-[11px] uppercase tracking-[0.16em] text-muted-foreground sm:mb-4 sm:text-[12px] sm:tracking-[0.18em]">
-                {c.title}
-              </p>
-              <ul className="space-y-2.5 sm:space-y-3">
-                {c.links.map((l) => (
-                  <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      className="text-[13px] leading-snug text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
           ))}
         </div>
       </div>
-
-      <Separator className="bg-border" />
-
-      <div className="container-x flex flex-col items-center gap-4 py-5 sm:flex-row sm:justify-between sm:py-4">
-        <p className="text-center text-[12px] text-muted-foreground sm:text-left">
-          © 2025 AlgoryCode. Tüm hakları saklıdır.
+      <div className="border-t border-border/70 px-5 py-4">
+        <p className="mx-auto max-w-6xl text-xs text-muted-foreground">
+          © {new Date().getFullYear()} AlgoryCode. Tüm hakları saklıdır.
         </p>
-        <PaymentMethodLogos variant="footer" />
       </div>
     </footer>
   );

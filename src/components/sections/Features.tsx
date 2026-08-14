@@ -1,138 +1,61 @@
-"use client";
+import Link from "next/link";
+import { ArrowUpRight, Cpu, GraduationCap, Layers, Monitor, ShoppingCart, Smartphone } from "lucide-react";
+import { Reveal } from "@/components/site/Reveal";
+import { Section } from "@/components/site/Section";
 
-import { motion } from "framer-motion";
-import {
-  Cpu,
-  GraduationCap,
-  Layers,
-  Monitor,
-  ShoppingCart,
-  Smartphone,
-  type LucideIcon,
-} from "lucide-react";
-import { AuraCard } from "@/components/ui/AuraCard";
-import { CardContent } from "@/components/ui/Card";
-
-type Feature = {
-  icon: LucideIcon;
-  title: string;
-  desc: string;
-  accent: string;
-};
-
-const FEATURES: Feature[] = [
+const SERVICES = [
   {
     icon: ShoppingCart,
-    title: "E-Ticaret Hizmeti",
-    desc: "Ödeme, stok ve sipariş yönetimi entegre; mağazanızı hızla satışa hazır hale getiriyoruz.",
-    accent: "#f59e0b",
+    title: "E-Ticaret",
+    text: "Ödeme, stok ve sipariş yönetimi entegre. Mağazanızı hızla satışa hazır hale getiriyoruz.",
   },
   {
     icon: Smartphone,
     title: "Mobil Uygulama",
-    desc: "iOS ve Android için tek kod tabanı. Native performans, modern kullanıcı deneyimi.",
-    accent: "#3b82f6",
+    text: "iOS ve Android için tek kod tabanı. Native performans, modern kullanıcı deneyimi.",
   },
   {
     icon: Cpu,
-    title: "Yapay Zeka Entegrasyonu",
-    desc: "LLM destekli chatbot, öneri motoru ve otomasyon sistemlerini ürününüze ekleyin.",
-    accent: "#a855f7",
+    title: "Yapay Zekâ",
+    text: "LLM destekli chatbot, öneri motoru ve otomasyon sistemlerini ürününüze ekleyin.",
   },
   {
     icon: Monitor,
-    title: "Kurumsal Web Hizmeti",
-    desc: "Markanıza özel kurumsal siteler, yönetim panelleri ve müşteri portalları — ölçeklenebilir, güvenli ve SEO uyumlu.",
-    accent: "#00ff88",
+    title: "Kurumsal Web",
+    text: "Markanıza özel siteler, yönetim panelleri ve müşteri portalları — ölçeklenebilir, güvenli, SEO uyumlu.",
   },
   {
     icon: GraduationCap,
-    title: "Eğitim Hizmeti",
-    desc: "Bu platformda eğitim alarak uygulama geliştirmeyi öğrenin; adım adım içeriklerle kendi projelerinizi hayata geçirin.",
-    accent: "#f97316",
+    title: "Eğitim",
+    text: "Gerçek projeler üzerinde ilerleyen, kuruma özel canlı programlar. Bilgi ekibinizde kalır.",
   },
   {
     icon: Layers,
-    title: "Bireysel Web Hizmeti",
-    desc: "Kişisel portfolyo, blog ve tanıtım siteleri — modern tasarım, mobil uyum ve hızlı yayına alma.",
-    accent: "#ededed",
+    title: "Bireysel Web",
+    text: "Kişisel portfolyo, blog ve tanıtım siteleri — modern tasarım, mobil uyum, hızlı yayın.",
   },
 ];
 
 export function Features() {
   return (
-    <section
-      id="features"
-      className="section border-b border-border bg-[#f3efe9]"
-      aria-labelledby="features-heading"
-    >
-      <div className="container-x">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-16 max-w-[640px]"
-        >
-          <p className="mb-4 text-[13px] uppercase tracking-[0.16em] text-[#8a8378]">
-            Hizmetlerimiz
-          </p>
-          <h2
-            id="features-heading"
-            className="heading text-[28px] font-semibold tracking-tight text-[#121212] md:text-[36px]"
-          >
-            Her alanda uzman ekip,
-            <br />
-            <span className="font-normal text-[#2a2a2a]">
-              projenize özel çözüm.
-            </span>
-          </h2>
-          <p className="section-desc mt-4 max-w-[580px]">
-            E-ticaret, mobil uygulama, yapay zeka, kurumsal ve bireysel web ile
-            eğitim hizmetlerini tek çatı altında sunuyoruz.
-          </p>
-        </motion.div>
-
-        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f, i) => {
-            const Icon = f.icon;
-            return (
-              <motion.li
-                key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.5,
-                  delay: i * 0.08,
-                  ease: "easeOut",
-                }}
-              >
-                <AuraCard accent={f.accent} className="h-full">
-                  <CardContent className="p-8">
-                    <div
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-lg border transition-colors duration-300"
-                      style={{
-                        color: f.accent,
-                        backgroundColor: `color-mix(in srgb, ${f.accent} 12%, transparent)`,
-                        borderColor: `color-mix(in srgb, ${f.accent} 28%, transparent)`,
-                      }}
-                    >
-                      <Icon size={18} />
-                    </div>
-                    <h3 className="heading mt-6 text-[17px] font-semibold leading-snug tracking-tight text-[#121212]">
-                      {f.title}
-                    </h3>
-                    <p className="section-desc mt-2 text-[14px] leading-[1.65]">
-                      {f.desc}
-                    </p>
-                  </CardContent>
-                </AuraCard>
-              </motion.li>
-            );
-          })}
-        </ul>
+    <Section title="Ne yapıyoruz" description="Keşiften bakıma kadar tek ekip.">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {SERVICES.map((s) => (
+          <Reveal key={s.title} as="article">
+            <Link
+              href="/contact"
+              className="surface-card group flex h-full items-start justify-between gap-6 p-7 block"
+            >
+              <div>
+                <s.icon className="size-6" />
+                <h3 className="mt-6 text-xl font-bold">{s.title}</h3>
+                <p className="mt-2 text-muted-foreground">{s.text}</p>
+              </div>
+              <ArrowUpRight className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }

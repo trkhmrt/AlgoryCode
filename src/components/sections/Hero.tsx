@@ -1,90 +1,137 @@
-"use client";
-
+import Link from "next/link";
 import { SiteHeader } from "@/components/sections/SiteHeader";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/site/Reveal";
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.08,
-    },
-  },
-};
+const stats = [
+  { label: "Tamamlanan proje", value: "80+" },
+  { label: "Ortalama teslim", value: "10 hafta" },
+  { label: "Uptime", value: "%99,9" },
+  { label: "Eğitim mezunu", value: "1.400+" },
+];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
+const progress = [
+  { name: "E-Ticaret Platformu", pct: 100 },
+  { name: "Mobil Uygulama", pct: 74 },
+  { name: "AI Entegrasyonu", pct: 41 },
+];
+
+const tags = ["React", "TypeScript", "Next.js", "Node.js", "PostgreSQL"];
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#faf9f6]">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-[28%_55%] bg-no-repeat"
-        style={{ backgroundImage: "url(/images/hero-bg.png)" }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#faf9f6]/80 via-transparent to-[#faf9f6]/30"
-      />
+    <>
+      <SiteHeader />
+      <section className="mx-auto max-w-6xl px-5 pt-10 pb-6 sm:pt-16">
+        <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-stretch">
+          {/* Left: text */}
+          <Reveal className="flex flex-col justify-center py-6 lg:py-16">
+            <span className="eyebrow">
+              <span
+                className="size-2 rounded-full"
+                style={{ background: "var(--accent)" }}
+                aria-hidden
+              />
+              2020'den beri
+            </span>
+            <h1 className="mt-8 text-6xl leading-[0.92] font-extrabold sm:text-7xl">
+              Yazılım{" "}
+              <span style={{ color: "var(--accent)" }}>ve</span>
+              <br />
+              eğitim
+              <br />
+              işi
+            </h1>
+            <p className="mt-8 max-w-md text-lg text-muted-foreground">
+              Ürününüzü kuran ekip, ekibinize öğreten ekiple aynı. Sade
+              teknoloji, şeffaf ilerleme.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link
+                href="/contact"
+                className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                Projenizi konuşalım
+              </Link>
+              <Link
+                href="/education"
+                className="rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80"
+              >
+                Eğitim kataloğu
+              </Link>
+            </div>
+          </Reveal>
 
-      <SiteHeader transparent />
+          {/* Right: stats panel */}
+          <Reveal delay={120} className="min-h-[420px] sm:min-h-[560px]">
+            <div className="panel relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden p-6 sm:min-h-[560px] sm:p-8">
+              <div className="absolute inset-0 dotted-grid opacity-40" />
 
-      <div className="relative z-10 flex min-h-screen flex-col px-6 pb-14 pt-28 md:px-10 lg:px-14">
-        <motion.div
-          className="mx-auto flex max-w-[980px] flex-1 flex-col items-center justify-center text-center"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.h1
-            variants={fadeUp}
-            className="heading max-w-[900px] !text-[#121212] text-[clamp(2rem,5vw,3.25rem)] font-semibold leading-[1.12] tracking-[-0.03em]"
-          >
-            İşinizi
-            <br />
-            Teknolojiyle Büyütün
-          </motion.h1>
+              {/* Stat boxes */}
+              <div className="relative grid gap-2 sm:grid-cols-2">
+                {stats.map(({ label, value }) => (
+                  <div key={label} className="rounded-2xl bg-background p-5">
+                    <p className="text-sm text-muted-foreground">{label}</p>
+                    <p className="mt-2 text-2xl font-extrabold">{value}</p>
+                  </div>
+                ))}
+              </div>
 
-          <motion.p
-            variants={fadeUp}
-            className="section-desc mt-5 max-w-[520px] md:mt-6"
-          >
-            E-ticaretten yapay zekaya — modern, ölçeklenebilir dijital
-            çözümlerle büyümenize odaklanın.
-          </motion.p>
+              {/* Progress panel */}
+              <div className="relative my-6 rounded-2xl bg-background p-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Aktif sprint
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold"
+                    style={{
+                      background: "oklch(0.78 0.2 152 / 0.18)",
+                      color: "var(--accent-foreground)",
+                    }}
+                  >
+                    <span
+                      className="size-1.5 rounded-full"
+                      style={{ background: "var(--accent)" }}
+                    />
+                    canlıda
+                  </span>
+                </div>
+                <div className="mt-5 space-y-3">
+                  {progress.map(({ name, pct }) => (
+                    <div key={name}>
+                      <div className="flex justify-between text-sm">
+                        <span>{name}</span>
+                        <span className="text-muted-foreground">%{pct}</span>
+                      </div>
+                      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-secondary">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${pct}%`,
+                            background: "var(--primary)",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-          <motion.div
-            variants={fadeUp}
-            className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
-          >
-            <Button
-              href="/contact"
-              size="lg"
-              className="rounded-full border-0 bg-[#121212] px-8 text-white shadow-[0_8px_32px_-8px_rgba(0,0,0,0.25)] hover:bg-[#2a2a2a]"
-            >
-              Ücretsiz Görüşme Ayarla
-            </Button>
-            <Button
-              href="/contact"
-              size="lg"
-              className="rounded-full border-0 bg-white px-8 text-[#121212] shadow-[0_4px_24px_rgba(0,0,0,0.2)] hover:bg-white hover:text-[#121212]"
-            >
-              İletişime Geç
-              <ArrowRight size={16} />
-            </Button>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
+              {/* Tech tags */}
+              <div className="relative flex flex-wrap gap-2">
+                {tags.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full bg-background px-3.5 py-1.5 text-sm font-medium"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
   );
 }
