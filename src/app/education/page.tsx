@@ -136,7 +136,7 @@ export default async function EducationPage({ searchParams }: EducationPageProps
           style={{ borderColor: "var(--sr-border)" }}
         >
           <div className="mx-auto max-w-6xl px-5">
-            <div className="grid grid-cols-2 divide-x sm:grid-cols-4" style={{ divideColor: "var(--sr-border)" }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4">
               {[
                 { value: "1.400+", label: "Mezun öğrenci" },
                 { value: "%98", label: "Memnuniyet oranı" },
