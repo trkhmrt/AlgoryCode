@@ -60,7 +60,7 @@ const contactStructuredData = {
 
 const INFO = [
   { icon: Mail, title: "E-posta", detail: "info@algorycode.com" },
-  { icon: Phone, title: "Telefon", detail: "+90 850 000 00 00" },
+  { icon: Phone, title: "Telefon", detail: "850 308 87 23" },
   { icon: MapPin, title: "Ofis", detail: "İstanbul, Türkiye" },
 ] as const;
 
