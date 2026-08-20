@@ -6,10 +6,10 @@ import { Footer } from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "AlgoryCode — Yazılım, Eğitim ve Dijital Çözümler",
+    absolute: "AlgoryCode — Yazılım ve Dijital Çözümler",
   },
   description:
-    "E-ticaretten yapay zekaya modern, ölçeklenebilir dijital çözümler. Yazılım geliştirme, eğitim programları ve ürün danışmanlığı için AlgoryCode.",
+    "E-ticaretten yapay zekaya modern, ölçeklenebilir dijital çözümler. Yazılım geliştirme ve ürün danışmanlığı için AlgoryCode.",
   alternates: {
     canonical: "/",
   },

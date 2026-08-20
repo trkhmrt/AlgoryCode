@@ -7,7 +7,7 @@ import {
 } from "@/lib/legal/privacy-policy";
 
 const DESCRIPTION =
-  "AlgoryCode Gizlilik Politikası: kişisel verilerinizin toplanması, kullanımı, saklanması ve korunmasına ilişkin bilgiler.";
+  "AlgoryCode Gizlilik Sözleşmesi: kişisel verilerinizin toplanması, kullanımı, saklanması ve korunmasına ilişkin bilgiler.";
 
 export const metadata: Metadata = {
   title: PRIVACY_POLICY_TITLE,

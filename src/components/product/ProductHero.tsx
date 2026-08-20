@@ -71,8 +71,8 @@ export function ProductHero({ product }: { product: Product }) {
           <Button href="#demo" size="lg">
             Demo Talep Et
           </Button>
-          <Button href="/education" variant="secondary" size="lg">
-            Dokümantasyon →
+          <Button href="/contact" variant="secondary" size="lg">
+            İletişime geç →
           </Button>
         </motion.div>
       </div>

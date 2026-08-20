@@ -274,7 +274,7 @@ export function CheckoutForm({
                     ))}
                   </select>
                   <p className="text-xs text-[#666]">
-                    iyzico sandbox test kartı seçin. SKT ve CVV için geçerli formatta
+                    Sandbox test kartı seçin. SKT ve CVV için geçerli formatta
                     rastgele değer kullanılabilir.
                   </p>
                 </>
@@ -430,7 +430,7 @@ export function CheckoutForm({
       <KvkkConsent tone="dark" />
 
       {!isFree ? (
-        <PaymentMethodLogos variant="checkout" className="pt-1" />
+        <PaymentMethodLogos className="pt-1" />
       ) : null}
 
       <Button type="submit" className="w-full" disabled={pending || !!state.threeDSHtmlContent}>

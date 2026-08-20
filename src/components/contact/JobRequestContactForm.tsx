@@ -10,7 +10,6 @@ import { KvkkConsent } from "@/components/legal/KvkkConsent";
 
 const TOPICS = [
   { value: "proje", label: "Yeni proje" },
-  { value: "egitim", label: "Eğitim talebi" },
   { value: "bakim", label: "Bakım / devralma" },
   { value: "diger", label: "Diğer" },
 ];

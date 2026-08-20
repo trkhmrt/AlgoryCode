@@ -19,19 +19,19 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "AlgoryCode — Yazılım, Eğitim ve Dijital Çözümler",
+    default: "AlgoryCode — Yazılım ve Dijital Çözümler",
     template: "%s — AlgoryCode",
   },
   description:
-    "E-ticaret, mobil uygulama, yapay zeka ve web geliştirme ile eğitim programları. AlgoryCode ile dijital ürünlerinizi büyütün.",
+    "E-ticaret, mobil uygulama, yapay zeka ve web geliştirme. AlgoryCode ile dijital ürünlerinizi büyütün.",
   metadataBase: new URL("https://algorycode.com"),
   openGraph: {
     type: "website",
     locale: "tr_TR",
     siteName: "AlgoryCode",
-    title: "AlgoryCode — Yazılım, Eğitim ve Dijital Çözümler",
+    title: "AlgoryCode — Yazılım ve Dijital Çözümler",
     description:
-      "E-ticaret, mobil uygulama, yapay zeka ve web geliştirme ile eğitim programları.",
+      "E-ticaret, mobil uygulama, yapay zeka ve web geliştirme.",
   },
 };
 

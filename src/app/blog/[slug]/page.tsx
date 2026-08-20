@@ -247,14 +247,13 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
               <Card className="p-6">
                 <h2 className="heading text-[16px] font-semibold tracking-tight">
-                  Eğitimleri keşfedin
+                  Projenizi konuşalım
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-[#888]">
-                  Blog yazılarımızın ötesinde, uygulamalı eğitim programlarımıza
-                  göz atın.
+                  Yazılım projeniz için bizimle iletişime geçin.
                 </p>
-                <Button href="/education" className="mt-5 w-full">
-                  Eğitimlere Git
+                <Button href="/contact" className="mt-5 w-full">
+                  İletişime geç
                 </Button>
               </Card>
             </aside>

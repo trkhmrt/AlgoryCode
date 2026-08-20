@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 
 const nav = [
   { href: "/#features", label: "Hizmetler" },
-  { href: "/education", label: "Eğitimler" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "İletişim" },
 ] as const;
@@ -29,7 +28,6 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
         )}
       >
         <div className="flex h-16 items-center justify-between px-4 sm:px-6">
-          {/* Logo */}
           <Link
             href="/"
             className="flex items-center gap-2.5"
@@ -38,13 +36,12 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
             <Image
               src="/algorycode-icon.png"
               alt="AlgoryCode"
-              width={28}
-              height={28}
-              className="size-7 rounded-full object-cover"
+              width={44}
+              height={44}
+              className="size-11 shrink-0 object-contain"
+              priority
             />
-            <span className="brand-logo-pixel text-[14px] [text-shadow:none]">
-              algorycode
-            </span>
+            <span className="text-base font-semibold tracking-tight">AlgoryCode</span>
           </Link>
 
           {/* Desktop nav */}
@@ -62,12 +59,6 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
 
           {/* Desktop CTA buttons */}
           <div className="hidden items-center gap-2 md:flex">
-            <Link
-              href="/education"
-              className="rounded-full bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80"
-            >
-              Eğitimler
-            </Link>
             <Link
               href="/contact"
               className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"

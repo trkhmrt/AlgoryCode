@@ -1,6 +1,6 @@
 import type { LegalSection } from "@/lib/legal/types";
 
-export const CANCELLATION_REFUND_TITLE = "İptal ve İade Şartları";
+export const CANCELLATION_REFUND_TITLE = "Teslimat ve İade Şartları";
 
 export const CANCELLATION_REFUND_LAST_UPDATED = "5 Ağustos 2026";
 
@@ -57,7 +57,7 @@ export const CANCELLATION_REFUND_SECTIONS: LegalSection[] = [
     heading: "7. İade Yöntemi ve Süresi",
     paragraphs: [
       "Onaylanan iadeler, ödemenin yapıldığı karta/bankaya iade yöntemiyle gerçekleştirilir. Banka ve ödeme kuruluşu süreçleri nedeniyle iade tutarının hesabınıza yansıması 10–14 iş gününü bulabilir.",
-      "İade işlemleri iyzico ödeme altyapısı üzerinden yürütülür.",
+      "İade işlemleri PayTR ödeme altyapısı üzerinden yürütülür.",
     ],
   },
   {

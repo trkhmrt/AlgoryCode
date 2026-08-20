@@ -1,6 +1,6 @@
 import type { LegalSection } from "@/lib/legal/types";
 
-export const PRIVACY_POLICY_TITLE = "Gizlilik Politikası";
+export const PRIVACY_POLICY_TITLE = "Gizlilik Sözleşmesi";
 
 export const PRIVACY_POLICY_LAST_UPDATED = "5 Ağustos 2026";
 
@@ -50,8 +50,8 @@ export const PRIVACY_POLICY_SECTIONS: LegalSection[] = [
   {
     heading: "5. Ödeme İşlemleri",
     paragraphs: [
-      "Ücretli eğitim ve hizmet satın alımlarında ödeme işlemleri iyzico ödeme altyapısı üzerinden gerçekleştirilmektedir. Kart bilgileriniz AlgoryCode sunucularında saklanmaz; ödeme süreci iyzico tarafından güvenli şekilde yönetilir.",
-      "Ödeme işlemi sırasında ad, soyad, e-posta, telefon ve fatura/teslimat bilgileri gibi veriler, ödemenin tamamlanması amacıyla iyzico ile paylaşılabilir.",
+      "Ücretli eğitim ve hizmet satın alımlarında ödeme işlemleri PayTR ödeme altyapısı üzerinden gerçekleştirilmektedir. Kart bilgileriniz AlgoryCode sunucularında saklanmaz; ödeme süreci PayTR tarafından güvenli şekilde yönetilir.",
+      "Ödeme işlemi sırasında ad, soyad, e-posta, telefon ve fatura/teslimat bilgileri gibi veriler, ödemenin tamamlanması amacıyla PayTR ile paylaşılabilir.",
     ],
   },
   {
@@ -60,7 +60,7 @@ export const PRIVACY_POLICY_SECTIONS: LegalSection[] = [
       "Kişisel verileriniz, yalnızca gerekli olduğu ölçüde ve uygun güvenlik önlemleri alınarak aşağıdaki taraflara aktarılabilir:",
     ],
     bullets: [
-      "Ödeme hizmet sağlayıcısı: iyzico",
+      "Ödeme hizmet sağlayıcısı: PayTR",
       "Barındırma ve altyapı hizmeti sağlayıcısı: Radore Veri Merkezi Hizmetleri A.Ş.",
       "Yasal yükümlülük halinde yetkili kamu kurum ve kuruluşları",
     ],

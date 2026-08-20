@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Cpu, GraduationCap, Layers, Monitor, ShoppingCart, Smartphone } from "lucide-react";
+import { ArrowUpRight, Cpu, Layers, Monitor, ShoppingCart, Smartphone } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
 
@@ -23,11 +23,6 @@ const SERVICES = [
     icon: Monitor,
     title: "Kurumsal Web",
     text: "Markanıza özel siteler, yönetim panelleri ve müşteri portalları — ölçeklenebilir, güvenli, SEO uyumlu.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Eğitim",
-    text: "Gerçek projeler üzerinde ilerleyen, kuruma özel canlı programlar. Bilgi ekibinizde kalır.",
   },
   {
     icon: Layers,

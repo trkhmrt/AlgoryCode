@@ -36,6 +36,12 @@ const contactStructuredData = {
       name: "AlgoryCode",
       url: "https://algorycode.com",
       email: "info@algorycode.com",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Sefaköy, Gültepe",
+        addressRegion: "Küçükçekmece",
+        addressCountry: "TR",
+      },
     },
     {
       "@type": "WebSite",
@@ -61,7 +67,7 @@ const contactStructuredData = {
 const INFO = [
   { icon: Mail, title: "E-posta", detail: "info@algorycode.com" },
   { icon: Phone, title: "Telefon", detail: "850 308 87 23" },
-  { icon: MapPin, title: "Ofis", detail: "İstanbul, Türkiye" },
+  { icon: MapPin, title: "Adres", detail: "İstanbul, Küçükçekmece, Sefaköy, Gültepe" },
 ] as const;
 
 export default function ContactPage() {
